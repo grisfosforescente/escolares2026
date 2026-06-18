@@ -78,6 +78,27 @@
     </div>
   </div>
 
+  <!-- MODAL DE GUARDADO MANUAL/CARRETE (Para móviles como iOS y Android) -->
+  <div id="save-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50 transition-opacity duration-300">
+    <div class="bg-white rounded-3xl p-5 sm:p-6 max-w-sm w-full shadow-comic-black border-4 border-black text-center space-y-4">
+      <div class="flex justify-between items-center border-b-4 border-black pb-2">
+        <span class="font-comic text-2xl text-black">💾 GUARDAR EN CARRETE</span>
+        <button onclick="closeSaveModal()" class="text-slate-500 hover:text-black">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+      <p class="text-xs font-black text-slate-800 uppercase tracking-wide leading-tight">
+        📱 Mantén presionada la imagen de abajo y selecciona <span class="text-[#FF2E93] font-black">"Guardar en Fotos"</span> (iOS) o <span class="text-[#FF2E93] font-black">"Descargar imagen"</span> (Android) para tenerla directo en tu carrete.
+      </p>
+      <div class="border-4 border-black rounded-2xl overflow-hidden bg-[#FFE100] p-2">
+        <img id="modal-captured-img" src="" class="w-full h-auto max-h-80 object-contain mx-auto" alt="Tu Ticket Fosfo Kids">
+      </div>
+      <button onclick="closeSaveModal()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-black py-3 rounded-xl text-xs uppercase border-2 border-black">
+        Entendido
+      </button>
+    </div>
+  </div>
+
   <!-- HEADER DE ALTO CONTRASTE -->
   <header class="w-full bg-[#FFE100] border-b-8 border-black py-6 px-4 relative overflow-hidden">
     <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
@@ -183,7 +204,7 @@
           
           <div class="flex items-center gap-3 mb-4 bg-white p-3 border-2 border-black">
             <input type="checkbox" id="check-individual" onchange="toggleIndividualMode()" class="w-6 h-6 border-2 border-black rounded-none cursor-pointer accent-[#FF2E93]">
-            <label for="check-individual" class="text-sm font-black cursor-pointer text-black uppercase select-none font-sans-bold">Activar cálculo por pieza individual</label>
+            <label for="check-individual" class="text-sm font-black cursor-pointer text-black uppercase select-none font-sans-bold font-sans-bold">Activar cálculo por pieza individual</label>
           </div>
 
           <div id="individual-selectors" class="grid grid-cols-2 sm:grid-cols-4 gap-4 opacity-30 pointer-events-none transition-all duration-300 font-sans-bold">
@@ -252,32 +273,32 @@
             <div onclick="selectMaterial('vinil_blanco_brillante', 0)" id="mat-vinil_blanco_brillante" class="border-4 border-black p-4 bg-white cursor-pointer select-none relative">
               <div class="absolute -top-4 -right-4 bg-[#00D4FF] text-black border-4 border-black font-black px-3 py-1 text-xs uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✅ ELEGIDO</div>
               <div class="flex justify-between items-center mb-2">
-                <span class="font-black text-xs uppercase bg-[#00D4FF] text-black px-2 py-0.5 border border-black font-sans-bold font-sans-bold">Estándar</span>
-                <span class="font-black text-xs text-green-600 uppercase font-sans-bold font-sans-bold">Sin costo extra</span>
+                <span class="font-black text-xs uppercase bg-[#00D4FF] text-black px-2 py-0.5 border border-black font-sans-bold font-sans-bold font-sans-bold">Estándar</span>
+                <span class="font-black text-xs text-green-600 uppercase font-sans-bold font-sans-bold font-sans-bold">Sin costo extra</span>
               </div>
               <h4 class="font-black text-base text-black uppercase">Vinil Blanco Brillante</h4>
-              <p class="text-xs text-gray-700 mt-1 uppercase font-sans-bold font-sans-bold">Excelente brillo y viveza de color para todo.</p>
+              <p class="text-xs text-gray-700 mt-1 uppercase font-sans-bold font-sans-bold font-sans-bold">Excelente brillo y viveza de color para todo.</p>
             </div>
 
             <div onclick="selectMaterial('vinil_blanco_mate', 0)" id="mat-vinil_blanco_mate" class="border-4 border-black p-4 bg-white cursor-pointer select-none relative">
               <div class="absolute -top-4 -right-4 bg-[#00D4FF] text-black border-4 border-black font-black px-3 py-1 text-xs uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✅ ELEGIDO</div>
               <div class="flex justify-between items-center mb-2">
-                <span class="font-black text-xs uppercase bg-gray-200 text-black px-2 py-0.5 border border-black font-sans-bold font-sans-bold">Estándar</span>
-                <span class="font-black text-xs text-green-600 uppercase font-sans-bold font-sans-bold">Sin costo extra</span>
+                <span class="font-black text-xs uppercase bg-gray-200 text-black px-2 py-0.5 border border-black font-sans-bold font-sans-bold font-sans-bold">Estándar</span>
+                <span class="font-black text-xs text-green-600 uppercase font-sans-bold font-sans-bold font-sans-bold">Sin costo extra</span>
               </div>
               <h4 class="font-black text-base text-black uppercase">Vinil Blanco Mate</h4>
-              <p class="text-xs text-gray-700 mt-1 uppercase font-sans-bold font-sans-bold">Acabado antirreflejo suave y muy elegante.</p>
+              <p class="text-xs text-gray-700 mt-1 uppercase font-sans-bold font-sans-bold font-sans-bold">Acabado antirreflejo suave y muy elegante.</p>
             </div>
 
             <div onclick="selectMaterial('vinil_holografico', 75)" id="mat-vinil_holografico" class="border-4 border-black p-4 bg-white cursor-pointer select-none relative overflow-hidden">
               <div class="absolute -top-4 -right-4 bg-[#00D4FF] text-black border-4 border-black font-black px-3 py-1 text-xs uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✅ ELEGIDO</div>
               <div class="absolute inset-0 bg-gradient-to-tr from-pink-300 via-cyan-200 to-yellow-200 opacity-25 pointer-events-none text-xs"></div>
               <div class="flex justify-between items-center mb-2 relative z-10">
-                <span class="font-black text-xs uppercase bg-[#FF2E93] text-white px-2 py-0.5 border border-black font-sans-bold font-sans-bold">Premium ⭐</span>
-                <span class="font-black text-xs text-red-600 font-sans-bold font-sans-bold">+$75.00 MXN</span>
+                <span class="font-black text-xs uppercase bg-[#FF2E93] text-white px-2 py-0.5 border border-black font-sans-bold font-sans-bold font-sans-bold">Premium ⭐</span>
+                <span class="font-black text-xs text-red-600 font-sans-bold font-sans-bold font-sans-bold">+$75.00 MXN</span>
               </div>
               <h4 class="font-black text-base text-black uppercase relative z-10">Vinil Holográfico</h4>
-              <p class="text-xs text-gray-700 mt-1 uppercase font-sans-bold relative z-10 font-sans-bold">Espectacular brillo arcoíris metálico.</p>
+              <p class="text-xs text-gray-700 mt-1 uppercase font-sans-bold relative z-10 font-sans-bold font-sans-bold">Espectacular brillo arcoíris metálico.</p>
             </div>
 
           </div>
@@ -313,7 +334,7 @@
         </div>
 
         <div class="mt-8 flex justify-between">
-          <button onclick="goToStep(1)" class="bg-white text-black font-black px-5 py-2.5 border-4 border-black shadow-comic-black flex items-center gap-2 uppercase text-sm font-sans-bold font-sans-bold">
+          <button onclick="goToStep(1)" class="bg-white text-black font-black px-5 py-2.5 border-4 border-black shadow-comic-black flex items-center gap-2 uppercase text-sm font-sans-bold font-sans-bold font-sans-bold">
             <i data-lucide="arrow-left" class="w-5 h-5"></i> Atrás
           </button>
           <button onclick="goToStep(3)" class="bg-[#FFE100] text-black font-comic text-2xl px-8 py-3.5 border-4 border-black shadow-comic-black flex items-center gap-2 uppercase">
@@ -389,7 +410,7 @@
         </div>
 
         <!-- Selector de Páginas del Catálogo -->
-        <div class="bg-black p-3 border-4 border-black mb-6 flex flex-col gap-2 shadow-comic-black">
+        <div class="bg-black p-3 border-4 border-black mb-6 flex flex-col gap-2 shadow-comic-black font-sans-bold">
           <span class="text-xs font-black text-white uppercase tracking-wider text-center">📖 Selecciona la Página del Catálogo:</span>
           <div class="grid grid-cols-5 sm:grid-cols-9 gap-1.5 font-sans-bold">
             <button onclick="changeCatalogPage(1)" id="btn-page-1" class="page-tab-btn py-2 border-2 border-white bg-neutral-800 text-white font-black text-xs uppercase hover:bg-neutral-700">Pág 1</button>
@@ -443,7 +464,7 @@
           </div>
         </div>
 
-        <div class="mt-8 flex justify-between font-sans-bold font-sans-bold">
+        <div class="mt-8 flex justify-between font-sans-bold font-sans-bold font-sans-bold">
           <button onclick="goToStep(3)" class="bg-white text-black font-black px-5 py-2.5 border-4 border-black shadow-comic-black flex items-center gap-2 uppercase text-sm">
             <i data-lucide="arrow-left" class="w-5 h-5"></i> Atrás
           </button>
@@ -1003,7 +1024,7 @@
       if (cardChico) cardChico.classList.remove('selected-card');
       if (cardGrande) cardGrande.classList.remove('selected-card');
       if (badgeChico) badgeChico.classList.add('hidden');
-      if (badgeGrande) badgeGrande.classList.add('hidden');
+      if (badgeGrande) badgeGrande.classList.remove('hidden');
 
       if (pkg === 'chico') {
         if (cardChico) cardChico.classList.add('selected-card');
@@ -1138,6 +1159,7 @@
       if (ticketTotalEl) ticketTotalEl.innerText = `$${totalSum.toFixed(2)} MXN`;
     }
 
+    // LÓGICA DE CAPTURA SEGURA QUE EVITA EL BUG DEL SISTEMA DE ARCHIVOS EN MÓVILES
     function captureOrder() {
       const ticketElement = document.getElementById('ticket-capture');
       if (!ticketElement) return;
@@ -1154,19 +1176,36 @@
       html2canvas(ticketElement, options).then(canvas => {
         const imgData = canvas.toDataURL('image/png');
         
-        const link = document.createElement('a');
-        link.download = `Pedido_FosfoKids.png`;
-        link.href = imgData;
-        
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        showToast("💾 ¡Tu pedido se descargó con éxito!");
+        // MOSTRAR VENTANA MODAL PARA QUE EL CLIENTE GUARDE EN SU CARRETE DIRECTAMENTE (iOS / Android Friendly)
+        const modal = document.getElementById('save-modal');
+        const modalImg = document.getElementById('modal-captured-img');
+        if (modal && modalImg) {
+          modalImg.src = imgData;
+          modal.classList.remove('hidden');
+          modal.classList.add('flex');
+          
+          // Además intentamos forzar la descarga de respaldo
+          const link = document.createElement('a');
+          link.download = `Pedido_FosfoKids.png`;
+          link.href = imgData;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          
+          showToast("💾 ¡Mantén presionada la imagen para guardarla en tu carrete!");
+        }
       }).catch(err => {
         showToast("⚠️ Detalle al capturar. Toma captura manual al ticket.", "warning");
         console.error("Error html2canvas:", err);
       });
+    }
+
+    function closeSaveModal() {
+      const modal = document.getElementById('save-modal');
+      if (modal) {
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+      }
     }
 
   </script>
