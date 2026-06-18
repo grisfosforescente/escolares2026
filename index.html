@@ -97,6 +97,35 @@
     </div>
   </div>
 
+  <!-- POPUP "AGREGA A PANTALLA" (A2HS) PARA CELULARES -->
+  <div id="install-modal" class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-4 sm:max-w-xs bg-[#00D4FF] border-4 border-black p-4 shadow-comic-black rounded-2xl z-40 hidden transition-all duration-500 transform translate-y-20 opacity-0">
+    <div class="flex items-start gap-3">
+      <!-- Logotipo fav.png -->
+      <img src="fav.png" alt="Fosfo Kids Logo" class="w-12 h-12 rounded-xl border-2 border-black bg-slate-900 p-0.5 shadow-comic-sm shrink-0">
+      <div class="flex-grow">
+        <div class="flex justify-between items-start">
+          <h3 class="font-comic text-xl text-black leading-none uppercase">📲 ¡AGREGA FOSFO KIDS!</h3>
+          <button onclick="dismissInstallPromptPermanently()" class="text-black hover:text-rose-600 -mt-1 -mr-1">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+        <p class="text-[10px] font-black text-slate-900 uppercase tracking-tight mt-1 leading-tight">
+          Para una mejor experiencia agrega este configurador de catálogo directamente a tus aplicaciones de pantalla de inicio.
+        </p>
+        
+        <!-- Instrucciones Dinámicas (iOS / Android) -->
+        <div id="install-instructions" class="text-[9px] font-black uppercase text-black bg-white/90 p-2 border-2 border-black rounded-lg mt-2.5 leading-snug">
+          <!-- Rellenado dinámicamente por JS -->
+        </div>
+        
+        <!-- Botón de Instalación Directa (PWA estándar) -->
+        <button id="btn-install-app" onclick="triggerPWAInstall()" class="hidden w-full mt-2.5 bg-black text-[#FFE100] font-black uppercase py-2 border-2 border-black hover:bg-slate-800 transition-colors shadow-comic-sm text-xs rounded-md">
+          ¡Instalar App ahora!
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL DE GUARDADO MANUAL/CARRETE (Para móviles como iOS y Android de respaldo) -->
   <div id="save-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50 transition-opacity duration-300">
     <div class="bg-white rounded-2xl p-5 max-w-sm w-full shadow-comic-black border-4 border-black text-center space-y-4">
@@ -141,7 +170,7 @@
   </header>
 
   <!-- CONTENEDOR PRINCIPAL CENTRADO (Optimizado para ancho automático fluido en móviles) -->
-  <main class="w-full max-w-lg mx-auto px-3 mt-4 flex flex-col gap-4 font-sans-bold">
+  <main class="w-full max-w-lg mx-auto px-3 mt-4 flex flex-col gap-4 font-sans-bold font-sans-bold">
     
     <!-- NAVEGACIÓN DE PASOS DE ALTO CONTRASTE (Píldoras compactas legibles) -->
     <div class="bg-white border-2 border-black p-2 shadow-comic-black flex justify-between items-center gap-1 overflow-x-auto rounded-lg">
@@ -214,7 +243,7 @@
               <li class="flex justify-between items-center bg-white p-1 border"><span>🍽️ Utensilios (5cm)</span> <span class="bg-[#FFE100] px-1 border-l">15</span></li>
             </ul>
             <div class="mt-2 flex justify-end">
-              <span id="badge-pkg-grande" class="bg-[#00D4FF] border border-black text-black font-black px-2 py-0.5 text-[9px] uppercase hidden rounded">¡ELEGIDO! ✓</span>
+              <span id="badge-pkg-grande" class="bg-[#00D4FF] border-2 border-black text-black font-black px-2 py-0.5 text-[9px] uppercase hidden rounded">¡ELEGIDO! ✓</span>
             </div>
           </div>
 
@@ -229,7 +258,7 @@
           <p class="text-[9px] font-black text-gray-700 uppercase mb-1">Diseña tu propio juego con las cantidades exactas que necesites.</p>
           <div class="text-[10px] font-black text-[#FF2E93] uppercase">Ideal si requieres menos cantidad o un set personalizado de etiquetas desde $0 base.</div>
           <div class="mt-2 flex justify-end">
-            <span id="badge-pkg-personalizado" class="bg-[#00D4FF] border border-black text-black font-black px-2 py-0.5 text-[9px] uppercase hidden rounded">¡ELEGIDO! ✓</span>
+            <span id="badge-pkg-personalizado" class="bg-[#00D4FF] border-2 border-black text-black font-black px-2 py-0.5 text-[9px] uppercase hidden rounded">¡ELEGIDO! ✓</span>
           </div>
         </div>
 
@@ -290,7 +319,7 @@
 
           <!-- Libro suelto -->
           <div class="bg-white border-2 border-black p-2.5 flex flex-col items-center justify-between text-center rounded-xl shadow-comic-sm">
-            <span class="text-[8px] font-black bg-[#A55EEA] text-white px-1.5 py-0.5 border border-black mb-1 rounded-sm">7 x 5 cm</span>
+            <span class="text-[8px] font-black bg-[#A55EEA] text-white px-1.5 py-0.5 border border-black mb-1">7 x 5 cm</span>
             <span class="text-xs font-black text-black uppercase">Libros</span>
             <span class="text-[10px] font-black text-[#FF2E93]">$6.00 c/u</span>
             <div class="flex items-center mt-2 gap-1.5">
@@ -466,14 +495,14 @@
             <button onclick="selectGridDesign(5, 2, 2)" id="cell-5" class="catalog-cell border-2 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
               <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-5">#5</span>
             </button>
-            <button onclick="selectGridDesign(6, 2, 3)" id="cell-6" class="catalog-cell border-2 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
+            <button onclick="selectGridDesign(6, 2, 3)" id="cell-6" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
               <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-6">#6</span>
             </button>
             
-            <button onclick="selectGridDesign(7, 3, 1)" id="cell-7" class="catalog-cell border-2 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
+            <button onclick="selectGridDesign(7, 3, 1)" id="cell-7" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
               <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-7">#7</span>
             </button>
-            <button onclick="selectGridDesign(8, 3, 2)" id="cell-8" class="catalog-cell border-2 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
+            <button onclick="selectGridDesign(8, 3, 2)" id="cell-8" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
               <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-8">#8</span>
             </button>
             <button onclick="selectGridDesign(9, 3, 3)" id="cell-9" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
@@ -550,7 +579,7 @@
 
         <!-- TICKET ULTRA CONTRASTADO Y ATRACTIVO -->
         <div class="bg-[#FFE100] p-4 border-4 border-black relative rounded-2xl" id="ticket-capture">
-          <div class="absolute -top-3 right-4 bg-black text-white text-xs font-black px-3 py-1 border-2 border-white rotate-[2deg] uppercase tracking-wider">
+          <div class="absolute -top-3 right-4 bg-black text-white text-xs font-black px-4 py-1.5 border-2 border-white rotate-[2deg] uppercase tracking-wider">
             ORDEN OFICIAL FOSFO KIDS
           </div>
           
@@ -826,29 +855,8 @@
         11: { id: 131, name: "Snoopy Skate", cat: "tiernos" },
         12: { id: 132, name: "Kuromi Ela", cat: "tiernos" },
         13: { id: 133, name: "Intensamente", cat: "caricaturas" },
-        14: { id: 134, name: "K-Drama", cat: "caricaturas" },
+        14: { id: 134, name: "Hwang In Yeop", cat: "caricaturas" },
         15: { id: 135, name: "Godzilla Kong", cat: "videojuegos" }
-      }
-    };
-
-    window.onload = function() {
-      try {
-        if (typeof lucide !== 'undefined' && lucide.createIcons) {
-          lucide.createIcons();
-        }
-      } catch (e) {
-        console.warn("No se pudieron cargar iconos.", e);
-      }
-      
-      try {
-        selectPackage('chico', 260);
-        selectMaterial('vinil_blanco_brillante', 0);
-        selectLaminated('ninguno', 0);
-        
-        changeCatalogPage(1);
-        selectGridDesign(1, 1, 1);
-      } catch (err) {
-        console.error("Error init:", err);
       }
     };
 
@@ -861,12 +869,12 @@
       if (imgErrorCount < EXTENSIONS.length) {
         const nextExt = EXTENSIONS[imgErrorCount];
         const newSrc = `${activePage}${nextExt}`;
-        console.log(`Error de carga en página ${activePage}. Intentando de inmediato con extensión: ${nextExt}`);
+        console.log(`Error de carga en página ${activePage}. Intentando con: ${nextExt}`);
         imgElement.src = newSrc;
       } else {
         imgElement.src = 'https://placehold.co/600x800/000000/ffffff?text=Fosfo+Kids+2026';
         imgElement.onerror = null;
-        showToast("⚠️ Nota: No pudimos cargar el fondo gráfico de la página. Asegúrate de haber subido los archivos '1.png' a '9.png' en la misma carpeta que tu 'index.html'.", "warning");
+        showToast("⚠️ Nota: No pudimos cargar el catálogo.", "warning");
       }
     }
 
@@ -974,6 +982,7 @@
       }
     }
 
+    // NAVEGACIÓN DE PASOS CON SCROLL AL TOP
     function goToStep(step) {
       if (step > currentStep && step > 3) {
         const clientNameInput = document.getElementById('input-client-name');
@@ -983,11 +992,11 @@
         const labelName = labelNameInput ? labelNameInput.value.trim() : "";
         
         if (!clientName) {
-          showToast("⚠️ Escribe tu Nombre de Cliente para identificar tu pedido.", "warning");
+          showToast("⚠️ Escribe tu Nombre de Cliente.", "warning");
           return;
         }
         if (!labelName) {
-          showToast("⚠️ Escribe el Nombre a imprimir en tus etiquetas.", "warning");
+          showToast("⚠️ Escribe el Nombre para tus etiquetas.", "warning");
           return;
         }
       }
@@ -1034,6 +1043,88 @@
           toast.classList.add('opacity-0');
         }, 3000);
       }
+    }
+
+    // SISTEMA INSTALACIÓN PWA MEJORADO / DETECCIÓN
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      showInstallPrompt();
+    });
+
+    function showInstallPrompt() {
+      if (localStorage.getItem('fosfo_kids_install_dismissed') === 'true') return;
+      
+      const modal = document.getElementById('install-modal');
+      const instructions = document.getElementById('install-instructions');
+      const btnInstall = document.getElementById('btn-install-app');
+      if (!modal || !instructions) return;
+
+      const isIOSVal = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+      if (isIOSVal) {
+        instructions.innerHTML = `
+          <div class="flex items-center gap-1.5 justify-center py-1">
+            <span>Toca</span>
+            <i data-lucide="share" class="w-4 h-4 text-blue-600"></i>
+            <span>compartir y luego</span>
+            <span class="text-[#FF2E93] font-black">"Agregar al inicio"</span>
+          </div>
+        `;
+        if (btnInstall) btnInstall.classList.add('hidden');
+      } else if (deferredPrompt) {
+        instructions.classList.add('hidden');
+        if (btnInstall) btnInstall.classList.remove('hidden');
+      } else {
+        instructions.innerHTML = `
+          <div class="flex items-center gap-1 justify-center py-1">
+            <span>Toca menú</span>
+            <i data-lucide="more-vertical" class="w-3.5 h-3.5 inline"></i>
+            <span>y selecciona</span>
+            <span class="text-[#FF2E93] font-black">"Instalar"</span>
+          </div>
+        `;
+        if (btnInstall) btnInstall.classList.add('hidden');
+      }
+
+      try {
+        if (typeof lucide !== 'undefined' && lucide.createIcons) {
+          lucide.createIcons();
+        }
+      } catch(err){}
+
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('translate-y-20', 'opacity-0');
+      }, 3000); // Demora la aparición 3 segundos después de cargar
+    }
+
+    function triggerPWAInstall() {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          localStorage.setItem('fosfo_kids_install_dismissed', 'true');
+          dismissInstallPrompt();
+        }
+        deferredPrompt = null;
+      });
+    }
+
+    function dismissInstallPrompt() {
+      const modal = document.getElementById('install-modal');
+      if (modal) {
+        modal.classList.add('translate-y-20', 'opacity-0');
+        setTimeout(() => {
+          modal.classList.add('hidden');
+        }, 500);
+      }
+    }
+
+    function dismissInstallPromptPermanently() {
+      localStorage.setItem('fosfo_kids_install_dismissed', 'true');
+      dismissInstallPrompt();
     }
 
     function syncQty(type, value) {
@@ -1243,7 +1334,6 @@
       const ticketLaminatedEl = document.getElementById('ticket-laminado');
       if (ticketLaminatedEl) ticketLaminatedEl.innerText = lamText;
 
-      // Actualización de los datos a imprimir
       const nameInput = document.getElementById('input-name');
       const gradeInput = document.getElementById('input-grade');
       const extraInput = document.getElementById('input-extra');
@@ -1261,14 +1351,13 @@
       const ticketChildExtraEl = document.getElementById('ticket-child-extra');
       if (ticketChildExtraEl) ticketChildExtraEl.innerText = (extra || "- SIN INFO ADICIONAL -").toUpperCase();
 
-      // Precios del ticket
       const ticketBaseCostEl = document.getElementById('ticket-base-cost');
       if (ticketBaseCostEl) ticketBaseCostEl.innerText = `$${basePrice.toFixed(2)} MXN`;
       
       const ticketMaterialCostEl = document.getElementById('ticket-material-cost');
       if (ticketMaterialCostEl) ticketMaterialCostEl.innerText = `$${materialPrice.toFixed(2)} MXN`;
       
-      const ticketLaminatedCostEl = document.getElementById('ticket-laminado-cost');
+      const ticketLaminatedCostEl = document.getElementById('ticket-laminated-cost');
       if (ticketLaminatedCostEl) ticketLaminatedCostEl.innerText = `$${laminatedPrice.toFixed(2)} MXN`;
 
       const totalSum = basePrice + materialPrice + laminatedPrice;
@@ -1306,7 +1395,7 @@
           link.click();
           document.body.removeChild(link);
           
-          showToast("💾 ¡Mantén presionada la imagen para guardarla en tu carrete!");
+          showToast("💾 ¡Tu pedido se descargó con éxito!");
         }
       }).catch(err => {
         showToast("⚠️ Detalle al capturar. Toma captura manual al ticket.", "warning");
