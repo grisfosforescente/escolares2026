@@ -116,50 +116,50 @@
     </div>
   </header>
 
-  <!-- CONTENEDOR PRINCIPAL CENTRADO -->
-  <main class="max-w-4xl mx-auto px-4 mt-8 flex flex-col gap-6">
+  <!-- CONTENEDOR PRINCIPAL CENTRADO (Optimizado para ancho automático fluido en móviles) -->
+  <main class="w-full max-w-2xl mx-auto px-4 mt-6 flex flex-col gap-6">
     
     <!-- NAVEGACIÓN DE PASOS DE ALTO CONTRASTE -->
-    <div class="bg-white border-4 border-black p-4 shadow-comic-black flex justify-between items-center gap-2 overflow-x-auto">
+    <div class="bg-white border-4 border-black p-3 shadow-comic-black flex justify-between items-center gap-2 overflow-x-auto">
       <button onclick="goToStep(1)" id="btn-step-1" class="px-3 py-2 border-2 border-black font-black text-xs uppercase bg-[#FFE100] text-black shrink-0">
         1. Paquetes
       </button>
-      <div class="h-1 bg-black flex-grow min-w-[10px]"></div>
+      <div class="h-1 bg-black flex-grow min-w-[8px]"></div>
       <button onclick="goToStep(2)" id="btn-step-2" class="px-3 py-2 border-2 border-black font-black text-xs uppercase bg-white text-gray-400 shrink-0">
         2. Material
       </button>
-      <div class="h-1 bg-black flex-grow min-w-[10px]"></div>
+      <div class="h-1 bg-black flex-grow min-w-[8px]"></div>
       <button onclick="goToStep(3)" id="btn-step-3" class="px-3 py-2 border-2 border-black font-black text-xs uppercase bg-white text-gray-400 shrink-0">
         3. Datos
       </button>
-      <div class="h-1 bg-black flex-grow min-w-[10px]"></div>
+      <div class="h-1 bg-black flex-grow min-w-[8px]"></div>
       <button onclick="goToStep(4)" id="btn-step-4" class="px-3 py-2 border-2 border-black font-black text-xs uppercase bg-white text-gray-400 shrink-0">
         4. Diseño
       </button>
-      <div class="h-1 bg-black flex-grow min-w-[10px]"></div>
+      <div class="h-1 bg-black flex-grow min-w-[8px]"></div>
       <button onclick="goToStep(5)" id="btn-step-5" class="px-3 py-2 border-2 border-black font-black text-xs uppercase bg-white text-gray-400 shrink-0">
         5. Ticket
       </button>
     </div>
 
     <!-- PANEL CONTENEDOR DEL FORMULARIO -->
-    <div class="bg-white border-4 border-black p-6 shadow-comic-black relative">
+    <div class="bg-white border-4 border-black p-4 md:p-6 shadow-comic-black relative w-full">
       
       <!-- PASO 1: SELECCIÓN DE PAQUETES -->
       <div id="step-content-1" class="step-pane">
-        <h2 class="font-comic text-4xl mb-1 text-black uppercase">
+        <h2 class="font-comic text-3xl md:text-4xl mb-1 text-black uppercase">
           🎒 Paso 1: Elige tu Paquete de Etiquetas
         </h2>
         <p class="text-sm font-black text-gray-600 uppercase mb-6">Selecciona uno de nuestros paquetes estrella de catálogo o arma tu cantidad.</p>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
           
           <!-- Tarjeta Paquete Chico -->
-          <div id="card-pkg-chico" onclick="selectPackage('chico', 260)" class="border-4 border-black p-5 relative bg-[#FFF0F5] cursor-pointer hover:scale-[1.01] transition-all select-none">
-            <div class="absolute -top-3 -right-3 border-4 border-black bg-[#FF2E93] text-white px-4 py-1.5 font-comic text-2xl rotate-[3deg] shadow-comic-sm">
+          <div id="card-pkg-chico" onclick="selectPackage('chico', 260)" class="border-4 border-black p-4 relative bg-[#FFF0F5] cursor-pointer hover:scale-[1.01] transition-all select-none">
+            <div class="absolute -top-3 -right-3 border-4 border-black bg-[#FF2E93] text-white px-3 py-1 font-comic text-xl rotate-[3deg] shadow-comic-sm">
               72 pzas x $260
             </div>
-            <h3 class="font-comic text-3xl text-black mt-2">PAQUETE CHICO</h3>
+            <h3 class="font-comic text-2xl text-black mt-2">PAQUETE CHICO</h3>
             <p class="text-xs font-black text-gray-700 uppercase tracking-wider mb-4">Recomendado para Preescolar/Kínder</p>
             
             <ul class="text-xs font-black text-gray-900 space-y-2 border-t-4 border-black pt-3 font-sans-bold">
@@ -174,11 +174,11 @@
           </div>
 
           <!-- Tarjeta Paquete Grande -->
-          <div id="card-pkg-grande" onclick="selectPackage('grande', 340)" class="border-4 border-black p-5 relative bg-[#ECFDF5] cursor-pointer hover:scale-[1.01] transition-all select-none">
-            <div class="absolute -top-3 -right-3 border-4 border-black bg-[#00D4FF] text-black px-4 py-1.5 font-comic text-2xl rotate-[-3deg] shadow-comic-sm">
+          <div id="card-pkg-grande" onclick="selectPackage('grande', 340)" class="border-4 border-black p-4 relative bg-[#ECFDF5] cursor-pointer hover:scale-[1.01] transition-all select-none">
+            <div class="absolute -top-3 -right-3 border-4 border-black bg-[#00D4FF] text-black px-3 py-1 font-comic text-xl rotate-[-3deg] shadow-comic-sm">
               120 pzas x $340
             </div>
-            <h3 class="font-comic text-3xl text-black mt-2">PAQUETE GRANDE</h3>
+            <h3 class="font-comic text-2xl text-black mt-2">PAQUETE GRANDE</h3>
             <p class="text-xs font-black text-gray-700 uppercase tracking-wider mb-4">El más completo para Primaria y Secundaria</p>
             
             <ul class="text-xs font-black text-gray-900 space-y-2 border-t-4 border-black pt-3 font-sans-bold">
@@ -204,7 +204,7 @@
           
           <div class="flex items-center gap-3 mb-4 bg-white p-3 border-2 border-black">
             <input type="checkbox" id="check-individual" onchange="toggleIndividualMode()" class="w-6 h-6 border-2 border-black rounded-none cursor-pointer accent-[#FF2E93]">
-            <label for="check-individual" class="text-sm font-black cursor-pointer text-black uppercase select-none font-sans-bold font-sans-bold">Activar cálculo por pieza individual</label>
+            <label for="check-individual" class="text-sm font-black cursor-pointer text-black uppercase select-none font-sans-bold">Activar cálculo por pieza individual</label>
           </div>
 
           <div id="individual-selectors" class="grid grid-cols-2 sm:grid-cols-4 gap-4 opacity-30 pointer-events-none transition-all duration-300 font-sans-bold">
@@ -214,7 +214,7 @@
               <span class="text-xs font-black text-[#FF2E93] mt-1">$3.00 c/u</span>
               <div class="flex items-center mt-2 gap-1">
                 <button type="button" onclick="adjustQty('lapiz', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">-</button>
-                <input type="number" id="qty-lapiz" value="0" min="0" onchange="calculatePrice()" class="w-10 text-center border-2 border-black text-xs font-black py-0.5">
+                <input type="number" id="qty-lapiz" value="0" min="0" onchange="syncQty('lapiz', this.value)" class="w-10 text-center border-2 border-black text-xs font-black py-0.5">
                 <button type="button" onclick="adjustQty('lapiz', 5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">+</button>
               </div>
             </div>
@@ -224,7 +224,7 @@
               <span class="text-xs font-black text-[#FF2E93] mt-1">$5.00 c/u</span>
               <div class="flex items-center mt-2 gap-1">
                 <button type="button" onclick="adjustQty('circulo', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">-</button>
-                <input type="number" id="qty-circulo" value="0" min="0" onchange="calculatePrice()" class="w-10 text-center border-2 border-black text-xs font-black py-0.5">
+                <input type="number" id="qty-circulo" value="0" min="0" onchange="syncQty('circulo', this.value)" class="w-10 text-center border-2 border-black text-xs font-black py-0.5">
                 <button type="button" onclick="adjustQty('circulo', 5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">+</button>
               </div>
             </div>
@@ -234,7 +234,7 @@
               <span class="text-xs font-black text-[#FF2E93] mt-1">$4.00 c/u</span>
               <div class="flex items-center mt-2 gap-1">
                 <button type="button" onclick="adjustQty('cuaderno', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">-</button>
-                <input type="number" id="qty-cuaderno" value="0" min="0" onchange="calculatePrice()" class="w-10 text-center border-2 border-black text-xs font-black py-0.5">
+                <input type="number" id="qty-cuaderno" value="0" min="0" onchange="syncQty('cuaderno', this.value)" class="w-10 text-center border-2 border-black text-xs font-black py-0.5">
                 <button type="button" onclick="adjustQty('cuaderno', 5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">+</button>
               </div>
             </div>
@@ -244,7 +244,7 @@
               <span class="text-xs font-black text-[#FF2E93] mt-1">$6.00 c/u</span>
               <div class="flex items-center mt-2 gap-1">
                 <button type="button" onclick="adjustQty('libro', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">-</button>
-                <input type="number" id="qty-libro" value="0" min="0" onchange="calculatePrice()" class="w-10 text-center border-2 border-black text-xs font-black py-0.5">
+                <input type="number" id="qty-libro" value="0" min="0" onchange="syncQty('libro', this.value)" class="w-10 text-center border-2 border-black text-xs font-black py-0.5">
                 <button type="button" onclick="adjustQty('libro', 5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">+</button>
               </div>
             </div>
@@ -268,37 +268,37 @@
         <!-- Tipo de Vinil -->
         <div class="mb-6">
           <h3 class="text-lg font-black text-black uppercase mb-3 bg-black text-white inline-block px-3 py-1">1. Vinil Base:</h3>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
             
             <div onclick="selectMaterial('vinil_blanco_brillante', 0)" id="mat-vinil_blanco_brillante" class="border-4 border-black p-4 bg-white cursor-pointer select-none relative">
               <div class="absolute -top-4 -right-4 bg-[#00D4FF] text-black border-4 border-black font-black px-3 py-1 text-xs uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✅ ELEGIDO</div>
               <div class="flex justify-between items-center mb-2">
-                <span class="font-black text-xs uppercase bg-[#00D4FF] text-black px-2 py-0.5 border border-black font-sans-bold font-sans-bold font-sans-bold">Estándar</span>
-                <span class="font-black text-xs text-green-600 uppercase font-sans-bold font-sans-bold font-sans-bold">Sin costo extra</span>
+                <span class="font-black text-xs uppercase bg-[#00D4FF] text-black px-2 py-0.5 border border-black font-sans-bold">Estándar</span>
+                <span class="font-black text-xs text-green-600 uppercase font-sans-bold font-sans-bold">Sin costo extra</span>
               </div>
               <h4 class="font-black text-base text-black uppercase">Vinil Blanco Brillante</h4>
-              <p class="text-xs text-gray-700 mt-1 uppercase font-sans-bold font-sans-bold font-sans-bold">Excelente brillo y viveza de color para todo.</p>
+              <p class="text-xs text-gray-700 mt-1 uppercase font-sans-bold">Excelente brillo y viveza de color para todo.</p>
             </div>
 
             <div onclick="selectMaterial('vinil_blanco_mate', 0)" id="mat-vinil_blanco_mate" class="border-4 border-black p-4 bg-white cursor-pointer select-none relative">
               <div class="absolute -top-4 -right-4 bg-[#00D4FF] text-black border-4 border-black font-black px-3 py-1 text-xs uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✅ ELEGIDO</div>
               <div class="flex justify-between items-center mb-2">
-                <span class="font-black text-xs uppercase bg-gray-200 text-black px-2 py-0.5 border border-black font-sans-bold font-sans-bold font-sans-bold">Estándar</span>
+                <span class="font-black text-xs uppercase bg-gray-200 text-black px-2 py-0.5 border border-black font-sans-bold">Estándar</span>
                 <span class="font-black text-xs text-green-600 uppercase font-sans-bold font-sans-bold font-sans-bold">Sin costo extra</span>
               </div>
               <h4 class="font-black text-base text-black uppercase">Vinil Blanco Mate</h4>
-              <p class="text-xs text-gray-700 mt-1 uppercase font-sans-bold font-sans-bold font-sans-bold">Acabado antirreflejo suave y muy elegante.</p>
+              <p class="text-xs text-gray-700 mt-1 uppercase font-sans-bold font-sans-bold text-center">Acabado antirreflejo elegante.</p>
             </div>
 
             <div onclick="selectMaterial('vinil_holografico', 75)" id="mat-vinil_holografico" class="border-4 border-black p-4 bg-white cursor-pointer select-none relative overflow-hidden">
               <div class="absolute -top-4 -right-4 bg-[#00D4FF] text-black border-4 border-black font-black px-3 py-1 text-xs uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✅ ELEGIDO</div>
               <div class="absolute inset-0 bg-gradient-to-tr from-pink-300 via-cyan-200 to-yellow-200 opacity-25 pointer-events-none text-xs"></div>
               <div class="flex justify-between items-center mb-2 relative z-10">
-                <span class="font-black text-xs uppercase bg-[#FF2E93] text-white px-2 py-0.5 border border-black font-sans-bold font-sans-bold font-sans-bold">Premium ⭐</span>
-                <span class="font-black text-xs text-red-600 font-sans-bold font-sans-bold font-sans-bold">+$75.00 MXN</span>
+                <span class="font-black text-xs uppercase bg-[#FF2E93] text-white px-2 py-0.5 border border-black font-sans-bold">Premium ⭐</span>
+                <span class="font-black text-xs text-red-600 font-sans-bold">+$75.00 MXN</span>
               </div>
               <h4 class="font-black text-base text-black uppercase relative z-10">Vinil Holográfico</h4>
-              <p class="text-xs text-gray-700 mt-1 uppercase font-sans-bold relative z-10 font-sans-bold font-sans-bold">Espectacular brillo arcoíris metálico.</p>
+              <p class="text-xs text-gray-700 mt-1 uppercase font-sans-bold relative z-10">Espectacular brillo arcoíris metálico.</p>
             </div>
 
           </div>
@@ -307,7 +307,7 @@
         <!-- Laminado protector -->
         <div class="mb-6">
           <h3 class="text-lg font-black text-black uppercase mb-3 bg-black text-white inline-block px-3 py-1">2. Laminado Protector:</h3>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 font-sans-bold">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-sans-bold">
             
             <div onclick="selectLaminated('ninguno', 0)" id="lam-ninguno" class="border-4 border-black p-4 bg-white cursor-pointer select-none relative">
               <div class="absolute -top-4 -right-4 bg-[#FF2E93] text-white border-4 border-black font-black px-3 py-1 text-xs uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✅ ELEGIDO</div>
@@ -334,7 +334,7 @@
         </div>
 
         <div class="mt-8 flex justify-between">
-          <button onclick="goToStep(1)" class="bg-white text-black font-black px-5 py-2.5 border-4 border-black shadow-comic-black flex items-center gap-2 uppercase text-sm font-sans-bold font-sans-bold font-sans-bold">
+          <button onclick="goToStep(1)" class="bg-white text-black font-black px-5 py-2.5 border-4 border-black shadow-comic-black flex items-center gap-2 uppercase text-sm font-sans-bold">
             <i data-lucide="arrow-left" class="w-5 h-5"></i> Atrás
           </button>
           <button onclick="goToStep(3)" class="bg-[#FFE100] text-black font-comic text-2xl px-8 py-3.5 border-4 border-black shadow-comic-black flex items-center gap-2 uppercase">
@@ -376,6 +376,69 @@
             <textarea id="input-extra" placeholder="Ej. MATERIA: ESPAÑOL" class="w-full border-4 border-black px-4 py-3 font-black text-sm uppercase bg-yellow-50 focus:bg-white outline-none h-24 resize-none"></textarea>
           </div>
 
+          <!-- SECCIÓN: AGREGA MÁS PIEZAS INDIVIDUALES (EN PASO 3) -->
+          <div class="border-4 border-black p-4 bg-yellow-50 relative mt-6 shadow-comic-sm">
+            <div class="absolute -top-3.5 left-4 bg-[#FF2E93] text-white text-xs font-black px-3 py-1.5 uppercase rotate-[-1deg] border-2 border-black shadow-comic-sm">
+              ➕ AGREGA MÁS PIEZAS INDIVIDUALES
+            </div>
+            
+            <p class="text-xs font-black text-gray-700 mt-3 mb-4 uppercase tracking-wider leading-snug">
+              ¿Quieres agregar etiquetas sueltas adicionales de cualquier tamaño a tu paquete? ¡Súmalas aquí al instante!
+            </p>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 font-sans-bold">
+              
+              <!-- Lápiz Extra -->
+              <div class="bg-white border-2 border-black p-2 flex flex-col items-center justify-between text-center">
+                <span class="text-[9px] font-black bg-[#FF2E93] text-white px-2 py-0.5 border border-black mb-1">5 x 1 cm</span>
+                <span class="text-xs font-black text-black">Lápiz</span>
+                <span class="text-xs font-black text-[#FF2E93] mt-0.5">$3.00 c/u</span>
+                <div class="flex items-center mt-2 gap-1">
+                  <button type="button" onclick="adjustQty('lapiz', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">-</button>
+                  <input type="number" id="qty-lapiz-step3" value="0" min="0" onchange="syncQty('lapiz', this.value)" class="w-10 text-center border-2 border-black text-xs font-black py-0.5">
+                  <button type="button" onclick="adjustQty('lapiz', 5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">+</button>
+                </div>
+              </div>
+
+              <!-- Círculo Extra -->
+              <div class="bg-white border-2 border-black p-2 flex flex-col items-center justify-between text-center">
+                <span class="text-[9px] font-black bg-[#00D4FF] text-black px-2 py-0.5 border border-black mb-1">Ø 5 cm</span>
+                <span class="text-xs font-black text-black">Círculo</span>
+                <span class="text-xs font-black text-[#FF2E93] mt-0.5">$5.00 c/u</span>
+                <div class="flex items-center mt-2 gap-1">
+                  <button type="button" onclick="adjustQty('circulo', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">-</button>
+                  <input type="number" id="qty-circulo-step3" value="0" min="0" onchange="syncQty('circulo', this.value)" class="w-10 text-center border-2 border-black text-xs font-black py-0.5">
+                  <button type="button" onclick="adjustQty('circulo', 5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">+</button>
+                </div>
+              </div>
+
+              <!-- Cuaderno Extra -->
+              <div class="bg-white border-2 border-black p-2 flex flex-col items-center justify-between text-center">
+                <span class="text-[9px] font-black bg-[#FFE100] text-black px-2 py-0.5 border border-black mb-1">4 x 3 cm</span>
+                <span class="text-xs font-black text-black">Cuaderno</span>
+                <span class="text-xs font-black text-[#FF2E93] mt-0.5">$4.00 c/u</span>
+                <div class="flex items-center mt-2 gap-1">
+                  <button type="button" onclick="adjustQty('cuaderno', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">-</button>
+                  <input type="number" id="qty-cuaderno-step3" value="0" min="0" onchange="syncQty('cuaderno', this.value)" class="w-10 text-center border-2 border-black text-xs font-black py-0.5">
+                  <button type="button" onclick="adjustQty('cuaderno', 5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">+</button>
+                </div>
+              </div>
+
+              <!-- Libro Extra -->
+              <div class="bg-white border-2 border-black p-2 flex flex-col items-center justify-between text-center">
+                <span class="text-[9px] font-black bg-[#A55EEA] text-white px-2 py-0.5 border border-black mb-1">7 x 5 cm</span>
+                <span class="text-xs font-black text-black">Libro</span>
+                <span class="text-xs font-black text-[#FF2E93] mt-0.5">$6.00 c/u</span>
+                <div class="flex items-center mt-2 gap-1">
+                  <button type="button" onclick="adjustQty('libro', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">-</button>
+                  <input type="number" id="qty-libro-step3" value="0" min="0" onchange="syncQty('libro', this.value)" class="w-10 text-center border-2 border-black text-xs font-black py-0.5">
+                  <button type="button" onclick="adjustQty('libro', 5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">+</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
         </div>
 
         <div class="mt-8 flex justify-between">
@@ -395,15 +458,17 @@
         </h2>
         <p class="text-sm font-black text-gray-600 uppercase mb-4">Selecciona una página del catálogo y haz clic directamente sobre la etiqueta que más te guste para aplicarla.</p>
 
-        <!-- CAJA DE DISEÑO PERSONALIZADO (NO ENCUENTRA LO QUE BUSCA) -->
-        <div class="bg-cyan-100 p-4 border-4 border-black mb-6 shadow-comic-sm font-sans-bold">
-          <h3 class="font-black text-black uppercase text-lg mb-1">🤔 ¿NO ENCUENTRAS TU TEMA?</h3>
-          <p class="text-xs font-bold text-gray-700 uppercase mb-3 leading-tight">
-            PUEDES PEDIR EL TEMA QUE QUIERAS. SE TE HARÁ <span class="text-[#FF2E93] font-black">1 PROPUESTA CON 1 CAMBIO</span>. TODO CAMBIO EXTRA DE DISEÑO TENDRÁ COSTO ADICIONAL.
+        <!-- CAJA DE DISEÑO PERSONALIZADO (¿NO ENCUENTRAS TU TEMA? CON MÁS CONTRASTE Y VISIBILIDAD) -->
+        <div class="bg-[#00D4FF] p-5 border-4 border-black mb-6 shadow-comic-black relative rounded-none">
+          <div class="absolute -top-4 -left-2 bg-[#FF2E93] text-white text-xs font-black px-3 py-1 border-2 border-black rotate-[-2deg] uppercase shadow-comic-sm">
+            💥 ¿NO ENCUENTRAS TU TEMA?
+          </div>
+          <p class="text-xs font-black text-black uppercase mb-3 leading-tight mt-1">
+            ¡Dinos qué tema buscas y lo diseñamos para ti! Se te hará <span class="text-[#FF2E93] font-black bg-white px-1.5 py-0.5 border border-black">1 propuesta con 1 cambio</span>. Todo ajuste o cambio de diseño extra tendrá costo adicional.
           </p>
           <div class="flex flex-col sm:flex-row gap-2">
-            <input type="text" id="input-custom-theme" placeholder="Ej. Roblox con fondo azul..." class="flex-grow border-4 border-black px-3 py-2 font-black text-sm uppercase outline-none focus:bg-white bg-white/80">
-            <button onclick="applyCustomTheme()" class="bg-black text-[#FFE100] font-black uppercase px-4 py-2 border-2 border-black hover:bg-gray-800 transition-colors whitespace-nowrap">
+            <input type="text" id="input-custom-theme" placeholder="Ej. Star Wars con fondo oscuro..." class="flex-grow border-4 border-black px-3 py-2 font-black text-sm uppercase outline-none focus:bg-white bg-white">
+            <button onclick="applyCustomTheme()" class="bg-black text-[#FFE100] font-black uppercase px-6 py-2 border-4 border-black hover:bg-slate-800 transition-colors whitespace-nowrap shadow-comic-sm text-sm">
               Aplicar Tema
             </button>
           </div>
@@ -425,35 +490,54 @@
           </div>
         </div>
 
-        <div class="relative border-8 border-black bg-black mx-auto overflow-hidden shadow-comic-black select-none max-w-lg">
+        <!-- VISUALIZADOR INTERACTIVO (Ajustado dinámicamente al ancho del celular) -->
+        <div class="relative border-8 border-black bg-neutral-900 mx-auto overflow-hidden shadow-comic-black select-none w-full max-w-md aspect-[3/4]">
           <!-- Cargador Dinámico con Auto-Extensión Fallback -->
-          <img id="active-catalog-img" src="1.png" class="w-full h-auto block" alt="Página de Catálogo Fosfo Kids" onerror="handleImageError(this)">
+          <img id="active-catalog-img" src="1.png" class="w-full h-full block object-fill" alt="Página de Catálogo Fosfo Kids" onerror="handleImageError(this)">
           
           <div class="absolute top-[17%] bottom-[8%] left-[9%] right-[9%] grid grid-cols-3 grid-rows-5 gap-[1.5%]">
-            <!-- Celdas Interactivas Sólidas -->
-            <button onclick="selectGridDesign(1, 1, 1)" id="cell-1" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/80 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-1">#1</span></button>
-            <button onclick="selectGridDesign(2, 1, 2)" id="cell-2" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/80 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-2">#2</span></button>
-            <button onclick="selectGridDesign(3, 1, 3)" id="cell-3" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/80 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-3">#3</span></button>
+            <!-- Celdas Interactivas Sólidas con números sutiles en la esquina superior izquierda -->
+            <button onclick="selectGridDesign(1, 1, 1)" id="cell-1" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
+              <span class="absolute top-1 left-1 bg-black/85 text-white text-[9px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-1">#1</span>
+            </button>
+            <button onclick="selectGridDesign(2, 1, 2)" id="cell-2" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
+              <span class="absolute top-1 left-1 bg-black/85 text-white text-[9px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-2">#2</span>
+            </button>
+            <button onclick="selectGridDesign(3, 1, 3)" id="cell-3" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
+              <span class="absolute top-1 left-1 bg-black/85 text-white text-[9px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-3">#3</span>
+            </button>
             
-            <button onclick="selectGridDesign(4, 2, 1)" id="cell-4" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/80 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-4">#4</span></button>
-            <button onclick="selectGridDesign(5, 2, 2)" id="cell-5" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/80 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-5">#5</span></button>
-            <button onclick="selectGridDesign(6, 2, 3)" id="cell-6" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/80 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-6">#6</span></button>
+            <button onclick="selectGridDesign(4, 2, 1)" id="cell-4" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
+              <span class="absolute top-1 left-1 bg-black/85 text-white text-[9px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-4">#4</span>
+            </button>
+            <button onclick="selectGridDesign(5, 2, 2)" id="cell-5" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
+              <span class="absolute top-1 left-1 bg-black/85 text-white text-[9px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-5">#5</span>
+            </button>
+            <button onclick="selectGridDesign(6, 2, 3)" id="cell-6" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
+              <span class="absolute top-1 left-1 bg-black/85 text-white text-[9px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-6">#6</span>
+            </button>
             
-            <button onclick="selectGridDesign(7, 3, 1)" id="cell-7" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/80 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-7">#7</span></button>
-            <button onclick="selectGridDesign(8, 3, 2)" id="cell-8" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/80 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-8">#8</span></button>
-            <button onclick="selectGridDesign(9, 3, 3)" id="cell-9" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/80 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-9">#9</span></button>
+            <button onclick="selectGridDesign(7, 3, 1)" id="cell-7" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
+              <span class="absolute top-1 left-1 bg-black/85 text-white text-[9px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-7">#7</span>
+            </button>
+            <button onclick="selectGridDesign(8, 3, 2)" id="cell-8" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
+              <span class="absolute top-1 left-1 bg-black/85 text-white text-[9px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-8">#8</span>
+            </button>
+            <button onclick="selectGridDesign(9, 3, 3)" id="cell-9" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
+              <span class="absolute top-1 left-1 bg-black/85 text-white text-[9px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-9">#9</span>
+            </button>
             
-            <button onclick="selectGridDesign(10, 4, 1)" id="cell-10" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/80 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-10">#10</span></button>
-            <button onclick="selectGridDesign(11, 4, 2)" id="cell-11" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/80 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-11">#11</span></button>
-            <button onclick="selectGridDesign(12, 4, 3)" id="cell-12" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/80 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-12">#12</span></button>
+            <button onclick="selectGridDesign(10, 4, 1)" id="cell-10" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/85 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-10">#10</span></button>
+            <button onclick="selectGridDesign(11, 4, 2)" id="cell-11" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/85 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-11">#11</span></button>
+            <button onclick="selectGridDesign(12, 4, 3)" id="cell-12" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/85 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-12">#12</span></button>
             
-            <button onclick="selectGridDesign(13, 5, 1)" id="cell-13" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/80 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-13">#13</span></button>
-            <button onclick="selectGridDesign(14, 5, 2)" id="cell-14" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/80 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-14">#14</span></button>
-            <button onclick="selectGridDesign(15, 5, 3)" id="cell-15" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/80 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-15">#15</span></button>
+            <button onclick="selectGridDesign(13, 5, 1)" id="cell-13" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/85 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-13">#13</span></button>
+            <button onclick="selectGridDesign(14, 5, 2)" id="cell-14" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/85 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-14">#14</span></button>
+            <button onclick="selectGridDesign(15, 5, 3)" id="cell-15" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/85 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-15">#15</span></button>
           </div>
         </div>
 
-        <div class="mt-4 p-4 border-4 border-black bg-slate-100 flex items-center gap-4 shadow-comic-sm font-sans-bold font-sans-bold">
+        <div class="mt-4 p-4 border-4 border-black bg-slate-100 flex items-center gap-4 shadow-comic-sm font-sans-bold">
           <div class="w-16 h-12 bg-black text-[#FFE100] flex items-center justify-center text-3xl border-2 border-black rounded shadow-comic-sm shrink-0">
             🏷️
           </div>
@@ -464,7 +548,7 @@
           </div>
         </div>
 
-        <div class="mt-8 flex justify-between font-sans-bold font-sans-bold font-sans-bold">
+        <div class="mt-8 flex justify-between font-sans-bold">
           <button onclick="goToStep(3)" class="bg-white text-black font-black px-5 py-2.5 border-4 border-black shadow-comic-black flex items-center gap-2 uppercase text-sm">
             <i data-lucide="arrow-left" class="w-5 h-5"></i> Atrás
           </button>
@@ -488,7 +572,7 @@
           </div>
           
           <div class="text-center pb-4 border-b-4 border-black mt-2">
-            <span class="font-comic text-4xl text-black uppercase tracking-wide font-comic">TICKET DE PEDIDO</span>
+            <span class="font-comic text-4xl text-black uppercase tracking-wide">TICKET DE PEDIDO</span>
             <p class="text-xs font-black text-black uppercase mt-1 font-sans-bold">FOSFO KIDS • DISEÑOS QUE INSPIRAN 2026</p>
           </div>
 
@@ -592,25 +676,7 @@
     let activePage = 1;
     let activeDesignIndex = 1;
 
-    // === DETECTOR DE CARGA AUTO-CURATIVO ===
-    const EXTENSIONS = ['.png', '.PNG', '.jpg', '.JPG', '.jpeg', '.JPEG'];
-    let imgErrorCount = 0;
-
-    function handleImageError(imgElement) {
-      imgErrorCount++;
-      if (imgErrorCount < EXTENSIONS.length) {
-        const nextExt = EXTENSIONS[imgErrorCount];
-        const newSrc = `${activePage}${nextExt}`;
-        console.log(`Error de carga en página ${activePage}. Intentando de inmediato con extensión: ${nextExt}`);
-        imgElement.src = newSrc;
-      } else {
-        // En caso extremo de que no existan, muestra un aviso claro de apoyo
-        imgElement.src = 'https://placehold.co/600x800/000000/ffffff?text=Fosfo+Kids+2026';
-        showToast("⚠️ Nota: No pudimos cargar el fondo gráfico de la página. Asegúrate de haber subido los archivos '1.png' a '9.png' en la misma carpeta que tu 'index.html'.", "warning");
-      }
-    }
-
-    // === LINKS DIRECTOS CONFIGURADOS CON AUTO-FALLBACK ===
+    // === LINKS DIRECTOS DE TUS CATÁLOGOS ===
     const CATALOG_IMAGES = {
       1: "1.png", 
       2: "2.png",
@@ -801,6 +867,25 @@
       }
     };
 
+    // === DETECTOR DE CARGA AUTO-CURATIVO ===
+    const EXTENSIONS = ['.png', '.PNG', '.jpg', '.JPG', '.jpeg', '.JPEG'];
+    let imgErrorCount = 0;
+
+    function handleImageError(imgElement) {
+      imgErrorCount++;
+      if (imgErrorCount < EXTENSIONS.length) {
+        const nextExt = EXTENSIONS[imgErrorCount];
+        const newSrc = `${activePage}${nextExt}`;
+        console.log(`Error de carga en página ${activePage}. Intentando de inmediato con extensión: ${nextExt}`);
+        imgElement.src = newSrc;
+      } else {
+        // En caso extremo de que no existan, muestra un aviso claro de apoyo
+        imgElement.src = 'https://placehold.co/600x800/000000/ffffff?text=Fosfo+Kids+2026';
+        imgElement.onerror = null; // Detener reintentos infinitos
+        showToast("⚠️ Nota: No pudimos cargar el fondo gráfico de la página. Asegúrate de haber subido los archivos '1.png' a '9.png' en la misma carpeta que tu 'index.html'.", "warning");
+      }
+    }
+
     function changeCatalogPage(pageNum) {
       activePage = pageNum;
       imgErrorCount = 0; // Reiniciar contador de reintentos para la nueva página
@@ -823,7 +908,7 @@
 
       const cells = document.querySelectorAll('.catalog-cell');
       cells.forEach(cell => {
-        cell.className = "catalog-cell border-4 border-transparent hover:border-white/90 rounded transition-all relative group cursor-pointer flex flex-col justify-end p-1";
+        cell.className = "catalog-cell border-4 border-transparent hover:border-white/90 rounded transition-all relative group cursor-pointer";
       });
 
       const currentPageMapping = catalogMapping[activePage];
@@ -831,7 +916,7 @@
         Object.keys(currentPageMapping).forEach(cellIndex => {
           const designInfo = currentPageMapping[cellIndex];
           const labelEl = document.getElementById(`cell-label-${cellIndex}`);
-          if (labelEl) labelEl.innerText = `#${designInfo.id} ${designInfo.name.split(' ')[0]}`;
+          if (labelEl) labelEl.innerText = `#${designInfo.id}`;
 
           if (designInfo.id === activeDesignIndex) {
             const cellEl = document.getElementById(`cell-${cellIndex}`);
@@ -907,6 +992,7 @@
       }
     }
 
+    // Navegación entre pasos con Scroll Automático suave hacia arriba
     function goToStep(step) {
       if (step > currentStep && step > 3) {
         const clientNameInput = document.getElementById('input-client-name');
@@ -941,6 +1027,9 @@
       
       currentStep = step;
       
+      // Auto scroll suave hasta arriba de la página
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
       if (step === 5) {
         updateTicketData();
       }
@@ -968,14 +1057,28 @@
       }
     }
 
+    // Sincronizar cantidades de inputs entre Paso 1 y Paso 3
+    function syncQty(type, value) {
+      let val = parseInt(value) || 0;
+      if (val < 0) val = 0;
+      
+      const input1 = document.getElementById(`qty-${type}`);
+      const input3 = document.getElementById(`qty-${type}-step3`);
+      
+      if (input1) input1.value = val;
+      if (input3) input3.value = val;
+      
+      calculatePrice();
+    }
+
     function adjustQty(type, amount) {
       const input = document.getElementById(`qty-${type}`);
       if (input) {
         let currentVal = parseInt(input.value) || 0;
         let newVal = currentVal + amount;
         if (newVal < 0) newVal = 0;
-        input.value = newVal;
-        calculatePrice();
+        
+        syncQty(type, newVal);
       }
     }
 
@@ -1024,7 +1127,7 @@
       if (cardChico) cardChico.classList.remove('selected-card');
       if (cardGrande) cardGrande.classList.remove('selected-card');
       if (badgeChico) badgeChico.classList.add('hidden');
-      if (badgeGrande) badgeGrande.classList.remove('hidden');
+      if (badgeGrande) badgeGrande.classList.add('hidden');
 
       if (pkg === 'chico') {
         if (cardChico) cardChico.classList.add('selected-card');
@@ -1066,14 +1169,20 @@
       calculatePrice();
     }
 
+    // Lógica mejorada: si no se activa modo individual, los inputs sueltos se suman como piezas extra
     function calculatePrice() {
-      if (selectedPackage === 'individual') {
-        const qtyLapiz = document.getElementById('qty-lapiz') ? parseInt(document.getElementById('qty-lapiz').value) || 0 : 0;
-        const qtyCirculo = document.getElementById('qty-circulo') ? parseInt(document.getElementById('qty-circulo').value) || 0 : 0;
-        const qtyCuaderno = document.getElementById('qty-cuaderno') ? parseInt(document.getElementById('qty-cuaderno').value) || 0 : 0;
-        const qtyLibro = document.getElementById('qty-libro') ? parseInt(document.getElementById('qty-libro').value) || 0 : 0;
+      const qtyLapiz = document.getElementById('qty-lapiz') ? parseInt(document.getElementById('qty-lapiz').value) || 0 : 0;
+      const qtyCirculo = document.getElementById('qty-circulo') ? parseInt(document.getElementById('qty-circulo').value) || 0 : 0;
+      const qtyCuaderno = document.getElementById('qty-cuaderno') ? parseInt(document.getElementById('qty-cuaderno').value) || 0 : 0;
+      const qtyLibro = document.getElementById('qty-libro') ? parseInt(document.getElementById('qty-libro').value) || 0 : 0;
 
+      if (selectedPackage === 'individual') {
         basePrice = (qtyLapiz * 3) + (qtyCirculo * 5) + (qtyCuaderno * 4) + (qtyLibro * 6);
+      } else {
+        // Paquete Chico/Grande seleccionado más las piezas adicionales
+        const packagePrice = selectedPackage === 'chico' ? 260 : 340;
+        const extraPrice = (qtyLapiz * 3) + (qtyCirculo * 5) + (qtyCuaderno * 4) + (qtyLibro * 6);
+        basePrice = packagePrice + extraPrice;
       }
     }
 
@@ -1086,14 +1195,23 @@
       if (ticketClientNameEl) ticketClientNameEl.innerText = clientNameDisplay.toUpperCase();
 
       let pkgText = '';
-      if (selectedPackage === 'chico') pkgText = 'PAQUETE CHICO (72 PZAS)';
-      else if (selectedPackage === 'grande') pkgText = 'PAQUETE GRANDE (120 PZAS)';
-      else {
-        const qtyLapiz = document.getElementById('qty-lapiz') ? document.getElementById('qty-lapiz').value : 0;
-        const qtyCirculo = document.getElementById('qty-circulo') ? document.getElementById('qty-circulo').value : 0;
-        const qtyCuaderno = document.getElementById('qty-cuaderno') ? document.getElementById('qty-cuaderno').value : 0;
-        const qtyLibro = document.getElementById('qty-libro') ? document.getElementById('qty-libro').value : 0;
-        pkgText = `SET PERSONALIZADO (${qtyLapiz} Lápices, ${qtyCirculo} Círculos, ${qtyCuaderno} Cuadernos, ${qtyLibro} Libros)`;
+      const qtyLapiz = document.getElementById('qty-lapiz') ? parseInt(document.getElementById('qty-lapiz').value) || 0 : 0;
+      const qtyCirculo = document.getElementById('qty-circulo') ? parseInt(document.getElementById('qty-circulo').value) || 0 : 0;
+      const qtyCuaderno = document.getElementById('qty-cuaderno') ? parseInt(document.getElementById('qty-cuaderno').value) || 0 : 0;
+      const qtyLibro = document.getElementById('qty-libro') ? parseInt(document.getElementById('qty-libro').value) || 0 : 0;
+
+      if (selectedPackage === 'chico') {
+        pkgText = 'PAQUETE CHICO (72 PZAS)';
+        if (qtyLapiz || qtyCirculo || qtyCuaderno || qtyLibro) {
+          pkgText += ` + EXTRA (${qtyLapiz} Lap, ${qtyCirculo} Cir, ${qtyCuaderno} Cuad, ${qtyLibro} Lib)`;
+        }
+      } else if (selectedPackage === 'grande') {
+        pkgText = 'PAQUETE GRANDE (120 PZAS)';
+        if (qtyLapiz || qtyCirculo || qtyCuaderno || qtyLibro) {
+          pkgText += ` + EXTRA (${qtyLapiz} Lap, ${qtyCirculo} Cir, ${qtyCuaderno} Cuad, ${qtyLibro} Lib)`;
+        }
+      } else {
+        pkgText = `ARMADO INDIVIDUAL (${qtyLapiz} Lápices, ${qtyCirculo} Círculos, ${qtyCuaderno} Cuadernos, ${qtyLibro} Libros)`;
       }
       const ticketPackageEl = document.getElementById('ticket-package');
       if (ticketPackageEl) ticketPackageEl.innerText = pkgText;
@@ -1159,7 +1277,7 @@
       if (ticketTotalEl) ticketTotalEl.innerText = `$${totalSum.toFixed(2)} MXN`;
     }
 
-    // LÓGICA DE CAPTURA SEGURA QUE EVITA EL BUG DEL SISTEMA DE ARCHIVOS EN MÓVILES
+    // Captura segura adaptada para carrete de celular
     function captureOrder() {
       const ticketElement = document.getElementById('ticket-capture');
       if (!ticketElement) return;
@@ -1176,7 +1294,7 @@
       html2canvas(ticketElement, options).then(canvas => {
         const imgData = canvas.toDataURL('image/png');
         
-        // MOSTRAR VENTANA MODAL PARA QUE EL CLIENTE GUARDE EN SU CARRETE DIRECTAMENTE (iOS / Android Friendly)
+        // MOSTRAR VENTANA MODAL PARA GUARDADO MANUAL DIRECTO EN CARRETE
         const modal = document.getElementById('save-modal');
         const modalImg = document.getElementById('modal-captured-img');
         if (modal && modalImg) {
@@ -1184,7 +1302,7 @@
           modal.classList.remove('hidden');
           modal.classList.add('flex');
           
-          // Además intentamos forzar la descarga de respaldo
+          // Forzar descarga de respaldo en descargas generales
           const link = document.createElement('a');
           link.download = `Pedido_FosfoKids.png`;
           link.href = imgData;
