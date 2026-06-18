@@ -48,7 +48,7 @@
       box-shadow: 0 0 15px rgba(255, 46, 147, 0.8) !important;
     }
 
-    /* SUPER CONTRASTE PARA MATERIALES Y LAMINADOS */
+    /* SUPER CONTRASTE PARA MATERIALES Y LAMINADOS SELECCIONADOS */
     .selected-card {
       border: 6px solid #FF2E93 !important;
       background-color: #FFE100 !important;
@@ -90,9 +90,6 @@
         </h1>
       </div>
       <div class="flex flex-col items-center md:items-end">
-        <div class="bg-[#00D4FF] border-4 border-black px-4 py-2 font-black text-sm uppercase shadow-comic-black rotate-[1deg]">
-          ⏰ LISTO EN 1 DÍA HÁBIL
-        </div>
         <p class="text-xs font-black uppercase text-gray-800 mt-2">Catálogo Oficial 2026</p>
       </div>
     </div>
@@ -186,7 +183,7 @@
           
           <div class="flex items-center gap-3 mb-4 bg-white p-3 border-2 border-black">
             <input type="checkbox" id="check-individual" onchange="toggleIndividualMode()" class="w-6 h-6 border-2 border-black rounded-none cursor-pointer accent-[#FF2E93]">
-            <label for="check-individual" class="text-sm font-black cursor-pointer text-black uppercase select-none">Activar cálculo por pieza individual</label>
+            <label for="check-individual" class="text-sm font-black cursor-pointer text-black uppercase select-none font-sans-bold">Activar cálculo por pieza individual</label>
           </div>
 
           <div id="individual-selectors" class="grid grid-cols-2 sm:grid-cols-4 gap-4 opacity-30 pointer-events-none transition-all duration-300 font-sans-bold">
@@ -255,32 +252,32 @@
             <div onclick="selectMaterial('vinil_blanco_brillante', 0)" id="mat-vinil_blanco_brillante" class="border-4 border-black p-4 bg-white cursor-pointer select-none relative">
               <div class="absolute -top-4 -right-4 bg-[#00D4FF] text-black border-4 border-black font-black px-3 py-1 text-xs uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✅ ELEGIDO</div>
               <div class="flex justify-between items-center mb-2">
-                <span class="font-black text-xs uppercase bg-[#00D4FF] text-black px-2 py-0.5 border border-black font-sans-bold">Estándar</span>
-                <span class="font-black text-xs text-green-600 uppercase font-sans-bold">Sin costo extra</span>
+                <span class="font-black text-xs uppercase bg-[#00D4FF] text-black px-2 py-0.5 border border-black font-sans-bold font-sans-bold">Estándar</span>
+                <span class="font-black text-xs text-green-600 uppercase font-sans-bold font-sans-bold">Sin costo extra</span>
               </div>
               <h4 class="font-black text-base text-black uppercase">Vinil Blanco Brillante</h4>
-              <p class="text-xs text-gray-700 mt-1 uppercase font-sans-bold">Excelente brillo y viveza de color para todo.</p>
+              <p class="text-xs text-gray-700 mt-1 uppercase font-sans-bold font-sans-bold">Excelente brillo y viveza de color para todo.</p>
             </div>
 
             <div onclick="selectMaterial('vinil_blanco_mate', 0)" id="mat-vinil_blanco_mate" class="border-4 border-black p-4 bg-white cursor-pointer select-none relative">
               <div class="absolute -top-4 -right-4 bg-[#00D4FF] text-black border-4 border-black font-black px-3 py-1 text-xs uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✅ ELEGIDO</div>
               <div class="flex justify-between items-center mb-2">
-                <span class="font-black text-xs uppercase bg-gray-200 text-black px-2 py-0.5 border border-black font-sans-bold">Estándar</span>
-                <span class="font-black text-xs text-green-600 uppercase font-sans-bold">Sin costo extra</span>
+                <span class="font-black text-xs uppercase bg-gray-200 text-black px-2 py-0.5 border border-black font-sans-bold font-sans-bold">Estándar</span>
+                <span class="font-black text-xs text-green-600 uppercase font-sans-bold font-sans-bold">Sin costo extra</span>
               </div>
               <h4 class="font-black text-base text-black uppercase">Vinil Blanco Mate</h4>
-              <p class="text-xs text-gray-700 mt-1 uppercase font-sans-bold">Acabado antirreflejo suave y muy elegante.</p>
+              <p class="text-xs text-gray-700 mt-1 uppercase font-sans-bold font-sans-bold">Acabado antirreflejo suave y muy elegante.</p>
             </div>
 
             <div onclick="selectMaterial('vinil_holografico', 75)" id="mat-vinil_holografico" class="border-4 border-black p-4 bg-white cursor-pointer select-none relative overflow-hidden">
               <div class="absolute -top-4 -right-4 bg-[#00D4FF] text-black border-4 border-black font-black px-3 py-1 text-xs uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✅ ELEGIDO</div>
               <div class="absolute inset-0 bg-gradient-to-tr from-pink-300 via-cyan-200 to-yellow-200 opacity-25 pointer-events-none text-xs"></div>
               <div class="flex justify-between items-center mb-2 relative z-10">
-                <span class="font-black text-xs uppercase bg-[#FF2E93] text-white px-2 py-0.5 border border-black font-sans-bold">Premium ⭐</span>
-                <span class="font-black text-xs text-red-600 font-sans-bold">+$75.00 MXN</span>
+                <span class="font-black text-xs uppercase bg-[#FF2E93] text-white px-2 py-0.5 border border-black font-sans-bold font-sans-bold">Premium ⭐</span>
+                <span class="font-black text-xs text-red-600 font-sans-bold font-sans-bold">+$75.00 MXN</span>
               </div>
               <h4 class="font-black text-base text-black uppercase relative z-10">Vinil Holográfico</h4>
-              <p class="text-xs text-gray-700 mt-1 uppercase font-sans-bold relative z-10">Espectacular brillo arcoíris metálico.</p>
+              <p class="text-xs text-gray-700 mt-1 uppercase font-sans-bold relative z-10 font-sans-bold">Espectacular brillo arcoíris metálico.</p>
             </div>
 
           </div>
@@ -316,7 +313,7 @@
         </div>
 
         <div class="mt-8 flex justify-between">
-          <button onclick="goToStep(1)" class="bg-white text-black font-black px-5 py-2.5 border-4 border-black shadow-comic-black flex items-center gap-2 uppercase text-sm font-sans-bold">
+          <button onclick="goToStep(1)" class="bg-white text-black font-black px-5 py-2.5 border-4 border-black shadow-comic-black flex items-center gap-2 uppercase text-sm font-sans-bold font-sans-bold">
             <i data-lucide="arrow-left" class="w-5 h-5"></i> Atrás
           </button>
           <button onclick="goToStep(3)" class="bg-[#FFE100] text-black font-comic text-2xl px-8 py-3.5 border-4 border-black shadow-comic-black flex items-center gap-2 uppercase">
@@ -377,6 +374,20 @@
         </h2>
         <p class="text-sm font-black text-gray-600 uppercase mb-4">Selecciona una página del catálogo y haz clic directamente sobre la etiqueta que más te guste para aplicarla.</p>
 
+        <!-- CAJA DE DISEÑO PERSONALIZADO (NO ENCUENTRA LO QUE BUSCA) -->
+        <div class="bg-cyan-100 p-4 border-4 border-black mb-6 shadow-comic-sm font-sans-bold">
+          <h3 class="font-black text-black uppercase text-lg mb-1">🤔 ¿NO ENCUENTRAS TU TEMA?</h3>
+          <p class="text-xs font-bold text-gray-700 uppercase mb-3 leading-tight">
+            PUEDES PEDIR EL TEMA QUE QUIERAS. SE TE HARÁ <span class="text-[#FF2E93] font-black">1 PROPUESTA CON 1 CAMBIO</span>. TODO CAMBIO EXTRA DE DISEÑO TENDRÁ COSTO ADICIONAL.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-2">
+            <input type="text" id="input-custom-theme" placeholder="Ej. Roblox con fondo azul..." class="flex-grow border-4 border-black px-3 py-2 font-black text-sm uppercase outline-none focus:bg-white bg-white/80">
+            <button onclick="applyCustomTheme()" class="bg-black text-[#FFE100] font-black uppercase px-4 py-2 border-2 border-black hover:bg-gray-800 transition-colors whitespace-nowrap">
+              Aplicar Tema
+            </button>
+          </div>
+        </div>
+
         <!-- Selector de Páginas del Catálogo -->
         <div class="bg-black p-3 border-4 border-black mb-6 flex flex-col gap-2 shadow-comic-black">
           <span class="text-xs font-black text-white uppercase tracking-wider text-center">📖 Selecciona la Página del Catálogo:</span>
@@ -394,10 +405,11 @@
         </div>
 
         <div class="relative border-8 border-black bg-black mx-auto overflow-hidden shadow-comic-black select-none max-w-lg">
-          <img id="active-catalog-img" src="1.png" class="w-full h-auto block" alt="Página de Catálogo Fosfo Kids" onerror="this.src='https://placehold.co/600x800/000000/ffffff?text=Fosfo+Kids+2026'">
+          <!-- Cargador Dinámico con Auto-Extensión Fallback -->
+          <img id="active-catalog-img" src="1.png" class="w-full h-auto block" alt="Página de Catálogo Fosfo Kids" onerror="handleImageError(this)">
           
           <div class="absolute top-[17%] bottom-[8%] left-[9%] right-[9%] grid grid-cols-3 grid-rows-5 gap-[1.5%]">
-            <!-- Renderizado JS Dinámico de las Celdas -->
+            <!-- Celdas Interactivas Sólidas -->
             <button onclick="selectGridDesign(1, 1, 1)" id="cell-1" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/80 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-1">#1</span></button>
             <button onclick="selectGridDesign(2, 1, 2)" id="cell-2" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/80 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-2">#2</span></button>
             <button onclick="selectGridDesign(3, 1, 3)" id="cell-3" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/80 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-3">#3</span></button>
@@ -420,7 +432,18 @@
           </div>
         </div>
 
-        <div class="mt-8 flex justify-between font-sans-bold">
+        <div class="mt-4 p-4 border-4 border-black bg-slate-100 flex items-center gap-4 shadow-comic-sm font-sans-bold font-sans-bold">
+          <div class="w-16 h-12 bg-black text-[#FFE100] flex items-center justify-center text-3xl border-2 border-black rounded shadow-comic-sm shrink-0">
+            🏷️
+          </div>
+          <div>
+            <p class="text-xs font-black text-gray-500 uppercase tracking-widest">Diseño seleccionado:</p>
+            <p class="font-black text-base text-black uppercase" id="live-design-name">- NINGUNO -</p>
+            <p class="text-xs font-bold text-[#FF2E93] uppercase" id="live-design-coordinates"></p>
+          </div>
+        </div>
+
+        <div class="mt-8 flex justify-between font-sans-bold font-sans-bold">
           <button onclick="goToStep(3)" class="bg-white text-black font-black px-5 py-2.5 border-4 border-black shadow-comic-black flex items-center gap-2 uppercase text-sm">
             <i data-lucide="arrow-left" class="w-5 h-5"></i> Atrás
           </button>
@@ -435,7 +458,7 @@
         <h2 class="font-comic text-4xl mb-1 text-black uppercase">
           🧾 Paso 5: Genera tu Ticket de Pedido
         </h2>
-        <p class="text-sm font-black text-gray-600 uppercase mb-6">Confirma tu información, revisa la vista previa de tu etiqueta y descarga el ticket para enviárselo a tu vendedor.</p>
+        <p class="text-sm font-black text-gray-600 uppercase mb-6">Confirma tu información y descarga el ticket para enviárselo a tu vendedor.</p>
 
         <!-- TICKET ULTRA CONTRASTADO Y ATRACTIVO -->
         <div class="bg-[#FFE100] p-6 border-4 border-black relative" id="ticket-capture">
@@ -444,12 +467,18 @@
           </div>
           
           <div class="text-center pb-4 border-b-4 border-black mt-2">
-            <span class="font-comic text-4xl text-black uppercase tracking-wide">TICKET DE PEDIDO</span>
+            <span class="font-comic text-4xl text-black uppercase tracking-wide font-comic">TICKET DE PEDIDO</span>
             <p class="text-xs font-black text-black uppercase mt-1 font-sans-bold">FOSFO KIDS • DISEÑOS QUE INSPIRAN 2026</p>
           </div>
 
           <div class="py-4 space-y-3 text-sm font-black text-black font-sans-bold">
             
+            <!-- NOTA UBER / DIDI Y PAGO HASTA ARRIBA -->
+            <div class="bg-black text-[#FFE100] p-3 border-4 border-black text-center font-black text-xs uppercase tracking-wider mb-4 shadow-comic-sm">
+              🚨 1 DÍA HÁBIL DESPUÉS DEL PAGO (SI NO HAY PAGO NO SE PROCESA).<br>
+              PROGRAMA TU UBER O DIDI ÚNICAMENTE CUANDO EL VENDEDOR TE DE LUZ VERDE 🟢
+            </div>
+
             <div class="flex justify-between border-b-2 border-black pb-1.5 bg-cyan-100 p-2 border-2 border-black">
               <span class="uppercase text-black">👤 NOMBRE DEL CLIENTE:</span>
               <span class="text-black font-extrabold" id="ticket-client-name">-</span>
@@ -472,27 +501,12 @@
               <span class="text-black" id="ticket-laminado">-</span>
             </div>
 
-            <!-- VISTA PREVIA DEL DISEÑO REAL (Reemplaza al bloque feo de texto) -->
-            <div class="bg-white p-3 border-4 border-black my-5 shadow-comic-sm">
-              <div class="text-[10px] font-black uppercase text-gray-500 tracking-widest border-b border-black pb-1 mb-3 text-center">👀 VISTA PREVIA DE TU ETIQUETA</div>
-              
-              <!-- El cuadro de la etiqueta previsualizada -->
-              <div class="w-full h-40 bg-black relative border-4 border-black rounded-lg overflow-hidden shadow-inner flex flex-col justify-center items-center p-4">
-                <!-- Fondo dinámico extraído del JPG -->
-                <div id="preview-bg-image" class="absolute inset-0 bg-no-repeat" style="filter: brightness(0.4) blur(1px);"></div>
-                
-                <!-- Textos dinámicos que se acomodan según lo que haya -->
-                <div class="relative z-10 w-full text-center flex flex-col items-center justify-center gap-1">
-                  <h3 id="preview-name" class="font-comic text-white leading-tight drop-shadow-[0_3px_3px_rgba(0,0,0,0.9)] uppercase break-words w-full"></h3>
-                  <p id="preview-grade" class="font-sans-bold text-[#FFE100] text-sm drop-shadow-[0_2px_2px_rgba(0,0,0,0.9)] uppercase"></p>
-                  <p id="preview-extra" class="font-sans-bold text-white/90 text-[10px] uppercase tracking-widest mt-1 bg-black/40 px-2 py-0.5 rounded"></p>
-                </div>
-              </div>
-            </div>
-
-            <!-- NOTA UBER / DIDI CON ALTO IMPACTO -->
-            <div class="bg-black text-[#FFE100] p-3 border-4 border-black text-center font-black text-xs uppercase tracking-wider my-3 shadow-comic-sm">
-              🚨 NOTA DE ENTREGA: PUEDES PROGRAMAR TU UBER O DIDI DE ENTREGA ÚNICAMENTE CUANDO EL VENDEDOR TE CONFIRME Y TE DÉ LUZ VERDE 🟢
+            <!-- Bloque Stark de Datos de Impresión -->
+            <div class="bg-white p-4 border-4 border-black my-4 shadow-comic-sm">
+              <div class="text-[10px] font-black uppercase text-gray-500 tracking-widest border-b border-black pb-1 mb-2">🏷️ Datos a Imprimir</div>
+              <div class="text-xl font-black text-black uppercase leading-tight" id="ticket-child-name">- SIN NOMBRE -</div>
+              <div class="text-sm font-black text-[#FF2E93] uppercase mt-1" id="ticket-child-grade">- SIN GRADO -</div>
+              <div class="text-xs font-bold text-gray-700 italic mt-1 uppercase" id="ticket-child-extra">- SIN INFO ADICIONAL -</div>
             </div>
 
             <!-- Desglose de Precios -->
@@ -517,16 +531,6 @@
               </div>
             </div>
           </div>
-
-          <div class="flex flex-col items-center justify-center pt-4 border-t-4 border-black mt-4">
-            <div class="w-full h-10 flex bg-white border-2 border-black px-4 py-1 items-center justify-center">
-              <div class="w-48 h-6 flex gap-1 justify-center">
-                <div class="bg-black w-[3px]"></div><div class="bg-black w-[6px]"></div><div class="bg-black w-[1px]"></div><div class="bg-black w-[4px]"></div><div class="bg-black w-[1px]"></div><div class="bg-black w-[8px]"></div><div class="bg-black w-[2px]"></div><div class="bg-black w-[4px]"></div><div class="bg-black w-[5px]"></div><div class="bg-black w-[2px]"></div><div class="bg-black w-[6px]"></div>
-              </div>
-            </div>
-            <span class="text-[10px] font-black tracking-wider text-black mt-2 uppercase bg-white border-2 border-black px-2 py-0.5 shadow-comic-sm" id="ticket-id">ORDEN-X</span>
-          </div>
-
         </div>
 
         <div class="mt-6 space-y-4 font-sans-bold">
@@ -567,7 +571,25 @@
     let activePage = 1;
     let activeDesignIndex = 1;
 
-    // === LINKS DIRECTOS DE TUS CATÁLOGOS ===
+    // === DETECTOR DE CARGA AUTO-CURATIVO ===
+    const EXTENSIONS = ['.png', '.PNG', '.jpg', '.JPG', '.jpeg', '.JPEG'];
+    let imgErrorCount = 0;
+
+    function handleImageError(imgElement) {
+      imgErrorCount++;
+      if (imgErrorCount < EXTENSIONS.length) {
+        const nextExt = EXTENSIONS[imgErrorCount];
+        const newSrc = `${activePage}${nextExt}`;
+        console.log(`Error de carga en página ${activePage}. Intentando de inmediato con extensión: ${nextExt}`);
+        imgElement.src = newSrc;
+      } else {
+        // En caso extremo de que no existan, muestra un aviso claro de apoyo
+        imgElement.src = 'https://placehold.co/600x800/000000/ffffff?text=Fosfo+Kids+2026';
+        showToast("⚠️ Nota: No pudimos cargar el fondo gráfico de la página. Asegúrate de haber subido los archivos '1.png' a '9.png' en la misma carpeta que tu 'index.html'.", "warning");
+      }
+    }
+
+    // === LINKS DIRECTOS CONFIGURADOS CON AUTO-FALLBACK ===
     const CATALOG_IMAGES = {
       1: "1.png", 
       2: "2.png",
@@ -756,17 +778,17 @@
       } catch (err) {
         console.error("Error init:", err);
       }
-      
-      const randomOrder = 'FOSFO-' + Math.floor(100000 + Math.random() * 900000);
-      const ticketIdEl = document.getElementById('ticket-id');
-      if (ticketIdEl) ticketIdEl.innerText = randomOrder;
     };
 
     function changeCatalogPage(pageNum) {
       activePage = pageNum;
+      imgErrorCount = 0; // Reiniciar contador de reintentos para la nueva página
       
       const activeImg = document.getElementById('active-catalog-img');
-      if (activeImg) activeImg.src = CATALOG_IMAGES[pageNum];
+      if (activeImg) {
+        // Empezar intentando con la primera extensión de la lista (.png)
+        activeImg.src = `${pageNum}${EXTENSIONS[0]}`;
+      }
       
       const buttons = document.querySelectorAll('.page-tab-btn');
       buttons.forEach(btn => {
@@ -774,7 +796,9 @@
       });
       
       const activeBtn = document.getElementById(`btn-page-${pageNum}`);
-      if (activeBtn) activeBtn.className = "page-tab-btn py-2 border-2 border-white bg-[#FF2E93] text-white font-black text-xs uppercase shadow-comic-sm";
+      if (activeBtn) {
+        activeBtn.className = "page-tab-btn py-2 border-2 border-white bg-[#FF2E93] text-white font-black text-xs uppercase shadow-comic-sm";
+      }
 
       const cells = document.querySelectorAll('.catalog-cell');
       cells.forEach(cell => {
@@ -803,10 +827,36 @@
       const targetCell = document.getElementById(`cell-${cellIndex}`);
       if (targetCell) targetCell.classList.add('selected-grid-cell');
 
+      const customInput = document.getElementById('input-custom-theme');
+      if (customInput) customInput.value = '';
+
       const currentPageMapping = catalogMapping[activePage];
       if (currentPageMapping && currentPageMapping[cellIndex]) {
         activeDesignIndex = currentPageMapping[cellIndex].id;
+        
+        // Actualizar visualización en tiempo real
+        const d = currentPageMapping[cellIndex];
+        document.getElementById('live-design-name').innerText = `DISEÑO #${d.id} - ${d.name.toUpperCase()}`;
+        document.getElementById('live-design-coordinates').innerText = `Página ${activePage} • Fila ${row}, Columna ${col}`;
       }
+    }
+    
+    function applyCustomTheme() {
+        const input = document.getElementById('input-custom-theme');
+        if (!input || !input.value.trim()) {
+            showToast("⚠️ Por favor escribe el tema que deseas.", "warning");
+            return;
+        }
+        
+        const cells = document.querySelectorAll('.catalog-cell');
+        cells.forEach(cell => cell.classList.remove('selected-grid-cell'));
+        
+        activeDesignIndex = 'custom';
+        
+        document.getElementById('live-design-name').innerText = `TEMA PERSONALIZADO: ${input.value.toUpperCase()}`;
+        document.getElementById('live-design-coordinates').innerText = `1 Propuesta / 1 Cambio (Cambio extra con costo)`;
+        
+        showToast("🎨 Tema personalizado aplicado.");
     }
 
     function filterCatalog(category, element) {
@@ -1028,13 +1078,18 @@
       if (ticketPackageEl) ticketPackageEl.innerText = pkgText;
 
       let designName = "Diseño Personalizado";
-      Object.keys(catalogMapping).forEach(p => {
-        Object.keys(catalogMapping[p]).forEach(c => {
-          if (catalogMapping[p][c].id === activeDesignIndex) {
-            designName = `Pág ${p} - #${activeDesignIndex} ${catalogMapping[p][c].name}`;
-          }
-        });
-      });
+      if (activeDesignIndex === 'custom') {
+          const customTheme = document.getElementById('input-custom-theme').value.trim();
+          designName = `PERSONALIZADO: ${customTheme}`;
+      } else {
+          Object.keys(catalogMapping).forEach(p => {
+            Object.keys(catalogMapping[p]).forEach(c => {
+              if (catalogMapping[p][c].id === activeDesignIndex) {
+                designName = `Pág ${p} - #${activeDesignIndex} ${catalogMapping[p][c].name}`;
+              }
+            });
+          });
+      }
       const ticketDesignEl = document.getElementById('ticket-design');
       if (ticketDesignEl) ticketDesignEl.innerText = designName.toUpperCase();
 
@@ -1050,7 +1105,7 @@
       const ticketLaminatedEl = document.getElementById('ticket-laminado');
       if (ticketLaminatedEl) ticketLaminatedEl.innerText = lamText;
 
-      // === ACTUALIZACIÓN DEL AUTO-LAYOUT PARA EL VISUALIZADOR DE ETIQUETA ===
+      // Actualización de los datos a imprimir
       const nameInput = document.getElementById('input-name');
       const gradeInput = document.getElementById('input-grade');
       const extraInput = document.getElementById('input-extra');
@@ -1059,61 +1114,14 @@
       const grade = gradeInput ? gradeInput.value.trim() : "";
       const extra = extraInput ? extraInput.value.trim() : "";
 
-      const pName = document.getElementById('preview-name');
-      const pGrade = document.getElementById('preview-grade');
-      const pExtra = document.getElementById('preview-extra');
-
-      if (pName) {
-        pName.innerText = name.toUpperCase() || "TU NOMBRE";
-        
-        // Si NO hay grado ni extra, el nombre se hace gigante
-        if (!grade && !extra) {
-            pName.className = "font-comic text-white text-5xl leading-none drop-shadow-[0_4px_4px_rgba(0,0,0,1)] uppercase break-words w-full";
-        } else {
-            pName.className = "font-comic text-white text-3xl leading-tight drop-shadow-[0_3px_3px_rgba(0,0,0,1)] uppercase break-words w-full";
-        }
-      }
-
-      if (pGrade) {
-        if (grade) {
-            pGrade.innerText = grade.toUpperCase();
-            pGrade.classList.remove('hidden');
-        } else {
-            pGrade.classList.add('hidden');
-        }
-      }
-
-      if (pExtra) {
-        if (extra) {
-            pExtra.innerText = extra.toUpperCase();
-            pExtra.classList.remove('hidden');
-        } else {
-            pExtra.classList.add('hidden');
-        }
-      }
-
-      // Actualizar la imagen de fondo recortada basada en la selección
-      const previewBg = document.getElementById('preview-bg-image');
-      if (previewBg) {
-        previewBg.style.backgroundImage = `url('${CATALOG_IMAGES[activePage]}')`;
-        
-        // Encontrar la posición exacta de la celda en la cuadrícula 3x5
-        let dRow = 1, dCol = 1;
-        const mapping = catalogMapping[activePage];
-        Object.keys(mapping).forEach(cellIndex => {
-            if(mapping[cellIndex].id === activeDesignIndex) {
-                dRow = Math.ceil(cellIndex / 3);
-                dCol = ((cellIndex - 1) % 3) + 1;
-            }
-        });
-        
-        // Calcular porcentaje de crop
-        const posX = (dCol - 1) * 50;
-        const posY = (dRow - 1) * 25;
-        
-        previewBg.style.backgroundSize = "350% 550%"; // Zoom al sector de la cuadrícula
-        previewBg.style.backgroundPosition = `${posX}% ${posY}%`;
-      }
+      const ticketChildNameEl = document.getElementById('ticket-child-name');
+      if (ticketChildNameEl) ticketChildNameEl.innerText = (name || "- SIN NOMBRE -").toUpperCase();
+      
+      const ticketChildGradeEl = document.getElementById('ticket-child-grade');
+      if (ticketChildGradeEl) ticketChildGradeEl.innerText = (grade || "- SIN GRADO -").toUpperCase();
+      
+      const ticketChildExtraEl = document.getElementById('ticket-child-extra');
+      if (ticketChildExtraEl) ticketChildExtraEl.innerText = (extra || "- SIN INFO ADICIONAL -").toUpperCase();
 
       // Precios del ticket
       const ticketBaseCostEl = document.getElementById('ticket-base-cost');
@@ -1147,9 +1155,7 @@
         const imgData = canvas.toDataURL('image/png');
         
         const link = document.createElement('a');
-        const ticketIdEl = document.getElementById('ticket-id');
-        const orderId = ticketIdEl ? ticketIdEl.innerText : 'FOSFO';
-        link.download = `Pedido_FosfoKids_${orderId}.png`;
+        link.download = `Pedido_FosfoKids.png`;
         link.href = imgData;
         
         document.body.appendChild(link);
