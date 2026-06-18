@@ -97,7 +97,7 @@
     </div>
   </div>
 
-  <!-- POPUP "AGREGA A PANTALLA" (A2HS) PARA CELULARES - REDISEÑADO CON ALTO CONTRASTE (Igual a save-modal) -->
+  <!-- MODAL DE INSTALACIÓN (Ahora luce idéntico al modal de guardado) -->
   <div id="install-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50 transition-opacity duration-300">
     <div class="bg-white rounded-2xl p-5 max-w-sm w-full shadow-comic-black border-4 border-black text-center space-y-4">
       <div class="flex justify-between items-center border-b-4 border-black pb-2">
@@ -109,52 +109,59 @@
           <i data-lucide="x" class="w-6 h-6"></i>
         </button>
       </div>
-      
       <p class="text-xs font-black text-slate-800 uppercase tracking-wide leading-tight">
-        📱 Para una mejor experiencia, agrega el configurador de catálogo directamente a tus aplicaciones de pantalla de inicio.
+        Para una mejor experiencia y no perder tu catálogo, agrega este sitio a tus aplicaciones de inicio.
       </p>
       
-      <!-- Instrucciones Dinámicas (iOS / Android / Navegadores de redes sociales) -->
-      <div id="install-instructions" class="text-xs font-black uppercase text-black bg-[#00D4FF] p-3 border-4 border-black rounded-xl shadow-comic-sm leading-snug">
+      <!-- Instrucciones Dinámicas Multi-Navegador -->
+      <div id="install-instructions" class="text-[10px] text-left font-black uppercase text-black bg-[#00D4FF] p-3 border-2 border-black rounded-lg leading-snug">
         <!-- Rellenado dinámicamente por JS -->
       </div>
       
-      <!-- Botón de Instalación Directa (PWA estándar) -->
-      <button id="btn-install-app" onclick="triggerPWAInstall()" class="hidden w-full bg-[#FFE100] text-black font-black uppercase py-2.5 border-4 border-black hover:bg-yellow-400 transition-colors shadow-comic-sm text-xs rounded-lg">
-        ¡Agregar ahora!
+      <!-- Botón Directo (Para Android Chrome / Edge) -->
+      <button id="btn-install-app" onclick="triggerPWAInstall()" class="hidden w-full bg-[#FFE100] hover:bg-yellow-400 text-black font-black uppercase py-2.5 border-2 border-black shadow-comic-sm text-xs rounded-lg">
+        ¡Instalar App Automáticamente!
       </button>
 
-      <button onclick="dismissInstallPrompt()" class="w-full bg-slate-100 hover:bg-slate-200 text-black font-black py-2 rounded-lg text-xs uppercase border border-slate-300">
+      <button onclick="dismissInstallPrompt()" class="w-full bg-slate-100 hover:bg-slate-200 text-black font-black py-2.5 rounded-lg text-[10px] uppercase border-2 border-black">
         Quizás más tarde
       </button>
     </div>
   </div>
 
-  <!-- MODAL DE GUARDADO MANUAL/CARRETE (Para móviles de respaldo) -->
+  <!-- MODAL DE GUARDADO Y COMPARTIDO (Carrete / WhatsApp) -->
   <div id="save-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50 transition-opacity duration-300">
     <div class="bg-white rounded-2xl p-5 max-w-sm w-full shadow-comic-black border-4 border-black text-center space-y-4">
       <div class="flex justify-between items-center border-b-4 border-black pb-2">
         <div class="flex items-center gap-2">
           <img src="fav.png" alt="Fosfo Kids Icon" class="w-8 h-8 object-contain rounded bg-slate-900 p-0.5 border border-black">
-          <span class="font-comic text-2xl text-black">💾 GUARDAR EN CARRETE</span>
+          <span class="font-comic text-2xl text-black">💾 TU TICKET LISTO</span>
         </div>
         <button onclick="closeSaveModal()" class="text-slate-500 hover:text-black">
           <i data-lucide="x" class="w-6 h-6"></i>
         </button>
       </div>
-      <p class="text-xs font-black text-slate-800 uppercase tracking-wide leading-tight">
-        📱 Mantén presionada la imagen de abajo y selecciona <span class="text-[#FF2E93] font-black">"Guardar en Fotos"</span> para guardarla directo en tu carrete y enviarla a tu vendedor.
+      <p class="text-[10px] font-black text-slate-800 uppercase tracking-wide leading-tight">
+        📱 Presiona <span class="text-[#FF2E93]">"Compartir"</span> para enviarlo, o mantén presionada la imagen para guardarla directo en tus Fotos.
       </p>
+      
       <div class="border-4 border-black rounded-xl overflow-hidden bg-[#FFE100] p-2">
         <img id="modal-captured-img" src="" class="w-full h-auto max-h-72 object-contain mx-auto" alt="Tu Ticket Fosfo Kids">
       </div>
-      <button onclick="closeSaveModal()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-black py-2.5 rounded-lg text-xs uppercase border-2 border-black">
-        Entendido
-      </button>
+      
+      <!-- Botones de Acción Múltiple -->
+      <div class="flex gap-2">
+        <button onclick="closeSaveModal()" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-black font-black py-2.5 rounded-lg text-[10px] uppercase border-2 border-black">
+          Cerrar
+        </button>
+        <button onclick="shareTicket()" class="w-2/3 bg-[#00D4FF] hover:bg-cyan-400 text-black font-black py-2.5 rounded-lg text-[10px] uppercase border-2 border-black shadow-comic-sm flex items-center justify-center gap-1.5">
+          <i data-lucide="share-2" class="w-4 h-4"></i> Compartir / Enviar
+        </button>
+      </div>
     </div>
   </div>
 
-  <!-- HEADER DE ALTO CONTRASTE (Con logotipo de marca integrado) -->
+  <!-- HEADER DE ALTO CONTRASTE -->
   <header class="w-full bg-[#FFE100] border-b-4 border-black py-4 px-4 relative overflow-hidden">
     <div class="max-w-2xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
       <div class="flex items-center gap-3 flex-col sm:flex-row text-center sm:text-left">
@@ -173,10 +180,10 @@
     </div>
   </header>
 
-  <!-- CONTENEDOR PRINCIPAL CENTRADO (Optimizado para ancho automático fluido en móviles) -->
-  <main class="w-full max-w-md mx-auto px-3 mt-4 flex flex-col gap-4 font-sans-bold">
+  <!-- CONTENEDOR PRINCIPAL CENTRADO -->
+  <main class="w-full max-w-lg mx-auto px-3 mt-4 flex flex-col gap-4 font-sans-bold">
     
-    <!-- NAVEGACIÓN DE PASOS DE ALTO CONTRASTE (Píldoras compactas legibles) -->
+    <!-- NAVEGACIÓN DE PASOS DE ALTO CONTRASTE -->
     <div class="bg-white border-2 border-black p-2 shadow-comic-black flex justify-between items-center gap-1 overflow-x-auto rounded-lg">
       <button onclick="goToStep(1)" id="btn-step-1" class="px-2.5 py-1.5 border border-black font-black text-[10px] uppercase bg-[#FFE100] text-black shrink-0 rounded-md">
         1. Paquetes
@@ -247,7 +254,7 @@
               <li class="flex justify-between items-center bg-white p-1 border"><span>🍽️ Utensilios (5cm)</span> <span class="bg-[#FFE100] px-1 border-l">15</span></li>
             </ul>
             <div class="mt-2 flex justify-end">
-              <span id="badge-pkg-grande" class="bg-[#00D4FF] border-2 border-black text-black font-black px-2 py-0.5 text-[9px] uppercase hidden rounded">¡ELEGIDO! ✓</span>
+              <span id="badge-pkg-grande" class="bg-[#00D4FF] border border-black text-black font-black px-2 py-0.5 text-[9px] uppercase hidden rounded">¡ELEGIDO! ✓</span>
             </div>
           </div>
 
@@ -285,7 +292,6 @@
         <!-- Selectores de cantidades -->
         <div class="grid grid-cols-2 gap-3 mt-4">
           
-          <!-- Lápiz suelto -->
           <div class="bg-white border-2 border-black p-2.5 flex flex-col items-center justify-between text-center rounded-xl shadow-comic-sm">
             <span class="text-[8px] font-black bg-[#FF2E93] text-white px-1.5 py-0.5 border border-black mb-1 rounded-sm">5 x 1 cm</span>
             <span class="text-xs font-black text-black uppercase">Lápices</span>
@@ -297,7 +303,6 @@
             </div>
           </div>
 
-          <!-- Círculo suelto -->
           <div class="bg-white border-2 border-black p-2.5 flex flex-col items-center justify-between text-center rounded-xl shadow-comic-sm">
             <span class="text-[8px] font-black bg-[#00D4FF] text-black px-1.5 py-0.5 border border-black mb-1 rounded-sm">Ø 5 cm</span>
             <span class="text-xs font-black text-black uppercase">Círculos</span>
@@ -309,7 +314,6 @@
             </div>
           </div>
 
-          <!-- Cuaderno suelto -->
           <div class="bg-white border-2 border-black p-2.5 flex flex-col items-center justify-between text-center rounded-xl shadow-comic-sm">
             <span class="text-[8px] font-black bg-[#FFE100] text-black px-1.5 py-0.5 border border-black mb-1 rounded-sm">4 x 3 cm</span>
             <span class="text-xs font-black text-black uppercase">Cuadernos</span>
@@ -321,7 +325,6 @@
             </div>
           </div>
 
-          <!-- Libro suelto -->
           <div class="bg-white border-2 border-black p-2.5 flex flex-col items-center justify-between text-center rounded-xl shadow-comic-sm">
             <span class="text-[8px] font-black bg-[#A55EEA] text-white px-1.5 py-0.5 border border-black mb-1 rounded-sm">7 x 5 cm</span>
             <span class="text-xs font-black text-black uppercase">Libros</span>
@@ -335,9 +338,8 @@
 
         </div>
 
-        <!-- Indicador de total preliminar -->
         <div class="p-3 border-2 border-black bg-slate-50 flex justify-between items-center rounded-xl">
-          <span class="text-[10px] uppercase font-black text-gray-500 tracking-wider">Monto preliminar acumulado:</span>
+          <span class="text-[10px] uppercase font-black text-gray-500 tracking-wider">Monto preliminar:</span>
           <span class="font-comic text-xl text-black" id="live-base-sum">$260.00 MXN</span>
         </div>
 
@@ -355,14 +357,13 @@
       <div id="step-content-3" class="step-pane hidden space-y-4">
         <div>
           <h2 class="font-comic text-2xl md:text-3xl text-black uppercase">
-            ✏️ Paso 3: Especificaciones y Datos
+            ✏️ Paso 3: Especificaciones
           </h2>
-          <p class="text-[11px] font-black text-gray-500 uppercase">Completa el nombre de quien compra y la información a imprimir en las etiquetas.</p>
+          <p class="text-[11px] font-black text-gray-500 uppercase">Completa el nombre de quien compra y la información a imprimir.</p>
         </div>
 
         <div class="space-y-4">
           
-          <!-- Bloque de datos -->
           <div class="border-2 border-black p-3.5 bg-slate-50 space-y-3 rounded-xl">
             <h3 class="text-xs font-black text-black uppercase border-b-2 border-black pb-1">👤 Datos del Cliente & Etiquetas:</h3>
             
@@ -370,6 +371,8 @@
               <label class="block text-[10px] font-black text-black uppercase mb-1">Nombre del Cliente (Quien compra):</label>
               <input type="text" id="input-client-name" placeholder="Ej. Carlos Mendoza" class="w-full border-2 border-black px-3 py-2 text-xs font-black uppercase bg-white outline-none rounded-md">
             </div>
+
+            <div class="border-t-2 border-black border-dashed my-4"></div>
 
             <div>
               <label class="block text-[10px] font-black text-black uppercase mb-1">Nombre a Imprimir en Etiquetas:</label>
@@ -456,7 +459,7 @@
       <div id="step-content-4" class="step-pane hidden space-y-4">
         <div>
           <h2 class="font-comic text-2xl md:text-3xl text-black uppercase">
-            🎨 Paso 4: Elige el Diseño del Catálogo
+            🎨 Paso 4: Elige tu Diseño
           </h2>
           <p class="text-[11px] font-black text-gray-500 uppercase">Selecciona una página y haz clic en la etiqueta que más te guste para aplicarla.</p>
         </div>
@@ -493,10 +496,10 @@
               <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-3">#3</span>
             </button>
             
-            <button onclick="selectGridDesign(4, 2, 1)" id="cell-4" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
+            <button onclick="selectGridDesign(4, 2, 1)" id="cell-4" class="catalog-cell border-2 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
               <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-4">#4</span>
             </button>
-            <button onclick="selectGridDesign(5, 2, 2)" id="cell-5" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
+            <button onclick="selectGridDesign(5, 2, 2)" id="cell-5" class="catalog-cell border-2 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
               <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-5">#5</span>
             </button>
             <button onclick="selectGridDesign(6, 2, 3)" id="cell-6" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
@@ -535,7 +538,7 @@
           </div>
         </div>
 
-        <div class="p-3 border-2 border-black bg-slate-100 flex items-center gap-3 rounded-xl font-sans-bold">
+        <div class="p-3 border-2 border-black bg-slate-100 flex items-center gap-3 rounded-xl">
           <div class="w-10 h-10 bg-black text-[#FFE100] flex items-center justify-center text-lg border border-black rounded shrink-0">
             🏷️
           </div>
@@ -546,23 +549,23 @@
           </div>
         </div>
 
-        <!-- REUBICADO Y REESTILIZADO CON ALTO CONTRASTE EXTREMO -->
-        <div class="bg-[#FFE100] p-4 border-4 border-[#FF2E93] shadow-comic-black relative rounded-xl mt-4">
+        <!-- CAJA DE DISEÑO PERSONALIZADO (ALTO IMPACTO JUSTO ANTES DE NAVEGACIÓN) -->
+        <div class="bg-[#FFE100] p-4 border-4 border-[#FF2E93] shadow-comic-black relative rounded-xl mt-6">
           <div class="absolute -top-3.5 left-3 bg-[#FF2E93] text-white text-[10px] font-black px-2.5 py-1 border-2 border-black rotate-[-1deg] uppercase shadow-comic-sm">
             💥 ¿NO ENCUENTRAS TU TEMA?
           </div>
           <p class="text-[10px] font-black text-black uppercase mb-2.5 leading-tight mt-1.5">
-            ¡Diseñamos el tema que quieras! Se te hará <span class="text-[#FF2E93] font-black bg-white px-1.5 py-0.5 rounded border border-black">1 propuesta con 1 cambio</span>. Todo cambio de diseño extra tendrá costo adicional.
+            ¡Diseñamos el tema que quieras! Se te hará <span class="text-[#FF2E93] font-black bg-white px-1.5 py-0.5 rounded border border-black">1 propuesta con 1 cambio</span>. Todo ajuste de diseño extra tendrá costo.
           </p>
           <div class="flex flex-col gap-2">
             <input type="text" id="input-custom-theme" placeholder="Ej. Star Wars con fondo oscuro..." class="w-full border-2 border-black px-3 py-1.5 text-xs font-black uppercase outline-none focus:bg-white bg-white rounded-md">
-            <button onclick="applyCustomTheme()" class="w-full bg-[#FF2E93] text-white font-black uppercase py-2 border-2 border-black hover:bg-rose-600 transition-colors shadow-comic-sm text-xs rounded-md">
+            <button onclick="applyCustomTheme()" class="w-full bg-[#FF2E93] text-white hover:text-[#FFE100] font-black uppercase py-2 border-2 border-black hover:bg-rose-600 transition-colors shadow-comic-sm text-xs rounded-md">
               Aplicar Tema Especial
             </button>
           </div>
         </div>
 
-        <div class="flex justify-between pt-2">
+        <div class="flex justify-between pt-4">
           <button onclick="goToStep(3)" class="bg-white text-black font-black px-4 py-2 border-2 border-black shadow-comic-black flex items-center gap-1.5 uppercase text-xs rounded-xl">
             <i data-lucide="arrow-left" class="w-4 h-4"></i> Atrás
           </button>
@@ -576,38 +579,38 @@
       <div id="step-content-5" class="step-pane hidden space-y-4">
         <div>
           <h2 class="font-comic text-2xl md:text-3xl text-black uppercase">
-            🧾 Paso 5: Genera tu Ticket de Pedido
+            🧾 Paso 5: Ticket de Pedido
           </h2>
           <p class="text-[11px] font-black text-gray-500 uppercase">Confirma tu información y descarga el ticket para enviárselo a tu vendedor.</p>
         </div>
 
         <!-- TICKET ULTRA CONTRASTADO Y ATRACTIVO -->
         <div class="bg-[#FFE100] p-4 border-4 border-black relative rounded-2xl" id="ticket-capture">
-          <div class="absolute -top-3 right-4 bg-black text-white text-xs font-black px-4 py-1.5 border-2 border-white rotate-[2deg] uppercase tracking-wider">
-            ORDEN OFICIAL FOSFO KIDS
+          <div class="absolute -top-3 right-4 bg-black text-white text-xs font-black px-4 py-1.5 border-2 border-white rotate-[2deg] uppercase tracking-wider shadow-comic-sm">
+            TICKET FOSFO KIDS
           </div>
           
           <div class="text-center pb-3 border-b-4 border-black mt-2 flex flex-col items-center justify-center">
             <!-- Logotipo oficial integrado en el ticket final -->
             <img src="fav.png" alt="Logo Fosfo Kids" class="w-16 h-16 object-contain border-4 border-black rounded-xl bg-slate-950 p-1 mb-2 shadow-comic-sm shrink-0">
-            <span class="font-comic text-3xl text-black uppercase tracking-wide">TICKET DE PEDIDO</span>
-            <p class="text-[9px] font-black text-black uppercase font-sans-bold">FOSFO KIDS • DISEÑOS QUE INSPIRAN 2026</p>
+            <span class="font-comic text-3xl text-black uppercase tracking-wide">ORDEN OFICIAL</span>
+            <p class="text-[9px] font-black text-black uppercase font-sans-bold mt-1">CATÁLOGO 2026</p>
           </div>
 
           <div class="py-3 space-y-2.5 text-xs font-black text-black font-sans-bold">
             
             <!-- NOTA UBER / DIDI Y PAGO HASTA ARRIBA -->
-            <div class="bg-black text-[#FFE100] p-2.5 border-2 border-black text-center font-black text-[9px] uppercase tracking-wider shadow-comic-sm rounded-lg">
+            <div class="bg-black text-[#FFE100] p-2.5 border-2 border-black text-center font-black text-[9px] uppercase tracking-wider shadow-comic-sm rounded-lg leading-tight">
               🚨 1 DÍA HÁBIL DESPUÉS DEL PAGO (SI NO HAY PAGO NO SE PROCESA).<br>
               PROGRAMA TU UBER O DIDI ÚNICAMENTE CUANDO EL VENDEDOR TE DE LUZ VERDE 🟢
             </div>
 
-            <div class="flex justify-between border-b border-black pb-1 bg-cyan-100 p-2 border-2 border-black rounded-lg">
+            <div class="flex justify-between border-b border-black pb-1 bg-cyan-100 p-2 border-2 border-black rounded-lg mt-3">
               <span class="uppercase text-black">👤 NOMBRE DEL CLIENTE:</span>
               <span class="text-black font-extrabold" id="ticket-client-name">-</span>
             </div>
             
-            <div class="flex justify-between border-b border-black pb-1">
+            <div class="flex justify-between border-b border-black pb-1 pt-1">
               <span class="uppercase text-black">PAQUETE SELECCIONADO:</span>
               <span class="bg-black text-white px-1.5 py-0.5 rounded text-[10px]" id="ticket-package">-</span>
             </div>
@@ -625,15 +628,15 @@
             </div>
 
             <!-- Bloque Stark de Datos de Impresión -->
-            <div class="bg-white p-3 border-2 border-black shadow-comic-sm rounded-lg">
+            <div class="bg-white p-3 border-2 border-black shadow-comic-sm rounded-lg mt-2">
               <div class="text-[9px] font-black uppercase text-gray-500 tracking-widest border-b border-black pb-1 mb-1.5">🏷️ Datos a Imprimir</div>
               <div class="text-lg font-black text-black uppercase leading-tight" id="ticket-child-name">- SIN NOMBRE -</div>
               <div class="text-xs font-black text-[#FF2E93] uppercase mt-0.5" id="ticket-child-grade">- SIN GRADO -</div>
               <div class="text-[10px] font-bold text-gray-700 italic mt-0.5 uppercase" id="ticket-child-extra">- SIN INFO ADICIONAL -</div>
             </div>
 
-            <!-- SECCIÓN TICKET DE PIEZAS ADICIONALES (Se renderiza dinámicamente) -->
-            <div id="ticket-extras-block" class="bg-white p-3 border-2 border-black shadow-comic-sm rounded-lg hidden">
+            <!-- SECCIÓN TICKET DE PIEZAS ADICIONALES -->
+            <div id="ticket-extras-block" class="bg-white p-3 border-2 border-black shadow-comic-sm rounded-lg hidden mt-2">
               <div class="text-[9px] font-black uppercase text-gray-500 tracking-widest border-b border-black pb-1 mb-1.5">🧩 PIEZAS EXTRAS AGREGADAS</div>
               <ul class="text-[10px] font-black text-slate-800 space-y-0.5" id="ticket-extras-list">
                 <!-- Inyección JS -->
@@ -641,7 +644,7 @@
             </div>
 
             <!-- Desglose de Precios -->
-            <div class="pt-2 border-t-2 border-black space-y-1 text-[10px] font-sans-bold">
+            <div class="pt-3 border-t-2 border-black space-y-1 text-[10px] font-sans-bold">
               <div class="flex justify-between">
                 <span class="uppercase">Costo base / Cantidad:</span>
                 <span id="ticket-base-cost">$0.00 MXN</span>
@@ -658,7 +661,7 @@
               <!-- TOTAL NETO DE ALTO IMPACTO -->
               <div class="flex justify-between text-base font-black text-black pt-2 border-t-2 border-black mt-1">
                 <span class="uppercase">TOTAL A PAGAR:</span>
-                <span class="bg-black text-[#FFE100] px-2 py-0.5 text-xl font-comic" id="ticket-total">$0.00 MXN</span>
+                <span class="bg-black text-[#FFE100] px-2 py-0.5 text-xl font-comic rounded" id="ticket-total">$0.00 MXN</span>
               </div>
             </div>
           </div>
@@ -668,12 +671,12 @@
           <button onclick="captureOrder()" class="w-full bg-[#FF2E93] text-white font-comic text-2xl py-3.5 border-4 border-black shadow-comic-black hover:scale-[1.01] transition-transform flex items-center justify-center gap-2 rounded-xl">
             <i data-lucide="download" class="w-6 h-6"></i> CAPTURAR PEDIDO (PNG)
           </button>
-          <div class="bg-[#00D4FF] p-3 border-2 border-black text-center font-black text-xs uppercase shadow-comic-black rounded-lg">
-            📢 COMPARTE LA CAPTURA GUARDADA EN TU GALERÍA DIRECTAMENTE CON TU VENDEDOR POR WHATSAPP O REDES SOCIALES PARA PROCESAR TU ENTREGA.
+          <div class="bg-[#00D4FF] p-3 border-2 border-black text-center font-black text-xs uppercase shadow-comic-black rounded-lg leading-tight">
+            📢 COMPARTE LA CAPTURA GUARDADA EN TU GALERÍA CON TU VENDEDOR POR WHATSAPP PARA PROCESAR LA ORDEN.
           </div>
         </div>
 
-        <div class="mt-8 flex justify-between font-sans-bold">
+        <div class="mt-8 flex justify-start font-sans-bold">
           <button onclick="goToStep(4)" class="bg-white text-black font-black px-4 py-2 border-2 border-black shadow-comic-black flex items-center gap-1.5 uppercase text-xs rounded-xl">
             <i data-lucide="arrow-left" class="w-4 h-4"></i> Atrás
           </button>
@@ -702,20 +705,7 @@
     let activePage = 1;
     let activeDesignIndex = 1;
 
-    // === LINKS DIRECTOS DE TUS CATÁLOGOS ===
-    const CATALOG_IMAGES = {
-      1: "1.png", 
-      2: "2.png",
-      3: "3.png",
-      4: "4.png",
-      5: "5.png",
-      6: "6.png",
-      7: "7.png",
-      8: "8.png",
-      9: "9.png"
-    };
-
-    // Mapeo detallado de diseños
+    // === Mapeo detallado de diseños ===
     const catalogMapping = {
       1: {
         1: { id: 1, name: "Gabby's Dollhouse", cat: "tiernos" },
@@ -867,8 +857,29 @@
         11: { id: 131, name: "Snoopy Skate", cat: "tiernos" },
         12: { id: 132, name: "Kuromi Ela", cat: "tiernos" },
         13: { id: 133, name: "Intensamente", cat: "caricaturas" },
-        14: { id: 134, name: "K-Drama", cat: "caricaturas" },
+        14: { id: 134, name: "Hwang In Yeop", cat: "caricaturas" },
         15: { id: 135, name: "Godzilla Kong", cat: "videojuegos" }
+      }
+    };
+
+    window.onload = function() {
+      try {
+        if (typeof lucide !== 'undefined' && lucide.createIcons) {
+          lucide.createIcons();
+        }
+      } catch (e) {
+        console.warn("No se pudieron cargar iconos.", e);
+      }
+      
+      try {
+        selectPackage('chico', 260);
+        selectMaterial('vinil_blanco_brillante', 0);
+        selectLaminated('ninguno', 0);
+        
+        changeCatalogPage(1);
+        selectGridDesign(1, 1, 1);
+      } catch (err) {
+        console.error("Error init:", err);
       }
     };
 
@@ -967,34 +978,7 @@
         showToast("🎨 Tema personalizado aplicado.");
     }
 
-    function filterCatalog(category, element) {
-      const currentPageMapping = catalogMapping[activePage];
-      if (!currentPageMapping) return;
-
-      Object.keys(currentPageMapping).forEach(cellIndex => {
-        const designInfo = currentPageMapping[cellIndex];
-        const cellEl = document.getElementById(`cell-${cellIndex}`);
-        if (cellEl) {
-          if (category === 'todos' || designInfo.cat === category) {
-            cellEl.style.opacity = "1";
-            cellEl.style.pointerEvents = "auto";
-          } else {
-            cellEl.style.opacity = "0.15";
-            cellEl.style.pointerEvents = "none";
-          }
-        }
-      });
-
-      const tabs = document.querySelectorAll('.cat-tab');
-      tabs.forEach(tab => {
-        tab.className = "cat-tab bg-white border-2 border-black px-3 py-1 text-xs font-black uppercase text-gray-500 shrink-0";
-      });
-      if (element) {
-        element.className = "cat-tab bg-[#FFE100] border-2 border-black px-3 py-1 text-xs font-black uppercase text-black shadow-comic-sm shrink-0";
-      }
-    }
-
-    // Navegación entre pasos con Scroll Al Top (Instantáneo e infalible)
+    // NAVEGACIÓN DE PASOS (Scroll al inicio garantizado)
     function goToStep(step) {
       if (step > currentStep && step > 3) {
         const clientNameInput = document.getElementById('input-client-name');
@@ -1029,7 +1013,7 @@
       
       currentStep = step;
       
-      // Scroll al inicio instantáneo compatible con todos los navegadores
+      // Scroll al inicio instantáneo y directo (soluciona fallos en móviles)
       window.scrollTo(0, 0);
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
@@ -1061,7 +1045,7 @@
       }
     }
 
-    // SISTEMA INSTALACIÓN PWA MEJORADO / DETECCIÓN MULTINAVEGADOR
+    // === SISTEMA INSTALACIÓN PWA UNIVERSAL ===
     let deferredPrompt;
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
@@ -1076,47 +1060,29 @@
       const instructions = document.getElementById('install-instructions');
       const btnInstall = document.getElementById('btn-install-app');
       if (!modal || !instructions) return;
+      
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
 
-      const isIOSVal = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-      const isChromeIOS = navigator.userAgent.includes('CriOS');
-      const isFirefoxIOS = navigator.userAgent.includes('FxiOS');
-
-      if (isIOSVal) {
-        if (isChromeIOS || isFirefoxIOS) {
-          instructions.innerHTML = `
-            <div class="flex flex-col gap-1 justify-center py-1">
-              <span>1. Toca el botón compartir u opciones <i data-lucide="share" class="w-3.5 h-3.5 inline text-blue-600"></i> o <i data-lucide="more-horizontal" class="w-3.5 h-3.5 inline"></i></span>
-              <span>2. Selecciona <span class="text-[#FF2E93] font-black">"Agregar a pantalla de inicio"</span></span>
-            </div>
-          `;
-        } else {
-          // Safari iOS
-          instructions.innerHTML = `
-            <div class="flex flex-col gap-1 justify-center py-1">
-              <span>1. Toca el botón compartir <i data-lucide="share" class="w-4 h-4 inline text-blue-600"></i></span>
-              <span>2. Selecciona <span class="text-[#FF2E93] font-black">"Agregar al inicio"</span></span>
-            </div>
-          `;
-        }
-        if (btnInstall) btnInstall.classList.add('hidden');
-      } else if (deferredPrompt) {
-        instructions.classList.add('hidden');
+      if (deferredPrompt) {
+        instructions.innerHTML = `Toca el botón de abajo para instalar el catálogo oficial de Fosfo Kids directamente en tu celular.`;
         if (btnInstall) btnInstall.classList.remove('hidden');
-      } else {
-        // Android u otros navegadores genéricos
+      } else if (isIOS) {
         instructions.innerHTML = `
-          <div class="flex flex-col gap-1 justify-center py-1">
-            <span>1. Abre el menú del navegador <i data-lucide="more-vertical" class="w-3.5 h-3.5 inline"></i></span>
-            <span>2. Selecciona <span class="text-[#FF2E93] font-black">"Instalar aplicación"</span> o <span class="text-[#FF2E93] font-black">"Agregar a pantalla principal"</span></span>
-          </div>
+          1. Toca el botón compartir <i data-lucide="share" class="w-3.5 h-3.5 inline text-blue-600"></i> en la barra de tu navegador.<br>
+          2. Selecciona <span class="text-[#FF2E93] font-black">"Agregar a inicio"</span>.
+        `;
+        if (btnInstall) btnInstall.classList.add('hidden');
+      } else {
+        instructions.innerHTML = `
+          1. Abre el menú del navegador <i data-lucide="more-vertical" class="w-3.5 h-3.5 inline text-slate-800"></i>.<br>
+          2. Selecciona <span class="text-[#FF2E93] font-black">"Instalar aplicación"</span> o <span class="text-[#FF2E93] font-black">"Agregar a pantalla principal"</span>.
         `;
         if (btnInstall) btnInstall.classList.add('hidden');
       }
 
       try {
-        if (typeof lucide !== 'undefined' && lucide.createIcons) {
-          lucide.createIcons();
-        }
+        if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
       } catch(err){}
 
       modal.classList.remove('hidden');
@@ -1311,21 +1277,36 @@
       const qtyCuaderno = document.getElementById('qty-cuaderno') ? parseInt(document.getElementById('qty-cuaderno').value) || 0 : 0;
       const qtyLibro = document.getElementById('qty-libro') ? parseInt(document.getElementById('qty-libro').value) || 0 : 0;
 
+      const extrasBlock = document.getElementById('ticket-extras-block');
+      const extrasList = document.getElementById('ticket-extras-list');
+      
+      let totalAdicionales = qtyLapiz + qtyCirculo + qtyCuaderno + qtyLibro;
+
       if (selectedPackage === 'chico') {
         pkgText = 'PAQUETE CHICO (72 PZAS)';
-        if (qtyLapiz || qtyCirculo || qtyCuaderno || qtyLibro) {
-          pkgText += ` + ADICIONALES`;
-        }
+        if (totalAdicionales > 0) pkgText += ` + ADICIONALES`;
       } else if (selectedPackage === 'grande') {
         pkgText = 'PAQUETE GRANDE (120 PZAS)';
-        if (qtyLapiz || qtyCirculo || qtyCuaderno || qtyLibro) {
-          pkgText += ` + ADICIONALES`;
-        }
+        if (totalAdicionales > 0) pkgText += ` + ADICIONALES`;
       } else {
-        pkgText = `SET PERSONALIZADO`;
+        pkgText = `SET PERSONALIZADO (${qtyLapiz} Lápices, ${qtyCirculo} Círculos, ${qtyCuaderno} Cuadernos, ${qtyLibro} Libros)`;
       }
       const ticketPackageEl = document.getElementById('ticket-package');
       if (ticketPackageEl) ticketPackageEl.innerText = pkgText;
+
+      // Actualizar Bloque de Extras en Ticket
+      if (extrasBlock && extrasList) {
+        extrasList.innerHTML = '';
+        if (selectedPackage !== 'individual' && totalAdicionales > 0) {
+          if (qtyLapiz > 0) extrasList.innerHTML += `<li>✏️ ${qtyLapiz} Lápices extra</li>`;
+          if (qtyCirculo > 0) extrasList.innerHTML += `<li>🍽️ ${qtyCirculo} Círculos extra</li>`;
+          if (qtyCuaderno > 0) extrasList.innerHTML += `<li>📔 ${qtyCuaderno} Cuadernos extra</li>`;
+          if (qtyLibro > 0) extrasList.innerHTML += `<li>📚 ${qtyLibro} Libros extra</li>`;
+          extrasBlock.classList.remove('hidden');
+        } else {
+          extrasBlock.classList.add('hidden');
+        }
+      }
 
       let designName = "Diseño Personalizado";
       if (activeDesignIndex === 'custom') {
@@ -1372,38 +1353,6 @@
       const ticketChildExtraEl = document.getElementById('ticket-child-extra');
       if (ticketChildExtraEl) ticketChildExtraEl.innerText = (extra || "- SIN INFO ADICIONAL -").toUpperCase();
 
-      // === GENERACIÓN DINÁMICA DE LA LISTA DE PIEZAS ADICIONALES EN EL TICKET ===
-      const extrasBlock = document.getElementById('ticket-extras-block');
-      const extrasList = document.getElementById('ticket-extras-list');
-      if (extrasBlock && extrasList) {
-        extrasList.innerHTML = '';
-        let hasExtras = false;
-        
-        if (qtyLapiz > 0) {
-          extrasList.innerHTML += `<li>✏️ ${qtyLapiz} Lápices adicionales</li>`;
-          hasExtras = true;
-        }
-        if (qtyCirculo > 0) {
-          extrasList.innerHTML += `<li>🍽️ ${qtyCirculo} Círculos adicionales</li>`;
-          hasExtras = true;
-        }
-        if (qtyCuaderno > 0) {
-          extrasList.innerHTML += `<li>📔 ${qtyCuaderno} Cuadernos adicionales</li>`;
-          hasExtras = true;
-        }
-        if (qtyLibro > 0) {
-          extrasList.innerHTML += `<li>📚 ${qtyLibro} Libros adicionales</li>`;
-          hasExtras = true;
-        }
-
-        if (hasExtras) {
-          extrasBlock.classList.remove('hidden');
-        } else {
-          extrasBlock.classList.add('hidden');
-        }
-      }
-
-      // Precios del ticket
       const ticketBaseCostEl = document.getElementById('ticket-base-cost');
       if (ticketBaseCostEl) ticketBaseCostEl.innerText = `$${basePrice.toFixed(2)} MXN`;
       
@@ -1422,7 +1371,7 @@
       const ticketElement = document.getElementById('ticket-capture');
       if (!ticketElement) return;
       
-      showToast("📸 Generando imagen de alta calidad...", "success");
+      showToast("📸 Generando ticket...", "success");
 
       const options = {
         backgroundColor: '#FFE100',
@@ -1440,20 +1389,35 @@
           modalImg.src = imgData;
           modal.classList.remove('hidden');
           modal.classList.add('flex');
-          
-          const link = document.createElement('a');
-          link.download = `Pedido_FosfoKids.png`;
-          link.href = imgData;
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          
-          showToast("💾 ¡Tu pedido se descargó con éxito!");
         }
       }).catch(err => {
-        showToast("⚠️ Detalle al capturar. Toma captura manual al ticket.", "warning");
+        showToast("⚠️ Ocurrió un detalle. Toma captura manual al ticket.", "warning");
         console.error("Error html2canvas:", err);
       });
+    }
+
+    // === FUNCIÓN DE COMPARTIR NATIVA ===
+    async function shareTicket() {
+      const imgEl = document.getElementById('modal-captured-img');
+      if (!imgEl || !imgEl.src) return;
+      
+      try {
+        const res = await fetch(imgEl.src);
+        const blob = await res.blob();
+        const file = new File([blob], 'Pedido_FosfoKids.png', { type: blob.type });
+        
+        if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({
+            title: 'Pedido Fosfo Kids',
+            text: 'Aquí está mi pedido de etiquetas de Fosfo Kids.',
+            files: [file]
+          });
+        } else {
+           showToast("⚠️ Tu navegador no soporta el compartido directo. Mantén presionada la imagen para guardarla en tu carrete.", "warning");
+        }
+      } catch(err) {
+        console.error("Error al compartir:", err);
+      }
     }
 
     function closeSaveModal() {
