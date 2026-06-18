@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fosfo Kids - Catálogo y Pedido de Etiquetas</title>
   
+  <!-- Favicon Oficial con tu logotipo fav.png -->
+  <link rel="icon" type="image/png" href="fav.png">
+  <link rel="apple-touch-icon" href="fav.png">
+  
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   
@@ -28,7 +32,7 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
     .shadow-comic-black {
-      box-shadow: 6px 6px 0px 0px #000000;
+      box-shadow: 5px 5px 0px 0px #000000;
     }
     .shadow-comic-sm {
       box-shadow: 3px 3px 0px 0px #000000;
@@ -45,15 +49,15 @@
     .selected-grid-cell {
       border: 5px solid #FF2E93 !important;
       background-color: rgba(255, 46, 147, 0.25);
-      box-shadow: 0 0 15px rgba(255, 46, 147, 0.8) !important;
+      box-shadow: 0 0 12px rgba(255, 46, 147, 0.8) !important;
     }
 
     /* SUPER CONTRASTE PARA MATERIALES Y LAMINADOS SELECCIONADOS */
     .selected-card {
       border: 6px solid #FF2E93 !important;
       background-color: #FFE100 !important;
-      transform: translateY(-4px);
-      box-shadow: 8px 8px 0px 0px #000000 !important;
+      transform: translateY(-2px);
+      box-shadow: 6px 6px 0px 0px #000000 !important;
     }
     
     .selected-card .check-indicator {
@@ -62,378 +66,342 @@
 
     /* Estilo para las celdas del catálogo interactivo */
     .catalog-cell {
-      transition: all 0.2s ease-in-out;
+      transition: all 0.15s ease-in-out;
+    }
+    
+    /* Personalización de barra de desplazamiento */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #FF2E93;
+      border-radius: 10px;
+      border: 2px solid #f1f5f9;
     }
   </style>
 </head>
 <body class="comic-dots-bg font-sans-bold min-h-screen text-black pb-12">
 
   <!-- NOTIFICADOR TOAST PREMIUM -->
-  <div id="toast" class="fixed top-5 left-1/2 transform -translate-x-1/2 z-50 pointer-events-none opacity-0 transition-all duration-300 max-w-sm w-full px-4">
-    <div class="bg-[#FFE100] text-black border-4 border-black font-black p-4 shadow-comic-black flex items-center gap-3">
-      <div class="bg-white p-1 border-2 border-black rounded-full">
-        <i data-lucide="check" class="w-5 h-5 text-black"></i>
+  <div id="toast" class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 pointer-events-none opacity-0 transition-all duration-300 max-w-xs w-full px-4">
+    <div class="bg-[#FFE100] text-black border-4 border-black font-black p-3 shadow-comic-black flex items-center gap-3 rounded-xl">
+      <div class="bg-white p-1 border-2 border-black rounded-full shrink-0">
+        <i data-lucide="check" class="w-4 h-4 text-black"></i>
       </div>
-      <p id="toast-message" class="text-sm uppercase tracking-wider"></p>
+      <p id="toast-message" class="text-xs uppercase tracking-wider"></p>
     </div>
   </div>
 
-  <!-- MODAL DE GUARDADO MANUAL/CARRETE (Para móviles como iOS y Android) -->
+  <!-- MODAL DE GUARDADO MANUAL/CARRETE (Para móviles como iOS y Android de respaldo) -->
   <div id="save-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50 transition-opacity duration-300">
-    <div class="bg-white rounded-3xl p-5 sm:p-6 max-w-sm w-full shadow-comic-black border-4 border-black text-center space-y-4">
+    <div class="bg-white rounded-2xl p-5 max-w-sm w-full shadow-comic-black border-4 border-black text-center space-y-4">
       <div class="flex justify-between items-center border-b-4 border-black pb-2">
-        <span class="font-comic text-2xl text-black">💾 GUARDAR EN CARRETE</span>
+        <div class="flex items-center gap-2">
+          <img src="fav.png" alt="Fosfo Kids Icon" class="w-8 h-8 object-contain rounded bg-slate-900 p-0.5 border border-black">
+          <span class="font-comic text-2xl text-black">💾 GUARDAR EN CARRETE</span>
+        </div>
         <button onclick="closeSaveModal()" class="text-slate-500 hover:text-black">
           <i data-lucide="x" class="w-6 h-6"></i>
         </button>
       </div>
       <p class="text-xs font-black text-slate-800 uppercase tracking-wide leading-tight">
-        📱 Mantén presionada la imagen de abajo y selecciona <span class="text-[#FF2E93] font-black">"Guardar en Fotos"</span> (iOS) o <span class="text-[#FF2E93] font-black">"Descargar imagen"</span> (Android) para tenerla directo en tu carrete.
+        📱 Mantén presionada la imagen de abajo y selecciona <span class="text-[#FF2E93] font-black">"Guardar en Fotos"</span> para guardarla directo en tu carrete y enviarla a tu vendedor.
       </p>
-      <div class="border-4 border-black rounded-2xl overflow-hidden bg-[#FFE100] p-2">
-        <img id="modal-captured-img" src="" class="w-full h-auto max-h-80 object-contain mx-auto" alt="Tu Ticket Fosfo Kids">
+      <div class="border-4 border-black rounded-xl overflow-hidden bg-[#FFE100] p-2">
+        <img id="modal-captured-img" src="" class="w-full h-auto max-h-72 object-contain mx-auto" alt="Tu Ticket Fosfo Kids">
       </div>
-      <button onclick="closeSaveModal()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-black py-3 rounded-xl text-xs uppercase border-2 border-black">
+      <button onclick="closeSaveModal()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-black py-2.5 rounded-lg text-xs uppercase border-2 border-black">
         Entendido
       </button>
     </div>
   </div>
 
-  <!-- HEADER DE ALTO CONTRASTE -->
-  <header class="w-full bg-[#FFE100] border-b-8 border-black py-6 px-4 relative overflow-hidden">
-    <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-      <div class="text-center md:text-left">
-        <span class="inline-block bg-[#FF2E93] text-white font-comic text-4xl md:text-6xl px-6 py-2 border-4 border-black shadow-comic-black rotate-[-2deg] uppercase">
-          Fosfo Kids
-        </span>
-        <h1 class="text-xl md:text-2xl font-black text-black uppercase tracking-tight mt-3">
-          ⚡ CONFIGURADOR DE PEDIDOS DE ETIQUETAS ESCOLARES
-        </h1>
+  <!-- HEADER DE ALTO CONTRASTE (Con logotipo de marca integrado) -->
+  <header class="w-full bg-[#FFE100] border-b-4 border-black py-4 px-4 relative overflow-hidden">
+    <div class="max-w-2xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-3 flex-col sm:flex-row text-center sm:text-left">
+        <!-- Logotipo fav.png integrado en el header -->
+        <img src="fav.png" alt="Logo Fosfo Kids" class="w-14 h-14 object-contain border-4 border-black rounded-xl bg-slate-950 p-1 shadow-comic-sm shrink-0">
+        <div>
+          <span class="inline-block bg-[#FF2E93] text-white font-comic text-3xl md:text-5xl px-4 py-1 border-4 border-black shadow-comic-black rotate-[-2deg] uppercase">
+            Fosfo Kids
+          </span>
+          <h1 class="text-[10px] sm:text-xs font-black text-black uppercase tracking-widest mt-1">
+            ⚡ CONFIGURADOR DE PEDIDOS DE ETIQUETAS ESCOLARES ⚡
+          </h1>
+        </div>
       </div>
-      <div class="flex flex-col items-center md:items-end">
-        <p class="text-xs font-black uppercase text-gray-800 mt-2">Catálogo Oficial 2026</p>
-      </div>
+      <p class="text-[10px] font-black uppercase text-gray-800 bg-white border-2 border-black px-2 py-0.5 shadow-comic-sm shrink-0 rounded">Catálogo Oficial 2026</p>
     </div>
   </header>
 
   <!-- CONTENEDOR PRINCIPAL CENTRADO (Optimizado para ancho automático fluido en móviles) -->
-  <main class="w-full max-w-2xl mx-auto px-4 mt-6 flex flex-col gap-6">
+  <main class="w-full max-w-lg mx-auto px-3 mt-4 flex flex-col gap-4 font-sans-bold">
     
-    <!-- NAVEGACIÓN DE PASOS DE ALTO CONTRASTE -->
-    <div class="bg-white border-4 border-black p-3 shadow-comic-black flex justify-between items-center gap-2 overflow-x-auto">
-      <button onclick="goToStep(1)" id="btn-step-1" class="px-3 py-2 border-2 border-black font-black text-xs uppercase bg-[#FFE100] text-black shrink-0">
+    <!-- NAVEGACIÓN DE PASOS DE ALTO CONTRASTE (Píldoras compactas legibles) -->
+    <div class="bg-white border-2 border-black p-2 shadow-comic-black flex justify-between items-center gap-1 overflow-x-auto rounded-lg">
+      <button onclick="goToStep(1)" id="btn-step-1" class="px-2.5 py-1.5 border border-black font-black text-[10px] uppercase bg-[#FFE100] text-black shrink-0 rounded-md">
         1. Paquetes
       </button>
-      <div class="h-1 bg-black flex-grow min-w-[8px]"></div>
-      <button onclick="goToStep(2)" id="btn-step-2" class="px-3 py-2 border-2 border-black font-black text-xs uppercase bg-white text-gray-400 shrink-0">
-        2. Material
+      <div class="h-0.5 bg-black flex-grow min-w-[5px]"></div>
+      <button onclick="goToStep(2)" id="btn-step-2" class="px-2.5 py-1.5 border border-black font-black text-[10px] uppercase bg-white text-gray-400 shrink-0 rounded-md">
+        2. ¿Más?
       </button>
-      <div class="h-1 bg-black flex-grow min-w-[8px]"></div>
-      <button onclick="goToStep(3)" id="btn-step-3" class="px-3 py-2 border-2 border-black font-black text-xs uppercase bg-white text-gray-400 shrink-0">
+      <div class="h-0.5 bg-black flex-grow min-w-[5px]"></div>
+      <button onclick="goToStep(3)" id="btn-step-3" class="px-2.5 py-1.5 border border-black font-black text-[10px] uppercase bg-white text-gray-400 shrink-0 rounded-md">
         3. Datos
       </button>
-      <div class="h-1 bg-black flex-grow min-w-[8px]"></div>
-      <button onclick="goToStep(4)" id="btn-step-4" class="px-3 py-2 border-2 border-black font-black text-xs uppercase bg-white text-gray-400 shrink-0">
+      <div class="h-0.5 bg-black flex-grow min-w-[5px]"></div>
+      <button onclick="goToStep(4)" id="btn-step-4" class="px-2.5 py-1.5 border border-black font-black text-[10px] uppercase bg-white text-gray-400 shrink-0 rounded-md">
         4. Diseño
       </button>
-      <div class="h-1 bg-black flex-grow min-w-[8px]"></div>
-      <button onclick="goToStep(5)" id="btn-step-5" class="px-3 py-2 border-2 border-black font-black text-xs uppercase bg-white text-gray-400 shrink-0">
+      <div class="h-0.5 bg-black flex-grow min-w-[5px]"></div>
+      <button onclick="goToStep(5)" id="btn-step-5" class="px-2.5 py-1.5 border border-black font-black text-[10px] uppercase bg-white text-gray-400 shrink-0 rounded-md">
         5. Ticket
       </button>
     </div>
 
     <!-- PANEL CONTENEDOR DEL FORMULARIO -->
-    <div class="bg-white border-4 border-black p-4 md:p-6 shadow-comic-black relative w-full">
+    <div class="bg-white border-4 border-black p-4 shadow-comic-black relative w-full rounded-2xl">
       
       <!-- PASO 1: SELECCIÓN DE PAQUETES -->
-      <div id="step-content-1" class="step-pane">
-        <h2 class="font-comic text-3xl md:text-4xl mb-1 text-black uppercase">
-          🎒 Paso 1: Elige tu Paquete de Etiquetas
-        </h2>
-        <p class="text-sm font-black text-gray-600 uppercase mb-6">Selecciona uno de nuestros paquetes estrella de catálogo o arma tu cantidad.</p>
+      <div id="step-content-1" class="step-pane space-y-4">
+        <div class="text-center sm:text-left">
+          <h2 class="font-comic text-2xl md:text-3xl text-black uppercase">
+            🎒 Paso 1: Elige tu Paquete
+          </h2>
+          <p class="text-[11px] font-black text-gray-500 uppercase">Selecciona el juego que se adapte mejor a tus necesidades.</p>
+        </div>
         
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           
           <!-- Tarjeta Paquete Chico -->
-          <div id="card-pkg-chico" onclick="selectPackage('chico', 260)" class="border-4 border-black p-4 relative bg-[#FFF0F5] cursor-pointer hover:scale-[1.01] transition-all select-none">
-            <div class="absolute -top-3 -right-3 border-4 border-black bg-[#FF2E93] text-white px-3 py-1 font-comic text-xl rotate-[3deg] shadow-comic-sm">
+          <div id="card-pkg-chico" onclick="selectPackage('chico', 260)" class="border-2 border-black p-3.5 relative bg-[#FFF0F5] cursor-pointer hover:scale-[1.01] transition-all select-none rounded-xl">
+            <div class="absolute -top-3.5 -right-1.5 border-2 border-black bg-[#FF2E93] text-white px-2 py-0.5 font-comic text-base rotate-[3deg] shadow-comic-sm">
               72 pzas x $260
             </div>
-            <h3 class="font-comic text-2xl text-black mt-2">PAQUETE CHICO</h3>
-            <p class="text-xs font-black text-gray-700 uppercase tracking-wider mb-4">Recomendado para Preescolar/Kínder</p>
+            <h3 class="font-comic text-xl text-black mt-1">PAQUETE CHICO</h3>
+            <p class="text-[9px] font-black text-gray-500 uppercase tracking-wider mb-2">Ideal para Preescolar/Kínder</p>
             
-            <ul class="text-xs font-black text-gray-900 space-y-2 border-t-4 border-black pt-3 font-sans-bold">
-              <li class="flex justify-between items-center bg-white p-1 border-2 border-black"><span>✏️ Lápices (5x1 cm)</span> <span class="bg-[#FFE100] px-2 border-l-2 border-black">38 pzas</span></li>
-              <li class="flex justify-between items-center bg-white p-1 border-2 border-black"><span>📔 Cuadernos (4x3 cm)</span> <span class="bg-[#FFE100] px-2 border-l-2 border-black">14 pzas</span></li>
-              <li class="flex justify-between items-center bg-white p-1 border-2 border-black"><span>📚 Libros (7x5 cm)</span> <span class="bg-[#FFE100] px-2 border-l-2 border-black">12 pzas</span></li>
-              <li class="flex justify-between items-center bg-white p-1 border-2 border-black"><span>🍽️ Utensilios (Círculo 5cm)</span> <span class="bg-[#FFE100] px-2 border-l-2 border-black">8 pzas</span></li>
+            <ul class="text-[10px] font-black text-gray-800 space-y-1 border-t border-black/20 pt-2">
+              <li class="flex justify-between items-center bg-white p-1 border"><span>✏️ Lápices (5x1cm)</span> <span class="bg-[#FFE100] px-1 border-l">38</span></li>
+              <li class="flex justify-between items-center bg-white p-1 border"><span>📔 Cuadernos (4x3cm)</span> <span class="bg-[#FFE100] px-1 border-l">14</span></li>
+              <li class="flex justify-between items-center bg-white p-1 border"><span>📚 Libros (7x5cm)</span> <span class="bg-[#FFE100] px-1 border-l">12</span></li>
+              <li class="flex justify-between items-center bg-white p-1 border"><span>🍽️ Utensilios (5cm)</span> <span class="bg-[#FFE100] px-1 border-l">8</span></li>
             </ul>
-            <div class="mt-4 flex justify-end">
-              <span id="badge-pkg-chico" class="bg-[#00D4FF] border-2 border-black text-black font-black px-3 py-1 text-xs uppercase hidden">¡ELEGIDO! ✓</span>
+            <div class="mt-2 flex justify-end">
+              <span id="badge-pkg-chico" class="bg-[#00D4FF] border border-black text-black font-black px-2 py-0.5 text-[9px] uppercase hidden rounded">¡ELEGIDO! ✓</span>
             </div>
           </div>
 
           <!-- Tarjeta Paquete Grande -->
-          <div id="card-pkg-grande" onclick="selectPackage('grande', 340)" class="border-4 border-black p-4 relative bg-[#ECFDF5] cursor-pointer hover:scale-[1.01] transition-all select-none">
+          <div id="card-pkg-grande" onclick="selectPackage('grande', 340)" class="border-2 border-black p-3.5 relative bg-[#ECFDF5] cursor-pointer hover:scale-[1.01] transition-all select-none rounded-xl">
             <div class="absolute -top-3 -right-3 border-4 border-black bg-[#00D4FF] text-black px-3 py-1 font-comic text-xl rotate-[-3deg] shadow-comic-sm">
               120 pzas x $340
             </div>
             <h3 class="font-comic text-2xl text-black mt-2">PAQUETE GRANDE</h3>
-            <p class="text-xs font-black text-gray-700 uppercase tracking-wider mb-4">El más completo para Primaria y Secundaria</p>
+            <p class="text-xs font-black text-gray-700 uppercase tracking-wider mb-2">Ideal para Primaria/Secundaria</p>
             
-            <ul class="text-xs font-black text-gray-900 space-y-2 border-t-4 border-black pt-3 font-sans-bold">
-              <li class="flex justify-between items-center bg-white p-1 border-2 border-black"><span>✏️ Lápices (5x1 cm)</span> <span class="bg-[#FFE100] px-2 border-l-2 border-black">60 pzas</span></li>
-              <li class="flex justify-between items-center bg-white p-1 border-2 border-black"><span>📔 Cuadernos (4x3 cm)</span> <span class="bg-[#FFE100] px-2 border-l-2 border-black">25 pzas</span></li>
-              <li class="flex justify-between items-center bg-white p-1 border-2 border-black"><span>📚 Libros (7x5 cm)</span> <span class="bg-[#FFE100] px-2 border-l-2 border-black">20 pzas</span></li>
-              <li class="flex justify-between items-center bg-white p-1 border-2 border-black"><span>🍽️ Utensilios (Círculo 5cm)</span> <span class="bg-[#FFE100] px-2 border-l-2 border-black">15 pzas</span></li>
+            <ul class="text-[10px] font-black text-gray-800 space-y-1 border-t border-black/20 pt-2">
+              <li class="flex justify-between items-center bg-white p-1 border"><span>✏️ Lápices (5x1cm)</span> <span class="bg-[#FFE100] px-1 border-l">60</span></li>
+              <li class="flex justify-between items-center bg-white p-1 border"><span>📔 Cuadernos (4x3cm)</span> <span class="bg-[#FFE100] px-1 border-l">25</span></li>
+              <li class="flex justify-between items-center bg-white p-1 border"><span>📚 Libros (7x5cm)</span> <span class="bg-[#FFE100] px-1 border-l">20</span></li>
+              <li class="flex justify-between items-center bg-white p-1 border"><span>🍽️ Utensilios (5cm)</span> <span class="bg-[#FFE100] px-1 border-l">15</span></li>
             </ul>
-            <div class="mt-4 flex justify-end">
-              <span id="badge-pkg-grande" class="bg-[#00D4FF] border-2 border-black text-black font-black px-3 py-1 text-xs uppercase hidden">¡ELEGIDO! ✓</span>
+            <div class="mt-2 flex justify-end">
+              <span id="badge-pkg-grande" class="bg-[#00D4FF] border border-black text-black font-black px-2 py-0.5 text-[9px] uppercase hidden rounded">¡ELEGIDO! ✓</span>
             </div>
           </div>
 
         </div>
 
-        <!-- SECCIÓN: NECESITO MENOS CANTIDAD -->
-        <div class="border-4 border-black p-4 bg-yellow-50 relative mt-6">
-          <div class="absolute -top-3 left-4 bg-[#FFE100] border-2 border-black text-xs font-black px-3 py-1 uppercase rotate-[-1deg]">
-            ⚠️ ¿Necesitas menos cantidad o un set personalizado?
+        <!-- Tarjeta Set Personalizado / Sin Paquete -->
+        <div id="card-pkg-personalizado" onclick="selectPackage('individual', 0)" class="border-2 border-black p-3.5 relative bg-[#FFFBEB] cursor-pointer hover:scale-[1.01] transition-all select-none w-full shadow-comic-sm rounded-xl">
+          <div class="absolute -top-3 right-4 border-2 border-black bg-[#A55EEA] text-white px-2 py-0.5 font-comic text-lg rotate-1 shadow-comic-sm">
+            Armado Libre
           </div>
-          
-          <p class="text-xs font-black text-gray-700 mt-3 mb-4 uppercase tracking-wider">Activa esta casilla para comprar piezas sueltas de cada etiqueta:</p>
-          
-          <div class="flex items-center gap-3 mb-4 bg-white p-3 border-2 border-black">
-            <input type="checkbox" id="check-individual" onchange="toggleIndividualMode()" class="w-6 h-6 border-2 border-black rounded-none cursor-pointer accent-[#FF2E93]">
-            <label for="check-individual" class="text-sm font-black cursor-pointer text-black uppercase select-none font-sans-bold">Activar cálculo por pieza individual</label>
-          </div>
-
-          <div id="individual-selectors" class="grid grid-cols-2 sm:grid-cols-4 gap-4 opacity-30 pointer-events-none transition-all duration-300 font-sans-bold">
-            <div class="bg-white border-2 border-black p-2 flex flex-col items-center justify-between text-center">
-              <span class="text-[10px] font-black bg-[#FF2E93] text-white px-2 py-0.5 border border-black mb-1">5 x 1 cm</span>
-              <span class="text-xs font-black text-black">Lápiz</span>
-              <span class="text-xs font-black text-[#FF2E93] mt-1">$3.00 c/u</span>
-              <div class="flex items-center mt-2 gap-1">
-                <button type="button" onclick="adjustQty('lapiz', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">-</button>
-                <input type="number" id="qty-lapiz" value="0" min="0" onchange="syncQty('lapiz', this.value)" class="w-10 text-center border-2 border-black text-xs font-black py-0.5">
-                <button type="button" onclick="adjustQty('lapiz', 5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">+</button>
-              </div>
-            </div>
-            <div class="bg-white border-2 border-black p-2 flex flex-col items-center justify-between text-center">
-              <span class="text-[10px] font-black bg-[#00D4FF] text-black px-2 py-0.5 border border-black mb-1">Ø 5 cm</span>
-              <span class="text-xs font-black text-black">Círculo</span>
-              <span class="text-xs font-black text-[#FF2E93] mt-1">$5.00 c/u</span>
-              <div class="flex items-center mt-2 gap-1">
-                <button type="button" onclick="adjustQty('circulo', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">-</button>
-                <input type="number" id="qty-circulo" value="0" min="0" onchange="syncQty('circulo', this.value)" class="w-10 text-center border-2 border-black text-xs font-black py-0.5">
-                <button type="button" onclick="adjustQty('circulo', 5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">+</button>
-              </div>
-            </div>
-            <div class="bg-white border-2 border-black p-2 flex flex-col items-center justify-between text-center">
-              <span class="text-[10px] font-black bg-[#FFE100] text-black px-2 py-0.5 border border-black mb-1">4 x 3 cm</span>
-              <span class="text-xs font-black text-black">Cuaderno</span>
-              <span class="text-xs font-black text-[#FF2E93] mt-1">$4.00 c/u</span>
-              <div class="flex items-center mt-2 gap-1">
-                <button type="button" onclick="adjustQty('cuaderno', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">-</button>
-                <input type="number" id="qty-cuaderno" value="0" min="0" onchange="syncQty('cuaderno', this.value)" class="w-10 text-center border-2 border-black text-xs font-black py-0.5">
-                <button type="button" onclick="adjustQty('cuaderno', 5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">+</button>
-              </div>
-            </div>
-            <div class="bg-white border-2 border-black p-2 flex flex-col items-center justify-between text-center">
-              <span class="text-[10px] font-black bg-[#A55EEA] text-white px-2 py-0.5 border border-black mb-1">7 x 5 cm</span>
-              <span class="text-xs font-black text-black">Libro</span>
-              <span class="text-xs font-black text-[#FF2E93] mt-1">$6.00 c/u</span>
-              <div class="flex items-center mt-2 gap-1">
-                <button type="button" onclick="adjustQty('libro', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">-</button>
-                <input type="number" id="qty-libro" value="0" min="0" onchange="syncQty('libro', this.value)" class="w-10 text-center border-2 border-black text-xs font-black py-0.5">
-                <button type="button" onclick="adjustQty('libro', 5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">+</button>
-              </div>
-            </div>
+          <h3 class="font-comic text-xl text-black mt-1">SÓLO ETIQUETAS SUELTAS (SIN PAQUETE)</h3>
+          <p class="text-[9px] font-black text-gray-700 uppercase mb-1">Diseña tu propio juego con las cantidades exactas que necesites.</p>
+          <div class="text-[10px] font-black text-[#FF2E93] uppercase">Ideal si requieres menos cantidad o un set personalizado de etiquetas desde $0 base.</div>
+          <div class="mt-2 flex justify-end">
+            <span id="badge-pkg-personalizado" class="bg-[#00D4FF] border border-black text-black font-black px-2 py-0.5 text-[9px] uppercase hidden rounded">¡ELEGIDO! ✓</span>
           </div>
         </div>
 
-        <div class="mt-8 flex justify-end">
-          <button onclick="goToStep(2)" class="bg-[#FFE100] text-black font-comic text-2xl px-8 py-3.5 border-4 border-black shadow-comic-black hover:translate-y-0.5 active:translate-y-1 transition-all flex items-center gap-2 uppercase">
-            Siguiente Paso <i data-lucide="arrow-right" class="w-6 h-6"></i>
+        <div class="mt-6 flex justify-end pt-2">
+          <button onclick="goToStep(2)" class="bg-[#FFE100] text-black font-comic text-xl px-6 py-2.5 border-4 border-black shadow-comic-black hover:translate-y-0.5 active:translate-y-1 transition-all flex items-center gap-1.5 uppercase rounded-xl">
+            Siguiente Paso <i data-lucide="arrow-right" class="w-5 h-5"></i>
           </button>
         </div>
       </div>
 
-      <!-- PASO 2: SELECCIÓN DE MATERIAL Y LAMINADO -->
-      <div id="step-content-2" class="step-pane hidden">
-        <h2 class="font-comic text-4xl mb-1 text-black uppercase">
-          ✨ Paso 2: Materiales y Laminados
-        </h2>
-        <p class="text-sm font-black text-gray-600 uppercase mb-6">Selecciona el tipo de vinil y su acabado protector de alta resistencia.</p>
-
-        <!-- Tipo de Vinil -->
-        <div class="mb-6">
-          <h3 class="text-lg font-black text-black uppercase mb-3 bg-black text-white inline-block px-3 py-1">1. Vinil Base:</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            
-            <div onclick="selectMaterial('vinil_blanco_brillante', 0)" id="mat-vinil_blanco_brillante" class="border-4 border-black p-4 bg-white cursor-pointer select-none relative">
-              <div class="absolute -top-4 -right-4 bg-[#00D4FF] text-black border-4 border-black font-black px-3 py-1 text-xs uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✅ ELEGIDO</div>
-              <div class="flex justify-between items-center mb-2">
-                <span class="font-black text-xs uppercase bg-[#00D4FF] text-black px-2 py-0.5 border border-black font-sans-bold">Estándar</span>
-                <span class="font-black text-xs text-green-600 uppercase font-sans-bold font-sans-bold">Sin costo extra</span>
-              </div>
-              <h4 class="font-black text-base text-black uppercase">Vinil Blanco Brillante</h4>
-              <p class="text-xs text-gray-700 mt-1 uppercase font-sans-bold">Excelente brillo y viveza de color para todo.</p>
-            </div>
-
-            <div onclick="selectMaterial('vinil_blanco_mate', 0)" id="mat-vinil_blanco_mate" class="border-4 border-black p-4 bg-white cursor-pointer select-none relative">
-              <div class="absolute -top-4 -right-4 bg-[#00D4FF] text-black border-4 border-black font-black px-3 py-1 text-xs uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✅ ELEGIDO</div>
-              <div class="flex justify-between items-center mb-2">
-                <span class="font-black text-xs uppercase bg-gray-200 text-black px-2 py-0.5 border border-black font-sans-bold">Estándar</span>
-                <span class="font-black text-xs text-green-600 uppercase font-sans-bold font-sans-bold font-sans-bold">Sin costo extra</span>
-              </div>
-              <h4 class="font-black text-base text-black uppercase">Vinil Blanco Mate</h4>
-              <p class="text-xs text-gray-700 mt-1 uppercase font-sans-bold font-sans-bold text-center">Acabado antirreflejo elegante.</p>
-            </div>
-
-            <div onclick="selectMaterial('vinil_holografico', 75)" id="mat-vinil_holografico" class="border-4 border-black p-4 bg-white cursor-pointer select-none relative overflow-hidden">
-              <div class="absolute -top-4 -right-4 bg-[#00D4FF] text-black border-4 border-black font-black px-3 py-1 text-xs uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✅ ELEGIDO</div>
-              <div class="absolute inset-0 bg-gradient-to-tr from-pink-300 via-cyan-200 to-yellow-200 opacity-25 pointer-events-none text-xs"></div>
-              <div class="flex justify-between items-center mb-2 relative z-10">
-                <span class="font-black text-xs uppercase bg-[#FF2E93] text-white px-2 py-0.5 border border-black font-sans-bold">Premium ⭐</span>
-                <span class="font-black text-xs text-red-600 font-sans-bold">+$75.00 MXN</span>
-              </div>
-              <h4 class="font-black text-base text-black uppercase relative z-10">Vinil Holográfico</h4>
-              <p class="text-xs text-gray-700 mt-1 uppercase font-sans-bold relative z-10">Espectacular brillo arcoíris metálico.</p>
-            </div>
-
-          </div>
+      <!-- PASO 2: ¿DESEAS AGREGAR MÁS ETIQUETAS? -->
+      <div id="step-content-2" class="step-pane hidden space-y-4">
+        <div>
+          <h2 class="font-comic text-2xl md:text-3xl text-black uppercase">
+            ➕ Paso 2: ¿Deseas agregar más?
+          </h2>
+          <p class="text-[11px] font-black text-gray-500 uppercase">Si elegiste paquete, puedes sumarle adicionales aquí. Si elegiste "Sólo etiquetas sueltas", agrega tus cantidades.</p>
         </div>
 
-        <!-- Laminado protector -->
-        <div class="mb-6">
-          <h3 class="text-lg font-black text-black uppercase mb-3 bg-black text-white inline-block px-3 py-1">2. Laminado Protector:</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-sans-bold">
-            
-            <div onclick="selectLaminated('ninguno', 0)" id="lam-ninguno" class="border-4 border-black p-4 bg-white cursor-pointer select-none relative">
-              <div class="absolute -top-4 -right-4 bg-[#FF2E93] text-white border-4 border-black font-black px-3 py-1 text-xs uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✅ ELEGIDO</div>
-              <h4 class="font-black text-base text-black uppercase">Sin Laminar</h4>
-              <p class="text-xs text-gray-600 mt-1 uppercase">Sencillo sin protección adicional.</p>
-              <div class="text-xs font-black text-green-600 mt-2 uppercase">Sin costo extra</div>
+        <!-- Selectores de cantidades -->
+        <div class="grid grid-cols-2 gap-3 mt-4">
+          
+          <!-- Lápiz suelto -->
+          <div class="bg-white border-2 border-black p-2.5 flex flex-col items-center justify-between text-center rounded-xl shadow-comic-sm">
+            <span class="text-[8px] font-black bg-[#FF2E93] text-white px-1.5 py-0.5 border border-black mb-1 rounded-sm">5 x 1 cm</span>
+            <span class="text-xs font-black text-black uppercase">Lápices</span>
+            <span class="text-[10px] font-black text-[#FF2E93]">$3.00 c/u</span>
+            <div class="flex items-center mt-2 gap-1.5">
+              <button type="button" onclick="adjustQty('lapiz', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black rounded-md">-</button>
+              <input type="number" id="qty-lapiz" value="0" min="0" onchange="calculatePrice()" class="w-8 text-center border-2 border-black text-xs font-black py-0.5">
+              <button type="button" onclick="adjustQty('lapiz', 5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black rounded-md">+</button>
             </div>
-
-            <div onclick="selectLaminated('brillante', 70)" id="lam-brillante" class="border-4 border-black p-4 bg-white cursor-pointer select-none relative">
-              <div class="absolute -top-4 -right-4 bg-[#FF2E93] text-white border-4 border-black font-black px-3 py-1 text-xs uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✅ ELEGIDO</div>
-              <h4 class="font-black text-base text-black uppercase">Laminado Brillante</h4>
-              <p class="text-xs text-gray-600 mt-1 uppercase">Capa extra brillante para proteger del agua y polvo.</p>
-              <div class="text-sm font-black text-rose-600 mt-2">+$70.00 MXN</div>
-            </div>
-
-            <div onclick="selectLaminated('mate', 70)" id="lam-mate" class="border-4 border-black p-4 bg-white cursor-pointer select-none relative">
-              <div class="absolute -top-4 -right-4 bg-[#FF2E93] text-white border-4 border-black font-black px-3 py-1 text-xs uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✅ ELEGIDO</div>
-              <h4 class="font-black text-base text-black uppercase">Laminado Mate</h4>
-              <p class="text-xs text-gray-600 mt-1 uppercase">Capa mate antirreflejante de alta resistencia.</p>
-              <div class="text-sm font-black text-rose-600 mt-2">+$70.00 MXN</div>
-            </div>
-
           </div>
+
+          <!-- Círculo suelto -->
+          <div class="bg-white border-2 border-black p-2.5 flex flex-col items-center justify-between text-center rounded-xl shadow-comic-sm">
+            <span class="text-[8px] font-black bg-[#00D4FF] text-black px-1.5 py-0.5 border border-black mb-1 rounded-sm">Ø 5 cm</span>
+            <span class="text-xs font-black text-black uppercase">Círculos</span>
+            <span class="text-[10px] font-black text-[#FF2E93]">$5.00 c/u</span>
+            <div class="flex items-center mt-2 gap-1.5">
+              <button type="button" onclick="adjustQty('circulo', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black rounded-md">-</button>
+              <input type="number" id="qty-circulo" value="0" min="0" onchange="calculatePrice()" class="w-8 text-center border-2 border-black text-xs font-black py-0.5">
+              <button type="button" onclick="adjustQty('circulo', 5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black rounded-md">+</button>
+            </div>
+          </div>
+
+          <!-- Cuaderno suelto -->
+          <div class="bg-white border-2 border-black p-2.5 flex flex-col items-center justify-between text-center rounded-xl shadow-comic-sm">
+            <span class="text-[8px] font-black bg-[#FFE100] text-black px-1.5 py-0.5 border border-black mb-1 rounded-sm">4 x 3 cm</span>
+            <span class="text-xs font-black text-black uppercase">Cuadernos</span>
+            <span class="text-[10px] font-black text-[#FF2E93]">$4.00 c/u</span>
+            <div class="flex items-center mt-2 gap-1.5">
+              <button type="button" onclick="adjustQty('cuaderno', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black rounded-md">-</button>
+              <input type="number" id="qty-cuaderno" value="0" min="0" onchange="calculatePrice()" class="w-8 text-center border-2 border-black text-xs font-black py-0.5">
+              <button type="button" onclick="adjustQty('cuaderno', 5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black rounded-md">+</button>
+            </div>
+          </div>
+
+          <!-- Libro suelto -->
+          <div class="bg-white border-2 border-black p-2.5 flex flex-col items-center justify-between text-center rounded-xl shadow-comic-sm">
+            <span class="text-[8px] font-black bg-[#A55EEA] text-white px-1.5 py-0.5 border border-black mb-1 rounded-sm">7 x 5 cm</span>
+            <span class="text-xs font-black text-black uppercase">Libros</span>
+            <span class="text-[10px] font-black text-[#FF2E93]">$6.00 c/u</span>
+            <div class="flex items-center mt-2 gap-1.5">
+              <button type="button" onclick="adjustQty('libro', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black rounded-md">-</button>
+              <input type="number" id="qty-libro" value="0" min="0" onchange="calculatePrice()" class="w-8 text-center border-2 border-black text-xs font-black py-0.5">
+              <button type="button" onclick="adjustQty('libro', 5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black rounded-md">+</button>
+            </div>
+          </div>
+
         </div>
 
-        <div class="mt-8 flex justify-between">
-          <button onclick="goToStep(1)" class="bg-white text-black font-black px-5 py-2.5 border-4 border-black shadow-comic-black flex items-center gap-2 uppercase text-sm font-sans-bold">
-            <i data-lucide="arrow-left" class="w-5 h-5"></i> Atrás
+        <!-- Indicador de total preliminar -->
+        <div class="p-3 border-2 border-black bg-slate-50 flex justify-between items-center rounded-xl">
+          <span class="text-[10px] uppercase font-black text-gray-500 tracking-wider">Monto preliminar acumulado:</span>
+          <span class="font-comic text-xl text-black" id="live-base-sum">$260.00 MXN</span>
+        </div>
+
+        <div class="flex justify-between pt-2">
+          <button onclick="goToStep(1)" class="bg-white text-black font-black px-4 py-2 border-2 border-black shadow-comic-black flex items-center gap-1.5 uppercase text-xs rounded-xl">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> Atrás
           </button>
-          <button onclick="goToStep(3)" class="bg-[#FFE100] text-black font-comic text-2xl px-8 py-3.5 border-4 border-black shadow-comic-black flex items-center gap-2 uppercase">
-            Siguiente Paso <i data-lucide="arrow-right" class="w-6 h-6"></i>
+          <button onclick="goToStep(3)" class="bg-[#FFE100] text-black font-comic text-xl px-6 py-2.5 border-4 border-black shadow-comic-black flex items-center gap-1.5 uppercase rounded-xl">
+            Siguiente <i data-lucide="arrow-right" class="w-5 h-5"></i>
           </button>
         </div>
       </div>
 
       <!-- PASO 3: DATOS DEL NIÑO Y DEL CLIENTE -->
-      <div id="step-content-3" class="step-pane hidden font-sans-bold">
-        <h2 class="font-comic text-4xl mb-1 text-black uppercase">
-          ✏️ Paso 3: Datos de Impresión y Cliente
-        </h2>
-        <p class="text-sm font-black text-gray-600 uppercase mb-6">Completa el nombre de quien compra y la información a imprimir en las etiquetas.</p>
+      <div id="step-content-3" class="step-pane hidden space-y-4">
+        <div>
+          <h2 class="font-comic text-2xl md:text-3xl text-black uppercase">
+            ✏️ Paso 3: Especificaciones y Datos
+          </h2>
+          <p class="text-[11px] font-black text-gray-500 uppercase">Completa el nombre de quien compra y la información a imprimir en las etiquetas.</p>
+        </div>
 
         <div class="space-y-4">
           
-          <div>
-            <label class="block text-sm font-black text-black uppercase mb-1">Nombre del Cliente (Quien compra):</label>
-            <input type="text" id="input-client-name" placeholder="Ej. Carlos Mendoza" class="w-full border-4 border-black px-4 py-3 font-black text-base uppercase bg-cyan-50 focus:bg-white outline-none">
-            <p class="text-xs text-gray-500 mt-1 uppercase font-black">Este nombre servirá para que el vendedor identifique tu ticket de pedido.</p>
-          </div>
-
-          <div class="border-t-2 border-black border-dashed my-4"></div>
-
-          <div>
-            <label class="block text-sm font-black text-black uppercase mb-1">Nombre a Imprimir en Etiquetas:</label>
-            <input type="text" id="input-name" placeholder="Ej. ELA REYES LUJAN" class="w-full border-4 border-black px-4 py-3 font-black text-base uppercase bg-yellow-50 focus:bg-white outline-none">
-            <p class="text-xs text-gray-500 mt-1 uppercase font-black">Te recomendamos usar el nombre y primer apellido. Si solo llenas este campo, el diseño de tu etiqueta se ajustará para lucir solo tu nombre al máximo tamaño.</p>
-          </div>
-
-          <div>
-            <label class="block text-sm font-black text-black uppercase mb-1">Grado, Grupo o Colegio (Opcional):</label>
-            <input type="text" id="input-grade" placeholder="Ej. 2º GRADO" class="w-full border-4 border-black px-4 py-3 font-black text-base uppercase bg-yellow-50 focus:bg-white outline-none">
-          </div>
-
-          <div>
-            <label class="block text-sm font-black text-black uppercase mb-1">Información Adicional (Opcional):</label>
-            <textarea id="input-extra" placeholder="Ej. MATERIA: ESPAÑOL" class="w-full border-4 border-black px-4 py-3 font-black text-sm uppercase bg-yellow-50 focus:bg-white outline-none h-24 resize-none"></textarea>
-          </div>
-
-          <!-- SECCIÓN: AGREGA MÁS PIEZAS INDIVIDUALES (EN PASO 3) -->
-          <div class="border-4 border-black p-4 bg-yellow-50 relative mt-6 shadow-comic-sm">
-            <div class="absolute -top-3.5 left-4 bg-[#FF2E93] text-white text-xs font-black px-3 py-1.5 uppercase rotate-[-1deg] border-2 border-black shadow-comic-sm">
-              ➕ AGREGA MÁS PIEZAS INDIVIDUALES
-            </div>
+          <!-- Bloque de datos -->
+          <div class="border-2 border-black p-3.5 bg-slate-50 space-y-3 rounded-xl">
+            <h3 class="text-xs font-black text-black uppercase border-b-2 border-black pb-1">👤 Datos del Cliente & Etiquetas:</h3>
             
-            <p class="text-xs font-black text-gray-700 mt-3 mb-4 uppercase tracking-wider leading-snug">
-              ¿Quieres agregar etiquetas sueltas adicionales de cualquier tamaño a tu paquete? ¡Súmalas aquí al instante!
-            </p>
+            <div>
+              <label class="block text-[10px] font-black text-black uppercase mb-1">Nombre del Cliente (Quien compra):</label>
+              <input type="text" id="input-client-name" placeholder="Ej. Carlos Mendoza" class="w-full border-2 border-black px-3 py-2 text-xs font-black uppercase bg-white outline-none rounded-md">
+            </div>
 
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 font-sans-bold">
+            <div>
+              <label class="block text-[10px] font-black text-black uppercase mb-1">Nombre a Imprimir en Etiquetas:</label>
+              <input type="text" id="input-name" placeholder="Ej. ELA REYES LUJAN" class="w-full border-2 border-black px-3 py-2 text-xs font-black uppercase bg-white outline-none rounded-md">
+            </div>
+
+            <div>
+              <label class="block text-[10px] font-black text-black uppercase mb-1">Grado, Grupo o Colegio (Opcional):</label>
+              <input type="text" id="input-grade" placeholder="Ej. 2º GRADO" class="w-full border-2 border-black px-3 py-2 text-xs font-black uppercase bg-white outline-none rounded-md">
+            </div>
+
+            <div>
+              <label class="block text-[10px] font-black text-black uppercase mb-1">Información Adicional (Opcional):</label>
+              <textarea id="input-extra" placeholder="Ej. MATERIA: ESPAÑOL" class="w-full border-2 border-black px-3 py-1.5 text-xs font-black uppercase bg-white outline-none h-14 resize-none rounded-md"></textarea>
+            </div>
+          </div>
+
+          <!-- Bloque de Materiales -->
+          <div class="border-2 border-black p-3.5 bg-slate-50 space-y-3 rounded-xl">
+            <h3 class="text-xs font-black text-black uppercase border-b-2 border-black pb-1">🎨 Tipo de Vinil Base:</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
               
-              <!-- Lápiz Extra -->
-              <div class="bg-white border-2 border-black p-2 flex flex-col items-center justify-between text-center">
-                <span class="text-[9px] font-black bg-[#FF2E93] text-white px-2 py-0.5 border border-black mb-1">5 x 1 cm</span>
-                <span class="text-xs font-black text-black">Lápiz</span>
-                <span class="text-xs font-black text-[#FF2E93] mt-0.5">$3.00 c/u</span>
-                <div class="flex items-center mt-2 gap-1">
-                  <button type="button" onclick="adjustQty('lapiz', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">-</button>
-                  <input type="number" id="qty-lapiz-step3" value="0" min="0" onchange="syncQty('lapiz', this.value)" class="w-10 text-center border-2 border-black text-xs font-black py-0.5">
-                  <button type="button" onclick="adjustQty('lapiz', 5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">+</button>
-                </div>
+              <div onclick="selectMaterial('vinil_blanco_brillante', 0)" id="mat-vinil_blanco_brillante" class="border-2 border-black p-3 bg-white cursor-pointer select-none relative rounded-md">
+                <div class="absolute -top-3 -right-2 bg-[#00D4FF] text-black border-2 border-black font-black px-2 py-0.5 text-[8px] uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✓ ELEGIDO</div>
+                <h4 class="font-black text-xs text-black uppercase">Vinil Blanco Brillante</h4>
+                <p class="text-[9px] text-gray-500 uppercase mt-0.5">Sin costo extra</p>
               </div>
 
-              <!-- Círculo Extra -->
-              <div class="bg-white border-2 border-black p-2 flex flex-col items-center justify-between text-center">
-                <span class="text-[9px] font-black bg-[#00D4FF] text-black px-2 py-0.5 border border-black mb-1">Ø 5 cm</span>
-                <span class="text-xs font-black text-black">Círculo</span>
-                <span class="text-xs font-black text-[#FF2E93] mt-0.5">$5.00 c/u</span>
-                <div class="flex items-center mt-2 gap-1">
-                  <button type="button" onclick="adjustQty('circulo', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">-</button>
-                  <input type="number" id="qty-circulo-step3" value="0" min="0" onchange="syncQty('circulo', this.value)" class="w-10 text-center border-2 border-black text-xs font-black py-0.5">
-                  <button type="button" onclick="adjustQty('circulo', 5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">+</button>
-                </div>
+              <div onclick="selectMaterial('vinil_blanco_mate', 0)" id="mat-vinil_blanco_mate" class="border-2 border-black p-3 bg-white cursor-pointer select-none relative rounded-md">
+                <div class="absolute -top-3 -right-2 bg-[#00D4FF] text-black border-2 border-black font-black px-2 py-0.5 text-[8px] uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✓ ELEGIDO</div>
+                <h4 class="font-black text-xs text-black uppercase">Vinil Blanco Mate</h4>
+                <p class="text-[9px] text-gray-500 uppercase mt-0.5">Sin costo extra</p>
               </div>
 
-              <!-- Cuaderno Extra -->
-              <div class="bg-white border-2 border-black p-2 flex flex-col items-center justify-between text-center">
-                <span class="text-[9px] font-black bg-[#FFE100] text-black px-2 py-0.5 border border-black mb-1">4 x 3 cm</span>
-                <span class="text-xs font-black text-black">Cuaderno</span>
-                <span class="text-xs font-black text-[#FF2E93] mt-0.5">$4.00 c/u</span>
-                <div class="flex items-center mt-2 gap-1">
-                  <button type="button" onclick="adjustQty('cuaderno', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">-</button>
-                  <input type="number" id="qty-cuaderno-step3" value="0" min="0" onchange="syncQty('cuaderno', this.value)" class="w-10 text-center border-2 border-black text-xs font-black py-0.5">
-                  <button type="button" onclick="adjustQty('cuaderno', 5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">+</button>
-                </div>
+              <div onclick="selectMaterial('vinil_holografico', 75)" id="mat-vinil_holografico" class="border-2 border-black p-3 bg-white cursor-pointer select-none relative overflow-hidden rounded-md">
+                <div class="absolute -top-3 -right-2 bg-[#00D4FF] text-black border-2 border-black font-black px-2 py-0.5 text-[8px] uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✓ ELEGIDO</div>
+                <div class="absolute inset-0 bg-gradient-to-tr from-pink-300 via-cyan-200 to-yellow-200 opacity-20 pointer-events-none"></div>
+                <h4 class="font-black text-xs text-black uppercase relative z-10">Vinil Holográfico</h4>
+                <p class="text-[9px] text-red-600 font-black mt-0.5">+$75.00 MXN</p>
               </div>
 
-              <!-- Libro Extra -->
-              <div class="bg-white border-2 border-black p-2 flex flex-col items-center justify-between text-center">
-                <span class="text-[9px] font-black bg-[#A55EEA] text-white px-2 py-0.5 border border-black mb-1">7 x 5 cm</span>
-                <span class="text-xs font-black text-black">Libro</span>
-                <span class="text-xs font-black text-[#FF2E93] mt-0.5">$6.00 c/u</span>
-                <div class="flex items-center mt-2 gap-1">
-                  <button type="button" onclick="adjustQty('libro', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">-</button>
-                  <input type="number" id="qty-libro-step3" value="0" min="0" onchange="syncQty('libro', this.value)" class="w-10 text-center border-2 border-black text-xs font-black py-0.5">
-                  <button type="button" onclick="adjustQty('libro', 5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black">+</button>
-                </div>
+            </div>
+          </div>
+
+          <!-- Bloque de Laminados -->
+          <div class="border-2 border-black p-3.5 bg-slate-50 space-y-3 rounded-xl">
+            <h3 class="text-xs font-black text-black uppercase border-b-2 border-black pb-1">🛡️ Laminado Protector:</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              
+              <div onclick="selectLaminated('ninguno', 0)" id="lam-ninguno" class="border-2 border-black p-3 bg-white cursor-pointer select-none relative rounded-md">
+                <div class="absolute -top-3 -right-2 bg-[#FF2E93] text-white border-2 border-black font-black px-2 py-0.5 text-[8px] uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✓ ELEGIDO</div>
+                <h4 class="font-black text-xs text-black uppercase">Sin Laminar</h4>
+                <p class="text-[9px] text-gray-500 uppercase mt-0.5">Sin costo extra</p>
+              </div>
+
+              <div onclick="selectLaminated('brillante', 70)" id="lam-brillante" class="border-2 border-black p-3 bg-white cursor-pointer select-none relative rounded-md">
+                <div class="absolute -top-3 -right-2 bg-[#FF2E93] text-white border-2 border-black font-black px-2 py-0.5 text-[8px] uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✓ ELEGIDO</div>
+                <h4 class="font-black text-xs text-black uppercase">Laminado Brillante</h4>
+                <p class="text-[9px] text-red-600 font-black mt-0.5">+$70.00 MXN</p>
+              </div>
+
+              <div onclick="selectLaminated('mate', 70)" id="lam-mate" class="border-2 border-black p-3 bg-white cursor-pointer select-none relative rounded-md">
+                <div class="absolute -top-3 -right-2 bg-[#FF2E93] text-white border-2 border-black font-black px-2 py-0.5 text-[8px] uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✓ ELEGIDO</div>
+                <h4 class="font-black text-xs text-black uppercase">Laminado Mate</h4>
+                <p class="text-[9px] text-red-600 font-black mt-0.5">+$70.00 MXN</p>
               </div>
 
             </div>
@@ -441,181 +409,198 @@
 
         </div>
 
-        <div class="mt-8 flex justify-between">
-          <button onclick="goToStep(2)" class="bg-white text-black font-black px-5 py-2.5 border-4 border-black shadow-comic-black flex items-center gap-2 uppercase text-sm">
-            <i data-lucide="arrow-left" class="w-5 h-5"></i> Atrás
+        <div class="flex justify-between pt-2">
+          <button onclick="goToStep(2)" class="bg-white text-black font-black px-4 py-2 border-2 border-black shadow-comic-black flex items-center gap-1.5 uppercase text-xs rounded-xl">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> Atrás
           </button>
-          <button onclick="goToStep(4)" class="bg-[#FFE100] text-black font-comic text-2xl px-8 py-3.5 border-4 border-black shadow-comic-black flex items-center gap-2 uppercase">
-            Siguiente Paso <i data-lucide="arrow-right" class="w-6 h-6"></i>
+          <button onclick="goToStep(4)" class="bg-[#FFE100] text-black font-comic text-xl px-6 py-2.5 border-4 border-black shadow-comic-black flex items-center gap-1.5 uppercase rounded-xl">
+            Siguiente <i data-lucide="arrow-right" class="w-5 h-5"></i>
           </button>
         </div>
       </div>
 
       <!-- PASO 4: CATÁLOGO DE DISEÑOS ESCOLARES -->
-      <div id="step-content-4" class="step-pane hidden">
-        <h2 class="font-comic text-4xl mb-1 text-black uppercase">
-          🎨 Paso 4: Elige el Diseño del Catálogo Real
-        </h2>
-        <p class="text-sm font-black text-gray-600 uppercase mb-4">Selecciona una página del catálogo y haz clic directamente sobre la etiqueta que más te guste para aplicarla.</p>
-
-        <!-- CAJA DE DISEÑO PERSONALIZADO (¿NO ENCUENTRAS TU TEMA? CON MÁS CONTRASTE Y VISIBILIDAD) -->
-        <div class="bg-[#00D4FF] p-5 border-4 border-black mb-6 shadow-comic-black relative rounded-none">
-          <div class="absolute -top-4 -left-2 bg-[#FF2E93] text-white text-xs font-black px-3 py-1 border-2 border-black rotate-[-2deg] uppercase shadow-comic-sm">
-            💥 ¿NO ENCUENTRAS TU TEMA?
-          </div>
-          <p class="text-xs font-black text-black uppercase mb-3 leading-tight mt-1">
-            ¡Dinos qué tema buscas y lo diseñamos para ti! Se te hará <span class="text-[#FF2E93] font-black bg-white px-1.5 py-0.5 border border-black">1 propuesta con 1 cambio</span>. Todo ajuste o cambio de diseño extra tendrá costo adicional.
-          </p>
-          <div class="flex flex-col sm:flex-row gap-2">
-            <input type="text" id="input-custom-theme" placeholder="Ej. Star Wars con fondo oscuro..." class="flex-grow border-4 border-black px-3 py-2 font-black text-sm uppercase outline-none focus:bg-white bg-white">
-            <button onclick="applyCustomTheme()" class="bg-black text-[#FFE100] font-black uppercase px-6 py-2 border-4 border-black hover:bg-slate-800 transition-colors whitespace-nowrap shadow-comic-sm text-sm">
-              Aplicar Tema
-            </button>
-          </div>
+      <div id="step-content-4" class="step-pane hidden space-y-4">
+        <div>
+          <h2 class="font-comic text-2xl md:text-3xl text-black uppercase">
+            🎨 Paso 4: Elige el Diseño del Catálogo
+          </h2>
+          <p class="text-[11px] font-black text-gray-500 uppercase">Selecciona una página y haz clic en la etiqueta que más te guste para aplicarla.</p>
         </div>
 
         <!-- Selector de Páginas del Catálogo -->
-        <div class="bg-black p-3 border-4 border-black mb-6 flex flex-col gap-2 shadow-comic-black font-sans-bold">
-          <span class="text-xs font-black text-white uppercase tracking-wider text-center">📖 Selecciona la Página del Catálogo:</span>
-          <div class="grid grid-cols-5 sm:grid-cols-9 gap-1.5 font-sans-bold">
-            <button onclick="changeCatalogPage(1)" id="btn-page-1" class="page-tab-btn py-2 border-2 border-white bg-neutral-800 text-white font-black text-xs uppercase hover:bg-neutral-700">Pág 1</button>
-            <button onclick="changeCatalogPage(2)" id="btn-page-2" class="page-tab-btn py-2 border-2 border-white bg-neutral-800 text-white font-black text-xs uppercase hover:bg-neutral-700">Pág 2</button>
-            <button onclick="changeCatalogPage(3)" id="btn-page-3" class="page-tab-btn py-2 border-2 border-white bg-neutral-800 text-white font-black text-xs uppercase hover:bg-neutral-700">Pág 3</button>
-            <button onclick="changeCatalogPage(4)" id="btn-page-4" class="page-tab-btn py-2 border-2 border-white bg-neutral-800 text-white font-black text-xs uppercase hover:bg-neutral-700">Pág 4</button>
-            <button onclick="changeCatalogPage(5)" id="btn-page-5" class="page-tab-btn py-2 border-2 border-white bg-neutral-800 text-white font-black text-xs uppercase hover:bg-neutral-700">Pág 5</button>
-            <button onclick="changeCatalogPage(6)" id="btn-page-6" class="page-tab-btn py-2 border-2 border-white bg-neutral-800 text-white font-black text-xs uppercase hover:bg-neutral-700">Pág 6</button>
-            <button onclick="changeCatalogPage(7)" id="btn-page-7" class="page-tab-btn py-2 border-2 border-white bg-neutral-800 text-white font-black text-xs uppercase hover:bg-neutral-700">Pág 7</button>
-            <button onclick="changeCatalogPage(8)" id="btn-page-8" class="page-tab-btn py-2 border-2 border-white bg-neutral-800 text-white font-black text-xs uppercase hover:bg-neutral-700">Pág 8</button>
-            <button onclick="changeCatalogPage(9)" id="btn-page-9" class="page-tab-btn py-2 border-2 border-white bg-neutral-800 text-white font-black text-xs uppercase hover:bg-neutral-700">Pág 9</button>
+        <div class="bg-black p-2 border-2 border-black flex flex-col gap-1.5 shadow-comic-black rounded-xl">
+          <span class="text-[10px] font-black text-white uppercase tracking-wider text-center">📖 Selecciona la Página:</span>
+          <div class="grid grid-cols-5 gap-1 font-sans-bold">
+            <button onclick="changeCatalogPage(1)" id="btn-page-1" class="page-tab-btn py-1.5 border border-white bg-neutral-800 text-white font-black text-[10px] uppercase rounded">Pág 1</button>
+            <button onclick="changeCatalogPage(2)" id="btn-page-2" class="page-tab-btn py-1.5 border border-white bg-neutral-800 text-white font-black text-[10px] uppercase rounded">Pág 2</button>
+            <button onclick="changeCatalogPage(3)" id="btn-page-3" class="page-tab-btn py-1.5 border border-white bg-neutral-800 text-white font-black text-[10px] uppercase rounded">Pág 3</button>
+            <button onclick="changeCatalogPage(4)" id="btn-page-4" class="page-tab-btn py-1.5 border border-white bg-neutral-800 text-white font-black text-[10px] uppercase rounded">Pág 4</button>
+            <button onclick="changeCatalogPage(5)" id="btn-page-5" class="page-tab-btn py-1.5 border border-white bg-neutral-800 text-white font-black text-[10px] uppercase rounded">Pág 5</button>
+            <button onclick="changeCatalogPage(6)" id="btn-page-6" class="page-tab-btn py-1.5 border border-white bg-neutral-800 text-white font-black text-[10px] uppercase rounded">Pág 6</button>
+            <button onclick="changeCatalogPage(7)" id="btn-page-7" class="page-tab-btn py-1.5 border border-white bg-neutral-800 text-white font-black text-[10px] uppercase rounded">Pág 7</button>
+            <button onclick="changeCatalogPage(8)" id="btn-page-8" class="page-tab-btn py-1.5 border border-white bg-neutral-800 text-white font-black text-[10px] uppercase rounded">Pág 8</button>
+            <button onclick="changeCatalogPage(9)" id="btn-page-9" class="page-tab-btn py-1.5 border border-white bg-neutral-800 text-white font-black text-[10px] uppercase rounded">Pág 9</button>
           </div>
         </div>
 
-        <!-- VISUALIZADOR INTERACTIVO (Ajustado dinámicamente al ancho del celular) -->
-        <div class="relative border-8 border-black bg-neutral-900 mx-auto overflow-hidden shadow-comic-black select-none w-full max-w-md aspect-[3/4]">
-          <!-- Cargador Dinámico con Auto-Extensión Fallback -->
+        <div class="relative border-4 border-black bg-neutral-900 mx-auto overflow-hidden shadow-comic-black select-none w-full max-w-sm aspect-[3/4] rounded-xl">
+          <!-- Cargador Dinámico -->
           <img id="active-catalog-img" src="1.png" class="w-full h-full block object-fill" alt="Página de Catálogo Fosfo Kids" onerror="handleImageError(this)">
           
           <div class="absolute top-[17%] bottom-[8%] left-[9%] right-[9%] grid grid-cols-3 grid-rows-5 gap-[1.5%]">
-            <!-- Celdas Interactivas Sólidas con números sutiles en la esquina superior izquierda -->
-            <button onclick="selectGridDesign(1, 1, 1)" id="cell-1" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
-              <span class="absolute top-1 left-1 bg-black/85 text-white text-[9px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-1">#1</span>
+            <!-- Celdas Interactivas Sólidas con números sutiles -->
+            <button onclick="selectGridDesign(1, 1, 1)" id="cell-1" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
+              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-1">#1</span>
             </button>
-            <button onclick="selectGridDesign(2, 1, 2)" id="cell-2" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
-              <span class="absolute top-1 left-1 bg-black/85 text-white text-[9px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-2">#2</span>
+            <button onclick="selectGridDesign(2, 1, 2)" id="cell-2" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
+              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-2">#2</span>
             </button>
-            <button onclick="selectGridDesign(3, 1, 3)" id="cell-3" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
-              <span class="absolute top-1 left-1 bg-black/85 text-white text-[9px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-3">#3</span>
-            </button>
-            
-            <button onclick="selectGridDesign(4, 2, 1)" id="cell-4" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
-              <span class="absolute top-1 left-1 bg-black/85 text-white text-[9px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-4">#4</span>
-            </button>
-            <button onclick="selectGridDesign(5, 2, 2)" id="cell-5" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
-              <span class="absolute top-1 left-1 bg-black/85 text-white text-[9px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-5">#5</span>
-            </button>
-            <button onclick="selectGridDesign(6, 2, 3)" id="cell-6" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
-              <span class="absolute top-1 left-1 bg-black/85 text-white text-[9px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-6">#6</span>
+            <button onclick="selectGridDesign(3, 1, 3)" id="cell-3" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
+              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-3">#3</span>
             </button>
             
-            <button onclick="selectGridDesign(7, 3, 1)" id="cell-7" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
-              <span class="absolute top-1 left-1 bg-black/85 text-white text-[9px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-7">#7</span>
+            <button onclick="selectGridDesign(4, 2, 1)" id="cell-4" class="catalog-cell border-2 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
+              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-4">#4</span>
             </button>
-            <button onclick="selectGridDesign(8, 3, 2)" id="cell-8" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
-              <span class="absolute top-1 left-1 bg-black/85 text-white text-[9px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-8">#8</span>
+            <button onclick="selectGridDesign(5, 2, 2)" id="cell-5" class="catalog-cell border-2 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
+              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-5">#5</span>
             </button>
-            <button onclick="selectGridDesign(9, 3, 3)" id="cell-9" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
-              <span class="absolute top-1 left-1 bg-black/85 text-white text-[9px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-9">#9</span>
+            <button onclick="selectGridDesign(6, 2, 3)" id="cell-6" class="catalog-cell border-2 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
+              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-6">#6</span>
             </button>
             
-            <button onclick="selectGridDesign(10, 4, 1)" id="cell-10" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/85 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-10">#10</span></button>
-            <button onclick="selectGridDesign(11, 4, 2)" id="cell-11" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/85 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-11">#11</span></button>
-            <button onclick="selectGridDesign(12, 4, 3)" id="cell-12" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/85 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-12">#12</span></button>
+            <button onclick="selectGridDesign(7, 3, 1)" id="cell-7" class="catalog-cell border-2 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
+              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-7">#7</span>
+            </button>
+            <button onclick="selectGridDesign(8, 3, 2)" id="cell-8" class="catalog-cell border-2 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
+              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-8">#8</span>
+            </button>
+            <button onclick="selectGridDesign(9, 3, 3)" id="cell-9" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
+              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-9">#9</span>
+            </button>
             
-            <button onclick="selectGridDesign(13, 5, 1)" id="cell-13" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/85 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-13">#13</span></button>
-            <button onclick="selectGridDesign(14, 5, 2)" id="cell-14" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/85 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-14">#14</span></button>
-            <button onclick="selectGridDesign(15, 5, 3)" id="cell-15" class="catalog-cell border-4 border-transparent hover:border-white/90 rounded relative group cursor-pointer flex flex-col justify-end p-1"><span class="bg-black/85 text-white text-[9px] font-black py-0.5 px-1 rounded truncate w-full text-center" id="cell-label-15">#15</span></button>
+            <button onclick="selectGridDesign(10, 4, 1)" id="cell-10" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
+              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-10">#10</span>
+            </button>
+            <button onclick="selectGridDesign(11, 4, 2)" id="cell-11" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
+              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-11">#11</span>
+            </button>
+            <button onclick="selectGridDesign(12, 4, 3)" id="cell-12" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
+              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-12">#12</span>
+            </button>
+            
+            <button onclick="selectGridDesign(13, 5, 1)" id="cell-13" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
+              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-13">#13</span>
+            </button>
+            <button onclick="selectGridDesign(14, 5, 2)" id="cell-14" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
+              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-14">#14</span>
+            </button>
+            <button onclick="selectGridDesign(15, 5, 3)" id="cell-15" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
+              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-15">#15</span>
+            </button>
           </div>
         </div>
 
-        <div class="mt-4 p-4 border-4 border-black bg-slate-100 flex items-center gap-4 shadow-comic-sm font-sans-bold">
-          <div class="w-16 h-12 bg-black text-[#FFE100] flex items-center justify-center text-3xl border-2 border-black rounded shadow-comic-sm shrink-0">
+        <div class="p-3 border-2 border-black bg-slate-100 flex items-center gap-3 rounded-xl">
+          <div class="w-10 h-10 bg-black text-[#FFE100] flex items-center justify-center text-lg border border-black rounded shrink-0">
             🏷️
           </div>
-          <div>
-            <p class="text-xs font-black text-gray-500 uppercase tracking-widest">Diseño seleccionado:</p>
-            <p class="font-black text-base text-black uppercase" id="live-design-name">- NINGUNO -</p>
-            <p class="text-xs font-bold text-[#FF2E93] uppercase" id="live-design-coordinates"></p>
+          <div class="min-w-0">
+            <p class="text-[9px] font-black text-gray-500 uppercase tracking-widest">Diseño seleccionado:</p>
+            <p class="font-black text-xs text-black uppercase truncate" id="live-design-name">- NINGUNO -</p>
+            <p class="text-[9px] font-bold text-[#FF2E93] uppercase" id="live-design-coordinates"></p>
           </div>
         </div>
 
-        <div class="mt-8 flex justify-between font-sans-bold">
-          <button onclick="goToStep(3)" class="bg-white text-black font-black px-5 py-2.5 border-4 border-black shadow-comic-black flex items-center gap-2 uppercase text-sm">
-            <i data-lucide="arrow-left" class="w-5 h-5"></i> Atrás
+        <!-- REUBICADO: CAJA DE DISEÑO PERSONALIZADO (¿NO ENCUENTRAS TU TEMA? CON DISEÑO DE ALTO IMPACTO JUSTO ANTES DE NAVEGACIÓN) -->
+        <div class="bg-[#00D4FF] p-4 border-4 border-black shadow-comic-black relative rounded-xl mt-4">
+          <div class="absolute -top-3.5 left-3 bg-[#FF2E93] text-white text-[10px] font-black px-2.5 py-1 border-2 border-black rotate-[-1deg] uppercase shadow-comic-sm">
+            💥 ¿NO ENCUENTRAS TU TEMA?
+          </div>
+          <p class="text-[10px] font-black text-black uppercase mb-2.5 leading-tight mt-1.5">
+            ¡Diseñamos el tema que quieras! Se te hará <span class="text-[#FF2E93] font-black bg-white px-1.5 py-0.5 rounded border border-black">1 propuesta con 1 cambio</span>. Todo ajuste o cambio extra de diseño tendrá costo adicional.
+          </p>
+          <div class="flex flex-col gap-2">
+            <input type="text" id="input-custom-theme" placeholder="Ej. Star Wars con fondo oscuro..." class="w-full border-2 border-black px-3 py-1.5 text-xs font-black uppercase outline-none focus:bg-white bg-white rounded-md">
+            <button onclick="applyCustomTheme()" class="w-full bg-black text-[#FFE100] font-black uppercase py-2 border-2 border-black hover:bg-slate-800 transition-colors shadow-comic-sm text-xs rounded-md">
+              Aplicar Tema Especial
+            </button>
+          </div>
+        </div>
+
+        <div class="flex justify-between pt-2">
+          <button onclick="goToStep(3)" class="bg-white text-black font-black px-4 py-2 border-2 border-black shadow-comic-black flex items-center gap-1.5 uppercase text-xs rounded-xl">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> Atrás
           </button>
-          <button onclick="goToStep(5)" class="bg-[#FF2E93] text-white font-comic text-2xl px-8 py-3.5 border-4 border-black shadow-comic-black flex items-center gap-2 uppercase">
-            Ver Resumen <i data-lucide="check" class="w-6 h-6"></i>
+          <button onclick="goToStep(5)" class="bg-[#FF2E93] text-white font-comic text-xl px-6 py-2.5 border-4 border-black shadow-comic-black flex items-center gap-1.5 uppercase rounded-xl">
+            Ver Resumen <i data-lucide="check" class="w-5 h-5"></i>
           </button>
         </div>
       </div>
 
       <!-- PASO 5: TICKET DE COMPRA -->
-      <div id="step-content-5" class="step-pane hidden">
-        <h2 class="font-comic text-4xl mb-1 text-black uppercase">
-          🧾 Paso 5: Genera tu Ticket de Pedido
-        </h2>
-        <p class="text-sm font-black text-gray-600 uppercase mb-6">Confirma tu información y descarga el ticket para enviárselo a tu vendedor.</p>
+      <div id="step-content-5" class="step-pane hidden space-y-4">
+        <div>
+          <h2 class="font-comic text-2xl md:text-3xl text-black uppercase">
+            🧾 Paso 5: Genera tu Ticket de Pedido
+          </h2>
+          <p class="text-[11px] font-black text-gray-500 uppercase">Confirma tu información y descarga el ticket para enviárselo a tu vendedor.</p>
+        </div>
 
         <!-- TICKET ULTRA CONTRASTADO Y ATRACTIVO -->
-        <div class="bg-[#FFE100] p-6 border-4 border-black relative" id="ticket-capture">
-          <div class="absolute -top-3 right-4 bg-black text-white text-xs font-black px-4 py-1.5 border-2 border-white rotate-[2deg] uppercase tracking-wider">
+        <div class="bg-[#FFE100] p-4 border-4 border-black relative rounded-2xl" id="ticket-capture">
+          <div class="absolute -top-3 right-4 bg-black text-white text-xs font-black px-3 py-1 border-2 border-white rotate-[2deg] uppercase tracking-wider">
             ORDEN OFICIAL FOSFO KIDS
           </div>
           
-          <div class="text-center pb-4 border-b-4 border-black mt-2">
-            <span class="font-comic text-4xl text-black uppercase tracking-wide">TICKET DE PEDIDO</span>
-            <p class="text-xs font-black text-black uppercase mt-1 font-sans-bold">FOSFO KIDS • DISEÑOS QUE INSPIRAN 2026</p>
+          <div class="text-center pb-3 border-b-4 border-black mt-2 flex flex-col items-center justify-center">
+            <!-- Logotipo oficial integrado en el ticket final -->
+            <img src="fav.png" alt="Logo Fosfo Kids" class="w-16 h-16 object-contain border-4 border-black rounded-xl bg-slate-950 p-1 mb-2 shadow-comic-sm shrink-0">
+            <span class="font-comic text-3xl text-black uppercase tracking-wide">TICKET DE PEDIDO</span>
+            <p class="text-[9px] font-black text-black uppercase font-sans-bold">FOSFO KIDS • DISEÑOS QUE INSPIRAN 2026</p>
           </div>
 
-          <div class="py-4 space-y-3 text-sm font-black text-black font-sans-bold">
+          <div class="py-3 space-y-2.5 text-xs font-black text-black font-sans-bold">
             
             <!-- NOTA UBER / DIDI Y PAGO HASTA ARRIBA -->
-            <div class="bg-black text-[#FFE100] p-3 border-4 border-black text-center font-black text-xs uppercase tracking-wider mb-4 shadow-comic-sm">
+            <div class="bg-black text-[#FFE100] p-2.5 border-2 border-black text-center font-black text-[9px] uppercase tracking-wider shadow-comic-sm rounded-lg">
               🚨 1 DÍA HÁBIL DESPUÉS DEL PAGO (SI NO HAY PAGO NO SE PROCESA).<br>
               PROGRAMA TU UBER O DIDI ÚNICAMENTE CUANDO EL VENDEDOR TE DE LUZ VERDE 🟢
             </div>
 
-            <div class="flex justify-between border-b-2 border-black pb-1.5 bg-cyan-100 p-2 border-2 border-black">
+            <div class="flex justify-between border-b border-black pb-1 bg-cyan-100 p-2 border-2 border-black rounded-lg">
               <span class="uppercase text-black">👤 NOMBRE DEL CLIENTE:</span>
               <span class="text-black font-extrabold" id="ticket-client-name">-</span>
             </div>
             
-            <div class="flex justify-between border-b-2 border-black pb-1.5">
+            <div class="flex justify-between border-b border-black pb-1">
               <span class="uppercase text-black">PAQUETE SELECCIONADO:</span>
-              <span class="bg-black text-white px-2 py-0.5 rounded text-xs" id="ticket-package">-</span>
+              <span class="bg-black text-white px-1.5 py-0.5 rounded text-[10px]" id="ticket-package">-</span>
             </div>
-            <div class="flex justify-between border-b-2 border-black pb-1.5">
+            <div class="flex justify-between border-b border-black pb-1">
               <span class="uppercase text-black">DISEÑO ELEGIDO:</span>
-              <span class="bg-black text-[#FFE100] px-2 py-0.5 rounded text-xs" id="ticket-design">-</span>
+              <span class="bg-black text-[#FFE100] px-1.5 py-0.5 rounded text-[10px]" id="ticket-design">-</span>
             </div>
-            <div class="flex justify-between border-b-2 border-black pb-1.5">
+            <div class="flex justify-between border-b border-black pb-1">
               <span class="uppercase text-black">TIPO DE VINIL BASE:</span>
               <span class="text-black" id="ticket-material">-</span>
             </div>
-            <div class="flex justify-between border-b-2 border-black pb-1.5">
+            <div class="flex justify-between border-b border-black pb-1">
               <span class="uppercase text-black">ACABADO LAMINADO:</span>
               <span class="text-black" id="ticket-laminado">-</span>
             </div>
 
             <!-- Bloque Stark de Datos de Impresión -->
-            <div class="bg-white p-4 border-4 border-black my-4 shadow-comic-sm">
-              <div class="text-[10px] font-black uppercase text-gray-500 tracking-widest border-b border-black pb-1 mb-2">🏷️ Datos a Imprimir</div>
-              <div class="text-xl font-black text-black uppercase leading-tight" id="ticket-child-name">- SIN NOMBRE -</div>
-              <div class="text-sm font-black text-[#FF2E93] uppercase mt-1" id="ticket-child-grade">- SIN GRADO -</div>
-              <div class="text-xs font-bold text-gray-700 italic mt-1 uppercase" id="ticket-child-extra">- SIN INFO ADICIONAL -</div>
+            <div class="bg-white p-3 border-2 border-black shadow-comic-sm rounded-lg">
+              <div class="text-[9px] font-black uppercase text-gray-500 tracking-widest border-b border-black pb-1 mb-1.5">🏷️ Datos a Imprimir</div>
+              <div class="text-lg font-black text-black uppercase leading-tight" id="ticket-child-name">- SIN NOMBRE -</div>
+              <div class="text-xs font-black text-[#FF2E93] uppercase mt-0.5" id="ticket-child-grade">- SIN GRADO -</div>
+              <div class="text-[10px] font-bold text-gray-700 italic mt-0.5 uppercase" id="ticket-child-extra">- SIN INFO ADICIONAL -</div>
             </div>
 
             <!-- Desglose de Precios -->
-            <div class="pt-2 border-t-4 border-black space-y-1 text-xs font-sans-bold">
+            <div class="pt-2 border-t-2 border-black space-y-1 text-[10px] font-sans-bold">
               <div class="flex justify-between">
                 <span class="uppercase">Costo base / Cantidad:</span>
                 <span id="ticket-base-cost">$0.00 MXN</span>
@@ -630,26 +615,26 @@
               </div>
               
               <!-- TOTAL NETO DE ALTO IMPACTO -->
-              <div class="flex justify-between text-xl font-black text-black pt-3 border-t-4 border-black mt-2">
+              <div class="flex justify-between text-base font-black text-black pt-2 border-t-2 border-black mt-1">
                 <span class="uppercase">TOTAL A PAGAR:</span>
-                <span class="bg-black text-[#FFE100] px-3 py-1 text-2xl font-comic" id="ticket-total">$0.00 MXN</span>
+                <span class="bg-black text-[#FFE100] px-2 py-0.5 text-xl font-comic" id="ticket-total">$0.00 MXN</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="mt-6 space-y-4 font-sans-bold">
-          <button onclick="captureOrder()" class="w-full bg-[#FF2E93] text-white font-comic text-3xl py-4 border-4 border-black shadow-comic-black hover:scale-[1.01] transition-transform flex items-center justify-center gap-3">
-            <i data-lucide="download" class="w-7 h-7"></i> CAPTURAR PEDIDO (PNG)
+        <div class="mt-6 space-y-3 font-sans-bold">
+          <button onclick="captureOrder()" class="w-full bg-[#FF2E93] text-white font-comic text-2xl py-3.5 border-4 border-black shadow-comic-black hover:scale-[1.01] transition-transform flex items-center justify-center gap-2 rounded-xl">
+            <i data-lucide="download" class="w-6 h-6"></i> CAPTURAR PEDIDO (PNG)
           </button>
-          <div class="bg-[#00D4FF] p-4 border-4 border-black text-center font-black text-sm uppercase shadow-comic-black">
+          <div class="bg-[#00D4FF] p-3 border-2 border-black text-center font-black text-xs uppercase shadow-comic-black rounded-lg">
             📢 COMPARTE LA CAPTURA GUARDADA EN TU GALERÍA DIRECTAMENTE CON TU VENDEDOR POR WHATSAPP O REDES SOCIALES PARA PROCESAR TU ENTREGA.
           </div>
         </div>
 
         <div class="mt-8 flex justify-between font-sans-bold">
-          <button onclick="goToStep(4)" class="bg-white text-black font-black px-5 py-2.5 border-4 border-black shadow-comic-black flex items-center gap-2 uppercase text-sm">
-            <i data-lucide="arrow-left" class="w-5 h-5"></i> Atrás
+          <button onclick="goToStep(4)" class="bg-white text-black font-black px-4 py-2 border-2 border-black shadow-comic-black flex items-center gap-1.5 uppercase text-xs rounded-xl">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> Atrás
           </button>
         </div>
       </div>
@@ -658,8 +643,8 @@
 
   </main>
 
-  <footer class="max-w-4xl mx-auto px-4 mt-12 text-center text-xs font-bold text-gray-700 pb-12">
-    <p class="bg-white border-4 border-black inline-block px-6 py-3 shadow-comic-black font-black uppercase text-black tracking-wider">
+  <footer class="max-w-md mx-auto px-4 mt-8 text-center text-xs font-bold text-gray-700 pb-12">
+    <p class="bg-white border-2 border-black inline-block px-4 py-2 shadow-comic-black font-black uppercase text-black tracking-wider text-[10px] rounded-lg">
       ⚡ FOSFO KIDS - DISEÑOS QUE INSPIRAN • ENTREGAS EXPRESAS ⚡
     </p>
   </footer>
@@ -879,36 +864,34 @@
         console.log(`Error de carga en página ${activePage}. Intentando de inmediato con extensión: ${nextExt}`);
         imgElement.src = newSrc;
       } else {
-        // En caso extremo de que no existan, muestra un aviso claro de apoyo
         imgElement.src = 'https://placehold.co/600x800/000000/ffffff?text=Fosfo+Kids+2026';
-        imgElement.onerror = null; // Detener reintentos infinitos
+        imgElement.onerror = null;
         showToast("⚠️ Nota: No pudimos cargar el fondo gráfico de la página. Asegúrate de haber subido los archivos '1.png' a '9.png' en la misma carpeta que tu 'index.html'.", "warning");
       }
     }
 
     function changeCatalogPage(pageNum) {
       activePage = pageNum;
-      imgErrorCount = 0; // Reiniciar contador de reintentos para la nueva página
+      imgErrorCount = 0;
       
       const activeImg = document.getElementById('active-catalog-img');
       if (activeImg) {
-        // Empezar intentando con la primera extensión de la lista (.png)
         activeImg.src = `${pageNum}${EXTENSIONS[0]}`;
       }
       
       const buttons = document.querySelectorAll('.page-tab-btn');
       buttons.forEach(btn => {
-        btn.className = "page-tab-btn py-2 border-2 border-white bg-neutral-800 text-white font-black text-xs uppercase hover:bg-neutral-700";
+        btn.className = "page-tab-btn py-1.5 border border-white bg-neutral-800 text-white font-black text-[10px] uppercase rounded";
       });
       
       const activeBtn = document.getElementById(`btn-page-${pageNum}`);
       if (activeBtn) {
-        activeBtn.className = "page-tab-btn py-2 border-2 border-white bg-[#FF2E93] text-white font-black text-xs uppercase shadow-comic-sm";
+        activeBtn.className = "page-tab-btn py-1.5 border border-white bg-[#FF2E93] text-white font-black text-[10px] uppercase shadow-comic-sm rounded";
       }
 
       const cells = document.querySelectorAll('.catalog-cell');
       cells.forEach(cell => {
-        cell.className = "catalog-cell border-4 border-transparent hover:border-white/90 rounded transition-all relative group cursor-pointer";
+        cell.className = "catalog-cell border-2 border-transparent hover:border-white/80 rounded transition-all relative group cursor-pointer";
       });
 
       const currentPageMapping = catalogMapping[activePage];
@@ -940,7 +923,6 @@
       if (currentPageMapping && currentPageMapping[cellIndex]) {
         activeDesignIndex = currentPageMapping[cellIndex].id;
         
-        // Actualizar visualización en tiempo real
         const d = currentPageMapping[cellIndex];
         document.getElementById('live-design-name').innerText = `DISEÑO #${d.id} - ${d.name.toUpperCase()}`;
         document.getElementById('live-design-coordinates').innerText = `Página ${activePage} • Fila ${row}, Columna ${col}`;
@@ -992,7 +974,6 @@
       }
     }
 
-    // Navegación entre pasos con Scroll Automático suave hacia arriba
     function goToStep(step) {
       if (step > currentStep && step > 3) {
         const clientNameInput = document.getElementById('input-client-name');
@@ -1016,18 +997,16 @@
         if (contentEl) contentEl.classList.add('hidden');
         
         const btn = document.getElementById(`btn-step-${i}`);
-        if (btn) btn.className = "px-3 py-2 border-2 border-black font-black text-xs uppercase bg-white text-gray-400 shrink-0";
+        if (btn) btn.className = "px-2.5 py-1.5 border border-black font-black text-[10px] uppercase bg-white text-gray-400 shrink-0 rounded-md";
       }
 
       const activeContentEl = document.getElementById(`step-content-${step}`);
       if (activeContentEl) activeContentEl.classList.remove('hidden');
       
       const activeBtn = document.getElementById(`btn-step-${step}`);
-      if (activeBtn) activeBtn.className = "px-3 py-2 border-2 border-black font-black text-xs uppercase bg-[#FFE100] text-black shadow-comic-sm shrink-0";
+      if (activeBtn) activeBtn.className = "px-2.5 py-1.5 border border-black font-black text-[10px] uppercase bg-[#FFE100] text-black shrink-0 rounded-md shadow-comic-sm";
       
       currentStep = step;
-      
-      // Auto scroll suave hasta arriba de la página
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
       if (step === 5) {
@@ -1057,18 +1036,15 @@
       }
     }
 
-    // Sincronizar cantidades de inputs entre Paso 1 y Paso 3
     function syncQty(type, value) {
       let val = parseInt(value) || 0;
       if (val < 0) val = 0;
       
       const input1 = document.getElementById(`qty-${type}`);
-      const input3 = document.getElementById(`qty-${type}-step3`);
-      
       if (input1) input1.value = val;
-      if (input3) input3.value = val;
       
       calculatePrice();
+      updateLiveSummary();
     }
 
     function adjustQty(type, amount) {
@@ -1095,48 +1071,66 @@
         
         const cardChico = document.getElementById('card-pkg-chico');
         const cardGrande = document.getElementById('card-pkg-grande');
+        const cardPersonalizado = document.getElementById('card-pkg-personalizado');
         const badgeChico = document.getElementById('badge-pkg-chico');
         const badgeGrande = document.getElementById('badge-pkg-grande');
+        const badgePersonalizado = document.getElementById('badge-pkg-personalizado');
 
         if (cardChico) cardChico.classList.remove('selected-card');
         if (badgeChico) badgeChico.classList.add('hidden');
         if (cardGrande) cardGrande.classList.remove('selected-card');
         if (badgeGrande) badgeGrande.classList.add('hidden');
+        if (cardPersonalizado) cardPersonalizado.classList.add('selected-card');
+        if (badgePersonalizado) badgePersonalizado.classList.remove('hidden');
       } else {
         if (container) container.classList.add('opacity-30', 'pointer-events-none');
         selectPackage('chico', 260);
       }
       calculatePrice();
+      updateLiveSummary();
     }
 
     function selectPackage(pkg, price) {
       const checkEl = document.getElementById('check-individual');
-      if (checkEl && checkEl.checked) {
-        checkEl.checked = false;
-        toggleIndividualMode();
-      }
-
+      
       selectedPackage = pkg;
       basePrice = price;
 
       const cardChico = document.getElementById('card-pkg-chico');
       const cardGrande = document.getElementById('card-pkg-grande');
+      const cardPersonalizado = document.getElementById('card-pkg-personalizado');
       const badgeChico = document.getElementById('badge-pkg-chico');
       const badgeGrande = document.getElementById('badge-pkg-grande');
+      const badgePersonalizado = document.getElementById('badge-pkg-personalizado');
 
       if (cardChico) cardChico.classList.remove('selected-card');
       if (cardGrande) cardGrande.classList.remove('selected-card');
+      if (cardPersonalizado) cardPersonalizado.classList.remove('selected-card');
       if (badgeChico) badgeChico.classList.add('hidden');
       if (badgeGrande) badgeGrande.classList.add('hidden');
+      if (badgePersonalizado) badgePersonalizado.classList.add('hidden');
 
       if (pkg === 'chico') {
         if (cardChico) cardChico.classList.add('selected-card');
         if (badgeChico) badgeChico.classList.remove('hidden');
-      } else {
+        if (checkEl) checkEl.checked = false;
+        const container = document.getElementById('individual-selectors');
+        if (container) container.classList.add('opacity-30', 'pointer-events-none');
+      } else if (pkg === 'grande') {
         if (cardGrande) cardGrande.classList.add('selected-card');
         if (badgeGrande) badgeGrande.classList.remove('hidden');
+        if (checkEl) checkEl.checked = false;
+        const container = document.getElementById('individual-selectors');
+        if (container) container.classList.add('opacity-30', 'pointer-events-none');
+      } else {
+        if (cardPersonalizado) cardPersonalizado.classList.add('selected-card');
+        if (badgePersonalizado) badgePersonalizado.classList.remove('hidden');
+        if (checkEl) checkEl.checked = true;
+        const container = document.getElementById('individual-selectors');
+        if (container) container.classList.remove('opacity-30', 'pointer-events-none');
       }
       calculatePrice();
+      updateLiveSummary();
     }
 
     function selectMaterial(material, price) {
@@ -1169,7 +1163,6 @@
       calculatePrice();
     }
 
-    // Lógica mejorada: si no se activa modo individual, los inputs sueltos se suman como piezas extra
     function calculatePrice() {
       const qtyLapiz = document.getElementById('qty-lapiz') ? parseInt(document.getElementById('qty-lapiz').value) || 0 : 0;
       const qtyCirculo = document.getElementById('qty-circulo') ? parseInt(document.getElementById('qty-circulo').value) || 0 : 0;
@@ -1179,10 +1172,16 @@
       if (selectedPackage === 'individual') {
         basePrice = (qtyLapiz * 3) + (qtyCirculo * 5) + (qtyCuaderno * 4) + (qtyLibro * 6);
       } else {
-        // Paquete Chico/Grande seleccionado más las piezas adicionales
         const packagePrice = selectedPackage === 'chico' ? 260 : 340;
         const extraPrice = (qtyLapiz * 3) + (qtyCirculo * 5) + (qtyCuaderno * 4) + (qtyLibro * 6);
         basePrice = packagePrice + extraPrice;
+      }
+    }
+
+    function updateLiveSummary() {
+      const liveSumEl = document.getElementById('live-base-sum');
+      if (liveSumEl) {
+        liveSumEl.innerText = `$${basePrice.toFixed(2)} MXN`;
       }
     }
 
@@ -1203,15 +1202,15 @@
       if (selectedPackage === 'chico') {
         pkgText = 'PAQUETE CHICO (72 PZAS)';
         if (qtyLapiz || qtyCirculo || qtyCuaderno || qtyLibro) {
-          pkgText += ` + EXTRA (${qtyLapiz} Lap, ${qtyCirculo} Cir, ${qtyCuaderno} Cuad, ${qtyLibro} Lib)`;
+          pkgText += ` + ADICIONALES (${qtyLapiz} Lap, ${qtyCirculo} Cir, ${qtyCuaderno} Cuad, ${qtyLibro} Lib)`;
         }
       } else if (selectedPackage === 'grande') {
         pkgText = 'PAQUETE GRANDE (120 PZAS)';
         if (qtyLapiz || qtyCirculo || qtyCuaderno || qtyLibro) {
-          pkgText += ` + EXTRA (${qtyLapiz} Lap, ${qtyCirculo} Cir, ${qtyCuaderno} Cuad, ${qtyLibro} Lib)`;
+          pkgText += ` + ADICIONALES (${qtyLapiz} Lap, ${qtyCirculo} Cir, ${qtyCuaderno} Cuad, ${qtyLibro} Lib)`;
         }
       } else {
-        pkgText = `ARMADO INDIVIDUAL (${qtyLapiz} Lápices, ${qtyCirculo} Círculos, ${qtyCuaderno} Cuadernos, ${qtyLibro} Libros)`;
+        pkgText = `SET PERSONALIZADO (${qtyLapiz} Lápices, ${qtyCirculo} Círculos, ${qtyCuaderno} Cuadernos, ${qtyLibro} Libros)`;
       }
       const ticketPackageEl = document.getElementById('ticket-package');
       if (ticketPackageEl) ticketPackageEl.innerText = pkgText;
@@ -1277,7 +1276,6 @@
       if (ticketTotalEl) ticketTotalEl.innerText = `$${totalSum.toFixed(2)} MXN`;
     }
 
-    // Captura segura adaptada para carrete de celular
     function captureOrder() {
       const ticketElement = document.getElementById('ticket-capture');
       if (!ticketElement) return;
@@ -1285,7 +1283,7 @@
       showToast("📸 Generando imagen de alta calidad...", "success");
 
       const options = {
-        backgroundColor: '#FFE100', // Sostiene el amarillo sólido
+        backgroundColor: '#FFE100',
         scale: 2, 
         logging: false,
         useCORS: true
@@ -1294,7 +1292,6 @@
       html2canvas(ticketElement, options).then(canvas => {
         const imgData = canvas.toDataURL('image/png');
         
-        // MOSTRAR VENTANA MODAL PARA GUARDADO MANUAL DIRECTO EN CARRETE
         const modal = document.getElementById('save-modal');
         const modalImg = document.getElementById('modal-captured-img');
         if (modal && modalImg) {
@@ -1302,7 +1299,6 @@
           modal.classList.remove('hidden');
           modal.classList.add('flex');
           
-          // Forzar descarga de respaldo en descargas generales
           const link = document.createElement('a');
           link.download = `Pedido_FosfoKids.png`;
           link.href = imgData;
@@ -1325,7 +1321,6 @@
         modal.classList.add('hidden');
       }
     }
-
   </script>
 </body>
 </html>
