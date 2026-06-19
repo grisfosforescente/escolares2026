@@ -97,7 +97,7 @@
     </div>
   </div>
 
-  <!-- MODAL DE INSTALACIÓN (Ahora luce idéntico al modal de guardado) -->
+  <!-- POPUP "AGREGA A PANTALLA" (A2HS) PARA CELULARES - REDISEÑADO CON ALTO CONTRASTE -->
   <div id="install-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50 transition-opacity duration-300">
     <div class="bg-white rounded-2xl p-5 max-w-sm w-full shadow-comic-black border-4 border-black text-center space-y-4">
       <div class="flex justify-between items-center border-b-4 border-black pb-2">
@@ -109,8 +109,9 @@
           <i data-lucide="x" class="w-6 h-6"></i>
         </button>
       </div>
+      
       <p class="text-xs font-black text-slate-800 uppercase tracking-wide leading-tight">
-        Para una mejor experiencia y no perder tu catálogo, agrega este sitio a tus aplicaciones de inicio.
+        📱 Para una mejor experiencia, agrega el configurador de catálogo directamente a tus aplicaciones de pantalla de inicio.
       </p>
       
       <!-- Instrucciones Dinámicas Multi-Navegador -->
@@ -229,10 +230,10 @@
             <p class="text-[9px] font-black text-gray-500 uppercase tracking-wider mb-2">Ideal para Preescolar/Kínder</p>
             
             <ul class="text-[10px] font-black text-gray-800 space-y-1 border-t border-black/20 pt-2">
-              <li class="flex justify-between items-center bg-white p-1 border"><span>✏️ Lápices (5x1cm)</span> <span class="bg-[#FFE100] px-1 border-l">38</span></li>
-              <li class="flex justify-between items-center bg-white p-1 border"><span>📔 Cuadernos (4x3cm)</span> <span class="bg-[#FFE100] px-1 border-l">14</span></li>
-              <li class="flex justify-between items-center bg-white p-1 border"><span>📚 Libros (7x5cm)</span> <span class="bg-[#FFE100] px-1 border-l">12</span></li>
-              <li class="flex justify-between items-center bg-white p-1 border"><span>🍽️ Utensilios (5cm)</span> <span class="bg-[#FFE100] px-1 border-l">8</span></li>
+              <li class="flex justify-between items-center bg-white p-1 border"><span><img src="icn lapices.png" class="h-4 inline-block mr-1" alt="Lápis"> Lápis (5x1cm)</span> <span class="bg-[#FFE100] px-1 border-l">38</span></li>
+              <li class="flex justify-between items-center bg-white p-1 border"><span><img src="icn cuadernos.png" class="h-4 inline-block mr-1" alt="Cadernos"> Cadernos (4x3cm)</span> <span class="bg-[#FFE100] px-1 border-l">14</span></li>
+              <li class="flex justify-between items-center bg-white p-1 border"><span><img src="icn libros.png" class="h-4 inline-block mr-1" alt="Livros"> Livros (7x5cm)</span> <span class="bg-[#FFE100] px-1 border-l">12</span></li>
+              <li class="flex justify-between items-center bg-white p-1 border"><span><img src="icn circulares.png" class="h-4 inline-block mr-1" alt="Circulares"> Circulares (5cm)</span> <span class="bg-[#FFE100] px-1 border-l">8</span></li>
             </ul>
             <div class="mt-2 flex justify-end">
               <span id="badge-pkg-chico" class="bg-[#00D4FF] border border-black text-black font-black px-2 py-0.5 text-[9px] uppercase hidden rounded">¡ELEGIDO! ✓</span>
@@ -248,10 +249,10 @@
             <p class="text-xs font-black text-gray-700 uppercase tracking-wider mb-2">Ideal para Primaria/Secundaria</p>
             
             <ul class="text-[10px] font-black text-gray-800 space-y-1 border-t border-black/20 pt-2">
-              <li class="flex justify-between items-center bg-white p-1 border"><span>✏️ Lápices (5x1cm)</span> <span class="bg-[#FFE100] px-1 border-l">60</span></li>
-              <li class="flex justify-between items-center bg-white p-1 border"><span>📔 Cuadernos (4x3cm)</span> <span class="bg-[#FFE100] px-1 border-l">25</span></li>
-              <li class="flex justify-between items-center bg-white p-1 border"><span>📚 Libros (7x5cm)</span> <span class="bg-[#FFE100] px-1 border-l">20</span></li>
-              <li class="flex justify-between items-center bg-white p-1 border"><span>🍽️ Utensilios (5cm)</span> <span class="bg-[#FFE100] px-1 border-l">15</span></li>
+              <li class="flex justify-between items-center bg-white p-1 border"><span><img src="icn lapices.png" class="h-4 inline-block mr-1" alt="Lápis"> Lápis (5x1cm)</span> <span class="bg-[#FFE100] px-1 border-l">60</span></li>
+              <li class="flex justify-between items-center bg-white p-1 border"><span><img src="icn cuadernos.png" class="h-4 inline-block mr-1" alt="Cadernos"> Cadernos (4x3cm)</span> <span class="bg-[#FFE100] px-1 border-l">25</span></li>
+              <li class="flex justify-between items-center bg-white p-1 border"><span><img src="icn libros.png" class="h-4 inline-block mr-1" alt="Livros"> Livros (7x5cm)</span> <span class="bg-[#FFE100] px-1 border-l">20</span></li>
+              <li class="flex justify-between items-center bg-white p-1 border"><span><img src="icn circulares.png" class="h-4 inline-block mr-1" alt="Circulares"> Circulares (5cm)</span> <span class="bg-[#FFE100] px-1 border-l">15</span></li>
             </ul>
             <div class="mt-2 flex justify-end">
               <span id="badge-pkg-grande" class="bg-[#00D4FF] border border-black text-black font-black px-2 py-0.5 text-[9px] uppercase hidden rounded">¡ELEGIDO! ✓</span>
@@ -294,8 +295,9 @@
           
           <div class="bg-white border-2 border-black p-2.5 flex flex-col items-center justify-between text-center rounded-xl shadow-comic-sm">
             <span class="text-[8px] font-black bg-[#FF2E93] text-white px-1.5 py-0.5 border border-black mb-1 rounded-sm">5 x 1 cm</span>
-            <span class="text-xs font-black text-black uppercase">Lápices</span>
-            <span class="text-[10px] font-black text-[#FF2E93]">$3.00 c/u</span>
+            <img src="icn lapices.png" class="h-8 object-contain mb-1" alt="Lápis">
+            <span class="text-xs font-black text-black uppercase">Lápis</span>
+            <span class="text-[10px] font-black text-[#FF2E93]">$2.00 c/u</span>
             <div class="flex items-center mt-2 gap-1.5">
               <button type="button" onclick="adjustQty('lapiz', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black rounded-md">-</button>
               <input type="number" id="qty-lapiz" value="0" min="0" onchange="calculatePrice()" class="w-8 text-center border-2 border-black text-xs font-black py-0.5">
@@ -305,8 +307,9 @@
 
           <div class="bg-white border-2 border-black p-2.5 flex flex-col items-center justify-between text-center rounded-xl shadow-comic-sm">
             <span class="text-[8px] font-black bg-[#00D4FF] text-black px-1.5 py-0.5 border border-black mb-1 rounded-sm">Ø 5 cm</span>
-            <span class="text-xs font-black text-black uppercase">Círculos</span>
-            <span class="text-[10px] font-black text-[#FF2E93]">$5.00 c/u</span>
+            <img src="icn circulares.png" class="h-8 object-contain mb-1" alt="Circulares">
+            <span class="text-xs font-black text-black uppercase">Circulares</span>
+            <span class="text-[10px] font-black text-[#FF2E93]">$4.00 c/u</span>
             <div class="flex items-center mt-2 gap-1.5">
               <button type="button" onclick="adjustQty('circulo', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black rounded-md">-</button>
               <input type="number" id="qty-circulo" value="0" min="0" onchange="calculatePrice()" class="w-8 text-center border-2 border-black text-xs font-black py-0.5">
@@ -316,8 +319,9 @@
 
           <div class="bg-white border-2 border-black p-2.5 flex flex-col items-center justify-between text-center rounded-xl shadow-comic-sm">
             <span class="text-[8px] font-black bg-[#FFE100] text-black px-1.5 py-0.5 border border-black mb-1 rounded-sm">4 x 3 cm</span>
-            <span class="text-xs font-black text-black uppercase">Cuadernos</span>
-            <span class="text-[10px] font-black text-[#FF2E93]">$4.00 c/u</span>
+            <img src="icn cuadernos.png" class="h-8 object-contain mb-1" alt="Cadernos">
+            <span class="text-xs font-black text-black uppercase">Cadernos</span>
+            <span class="text-[10px] font-black text-[#FF2E93]">$3.00 c/u</span>
             <div class="flex items-center mt-2 gap-1.5">
               <button type="button" onclick="adjustQty('cuaderno', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black rounded-md">-</button>
               <input type="number" id="qty-cuaderno" value="0" min="0" onchange="calculatePrice()" class="w-8 text-center border-2 border-black text-xs font-black py-0.5">
@@ -327,8 +331,9 @@
 
           <div class="bg-white border-2 border-black p-2.5 flex flex-col items-center justify-between text-center rounded-xl shadow-comic-sm">
             <span class="text-[8px] font-black bg-[#A55EEA] text-white px-1.5 py-0.5 border border-black mb-1 rounded-sm">7 x 5 cm</span>
-            <span class="text-xs font-black text-black uppercase">Libros</span>
-            <span class="text-[10px] font-black text-[#FF2E93]">$6.00 c/u</span>
+            <img src="icn libros.png" class="h-8 object-contain mb-1" alt="Livros">
+            <span class="text-xs font-black text-black uppercase">Livros</span>
+            <span class="text-[10px] font-black text-[#FF2E93]">$5.00 c/u</span>
             <div class="flex items-center mt-2 gap-1.5">
               <button type="button" onclick="adjustQty('libro', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black rounded-md">-</button>
               <input type="number" id="qty-libro" value="0" min="0" onchange="calculatePrice()" class="w-8 text-center border-2 border-black text-xs font-black py-0.5">
@@ -398,20 +403,20 @@
               <div onclick="selectMaterial('vinil_blanco_brillante', 0)" id="mat-vinil_blanco_brillante" class="border-2 border-black p-3 bg-white cursor-pointer select-none relative rounded-md">
                 <div class="absolute -top-3 -right-2 bg-[#00D4FF] text-black border-2 border-black font-black px-2 py-0.5 text-[8px] uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✓ ELEGIDO</div>
                 <h4 class="font-black text-xs text-black uppercase">Vinil Blanco Brillante</h4>
-                <p class="text-[9px] text-gray-500 uppercase mt-0.5">Sin costo extra</p>
+                <p class="text-[9px] text-[#39FF14] bg-black border border-black px-1.5 py-0.5 inline-block uppercase mt-1 shadow-comic-sm font-black tracking-wide">Sin costo extra</p>
               </div>
 
               <div onclick="selectMaterial('vinil_blanco_mate', 0)" id="mat-vinil_blanco_mate" class="border-2 border-black p-3 bg-white cursor-pointer select-none relative rounded-md">
                 <div class="absolute -top-3 -right-2 bg-[#00D4FF] text-black border-2 border-black font-black px-2 py-0.5 text-[8px] uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✓ ELEGIDO</div>
                 <h4 class="font-black text-xs text-black uppercase">Vinil Blanco Mate</h4>
-                <p class="text-[9px] text-gray-500 uppercase mt-0.5">Sin costo extra</p>
+                <p class="text-[9px] text-[#39FF14] bg-black border border-black px-1.5 py-0.5 inline-block uppercase mt-1 shadow-comic-sm font-black tracking-wide">Sin costo extra</p>
               </div>
 
               <div onclick="selectMaterial('vinil_holografico', 75)" id="mat-vinil_holografico" class="border-2 border-black p-3 bg-white cursor-pointer select-none relative overflow-hidden rounded-md">
                 <div class="absolute -top-3 -right-2 bg-[#00D4FF] text-black border-2 border-black font-black px-2 py-0.5 text-[8px] uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✓ ELEGIDO</div>
                 <div class="absolute inset-0 bg-gradient-to-tr from-pink-300 via-cyan-200 to-yellow-200 opacity-20 pointer-events-none"></div>
                 <h4 class="font-black text-xs text-black uppercase relative z-10">Vinil Holográfico</h4>
-                <p class="text-[9px] text-red-600 font-black mt-0.5">+$75.00 MXN</p>
+                <p class="text-[9px] text-red-600 font-black mt-0.5 relative z-10">+$75.00 MXN</p>
               </div>
 
             </div>
@@ -425,7 +430,7 @@
               <div onclick="selectLaminated('ninguno', 0)" id="lam-ninguno" class="border-2 border-black p-3 bg-white cursor-pointer select-none relative rounded-md">
                 <div class="absolute -top-3 -right-2 bg-[#FF2E93] text-white border-2 border-black font-black px-2 py-0.5 text-[8px] uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✓ ELEGIDO</div>
                 <h4 class="font-black text-xs text-black uppercase">Sin Laminar</h4>
-                <p class="text-[9px] text-gray-500 uppercase mt-0.5">Sin costo extra</p>
+                <p class="text-[9px] text-[#39FF14] bg-black border border-black px-1.5 py-0.5 inline-block uppercase mt-1 shadow-comic-sm font-black tracking-wide">Sin costo extra</p>
               </div>
 
               <div onclick="selectLaminated('brillante', 70)" id="lam-brillante" class="border-2 border-black p-3 bg-white cursor-pointer select-none relative rounded-md">
@@ -459,7 +464,7 @@
       <div id="step-content-4" class="step-pane hidden space-y-4">
         <div>
           <h2 class="font-comic text-2xl md:text-3xl text-black uppercase">
-            🎨 Paso 4: Elige tu Diseño
+            🎨 Paso 4: Elige el Diseño del Catálogo
           </h2>
           <p class="text-[11px] font-black text-gray-500 uppercase">Selecciona una página y haz clic en la etiqueta que más te guste para aplicarla.</p>
         </div>
@@ -579,14 +584,14 @@
       <div id="step-content-5" class="step-pane hidden space-y-4">
         <div>
           <h2 class="font-comic text-2xl md:text-3xl text-black uppercase">
-            🧾 Paso 5: Ticket de Pedido
+            🧾 Paso 5: Genera tu Ticket de Pedido
           </h2>
           <p class="text-[11px] font-black text-gray-500 uppercase">Confirma tu información y descarga el ticket para enviárselo a tu vendedor.</p>
         </div>
 
         <!-- TICKET ULTRA CONTRASTADO Y ATRACTIVO -->
         <div class="bg-[#FFE100] p-4 border-4 border-black relative rounded-2xl" id="ticket-capture">
-          <div class="absolute -top-3 right-4 bg-black text-white text-xs font-black px-4 py-1.5 border-2 border-white rotate-[2deg] uppercase tracking-wider shadow-comic-sm">
+          <div class="absolute -top-3 right-4 bg-black text-white text-xs font-black px-3 py-1 border-2 border-white rotate-[2deg] uppercase tracking-wider shadow-comic-sm">
             TICKET FOSFO KIDS
           </div>
           
@@ -635,7 +640,7 @@
               <div class="text-[10px] font-bold text-gray-700 italic mt-0.5 uppercase" id="ticket-child-extra">- SIN INFO ADICIONAL -</div>
             </div>
 
-            <!-- SECCIÓN TICKET DE PIEZAS ADICIONALES -->
+            <!-- SECCIÓN TICKET DE PIEZAS ADICIONALES (Se renderiza dinámicamente) -->
             <div id="ticket-extras-block" class="bg-white p-3 border-2 border-black shadow-comic-sm rounded-lg hidden mt-2">
               <div class="text-[9px] font-black uppercase text-gray-500 tracking-widest border-b border-black pb-1 mb-1.5">🧩 PIEZAS EXTRAS AGREGADAS</div>
               <ul class="text-[10px] font-black text-slate-800 space-y-0.5" id="ticket-extras-list">
@@ -661,7 +666,7 @@
               <!-- TOTAL NETO DE ALTO IMPACTO -->
               <div class="flex justify-between text-base font-black text-black pt-2 border-t-2 border-black mt-1">
                 <span class="uppercase">TOTAL A PAGAR:</span>
-                <span class="bg-black text-[#FFE100] px-2 py-0.5 text-xl font-comic rounded" id="ticket-total">$0.00 MXN</span>
+                <span class="bg-black text-[#FFE100] px-2 py-0.5 text-xl font-comic rounded border border-black shadow-comic-sm" id="ticket-total">$0.00 MXN</span>
               </div>
             </div>
           </div>
@@ -672,7 +677,7 @@
             <i data-lucide="download" class="w-6 h-6"></i> CAPTURAR PEDIDO (PNG)
           </button>
           <div class="bg-[#00D4FF] p-3 border-2 border-black text-center font-black text-xs uppercase shadow-comic-black rounded-lg leading-tight">
-            📢 COMPARTE LA CAPTURA GUARDADA EN TU GALERÍA CON TU VENDEDOR POR WHATSAPP PARA PROCESAR LA ORDEN.
+            📢 COMPARTE LA CAPTURA GUARDADA EN TU GALERÍA DIRECTAMENTE CON TU VENDEDOR POR WHATSAPP O REDES SOCIALES PARA PROCESAR TU ENTREGA.
           </div>
         </div>
 
@@ -705,7 +710,20 @@
     let activePage = 1;
     let activeDesignIndex = 1;
 
-    // === Mapeo detallado de diseños ===
+    // === LINKS DIRECTOS DE TUS CATÁLOGOS ===
+    const CATALOG_IMAGES = {
+      1: "1.png", 
+      2: "2.png",
+      3: "3.png",
+      4: "4.png",
+      5: "5.png",
+      6: "6.png",
+      7: "7.png",
+      8: "8.png",
+      9: "9.png"
+    };
+
+    // Mapeo detallado de diseños
     const catalogMapping = {
       1: {
         1: { id: 1, name: "Gabby's Dollhouse", cat: "tiernos" },
@@ -978,7 +996,34 @@
         showToast("🎨 Tema personalizado aplicado.");
     }
 
-    // NAVEGACIÓN DE PASOS (Scroll al inicio garantizado)
+    function filterCatalog(category, element) {
+      const currentPageMapping = catalogMapping[activePage];
+      if (!currentPageMapping) return;
+
+      Object.keys(currentPageMapping).forEach(cellIndex => {
+        const designInfo = currentPageMapping[cellIndex];
+        const cellEl = document.getElementById(`cell-${cellIndex}`);
+        if (cellEl) {
+          if (category === 'todos' || designInfo.cat === category) {
+            cellEl.style.opacity = "1";
+            cellEl.style.pointerEvents = "auto";
+          } else {
+            cellEl.style.opacity = "0.15";
+            cellEl.style.pointerEvents = "none";
+          }
+        }
+      });
+
+      const tabs = document.querySelectorAll('.cat-tab');
+      tabs.forEach(tab => {
+        tab.className = "cat-tab bg-white border-2 border-black px-3 py-1 text-xs font-black uppercase text-gray-500 shrink-0";
+      });
+      if (element) {
+        element.className = "cat-tab bg-[#FFE100] border-2 border-black px-3 py-1 text-xs font-black uppercase text-black shadow-comic-sm shrink-0";
+      }
+    }
+
+    // NAVEGACIÓN DE PASOS CON SCROLL AL TOP
     function goToStep(step) {
       if (step > currentStep && step > 3) {
         const clientNameInput = document.getElementById('input-client-name');
@@ -1223,6 +1268,26 @@
 
       const activeEl = document.getElementById(`mat-${material}`);
       if (activeEl) activeEl.classList.add('selected-card');
+      
+      // Regla exclusiva Vinil Holográfico: se lamina en Mate o va Sin Laminar
+      if (material === 'vinil_holografico') {
+        if (selectedLaminated === 'brillante') {
+          selectLaminated('mate', 70);
+          showToast("⚠️ El Vinil Holográfico no acepta Laminado Brillante.", "warning");
+        }
+        
+        const lamBrillante = document.getElementById('lam-brillante');
+        if(lamBrillante) { lamBrillante.style.opacity = '0.4'; lamBrillante.style.pointerEvents = 'none'; }
+        
+        const lamNinguno = document.getElementById('lam-ninguno');
+        if(lamNinguno) { lamNinguno.style.opacity = '1'; lamNinguno.style.pointerEvents = 'auto'; }
+      } else {
+        const lamNinguno = document.getElementById('lam-ninguno');
+        const lamBrillante = document.getElementById('lam-brillante');
+        if(lamNinguno) { lamNinguno.style.opacity = '1'; lamNinguno.style.pointerEvents = 'auto'; }
+        if(lamBrillante) { lamBrillante.style.opacity = '1'; lamBrillante.style.pointerEvents = 'auto'; }
+      }
+      
       calculatePrice();
     }
 
@@ -1248,10 +1313,10 @@
       const qtyLibro = document.getElementById('qty-libro') ? parseInt(document.getElementById('qty-libro').value) || 0 : 0;
 
       if (selectedPackage === 'individual') {
-        basePrice = (qtyLapiz * 3) + (qtyCirculo * 5) + (qtyCuaderno * 4) + (qtyLibro * 6);
+        basePrice = (qtyLapiz * 2) + (qtyCirculo * 4) + (qtyCuaderno * 3) + (qtyLibro * 5);
       } else {
         const packagePrice = selectedPackage === 'chico' ? 260 : 340;
-        const extraPrice = (qtyLapiz * 3) + (qtyCirculo * 5) + (qtyCuaderno * 4) + (qtyLibro * 6);
+        const extraPrice = (qtyLapiz * 2) + (qtyCirculo * 4) + (qtyCuaderno * 3) + (qtyLibro * 5);
         basePrice = packagePrice + extraPrice;
       }
     }
@@ -1283,32 +1348,32 @@
       let totalAdicionales = qtyLapiz + qtyCirculo + qtyCuaderno + qtyLibro;
 
       if (selectedPackage === 'chico') {
-        pkgText = 'PAQUETE CHICO (72 PZAS)';
-        if (totalAdicionales > 0) pkgText += ` + ADICIONALES`;
+        pkgText = 'PACOTE PEQUENO (72 PEÇAS)';
+        if (totalAdicionales > 0) pkgText += ` + ADICIONAIS`;
       } else if (selectedPackage === 'grande') {
-        pkgText = 'PAQUETE GRANDE (120 PZAS)';
-        if (totalAdicionales > 0) pkgText += ` + ADICIONALES`;
+        pkgText = 'PACOTE GRANDE (120 PEÇAS)';
+        if (totalAdicionales > 0) pkgText += ` + ADICIONAIS`;
       } else {
-        pkgText = `SET PERSONALIZADO (${qtyLapiz} Lápices, ${qtyCirculo} Círculos, ${qtyCuaderno} Cuadernos, ${qtyLibro} Libros)`;
+        pkgText = `CONJUNTO PERSONALIZADO (${qtyLapiz} Lápis, ${qtyCirculo} Circulares, ${qtyCuaderno} Cadernos, ${qtyLibro} Livros)`;
       }
       const ticketPackageEl = document.getElementById('ticket-package');
       if (ticketPackageEl) ticketPackageEl.innerText = pkgText;
 
-      // Actualizar Bloque de Extras en Ticket
+      // Atualizar Bloco de Extras no Ticket
       if (extrasBlock && extrasList) {
         extrasList.innerHTML = '';
         if (selectedPackage !== 'individual' && totalAdicionales > 0) {
-          if (qtyLapiz > 0) extrasList.innerHTML += `<li>✏️ ${qtyLapiz} Lápices extra</li>`;
-          if (qtyCirculo > 0) extrasList.innerHTML += `<li>🍽️ ${qtyCirculo} Círculos extra</li>`;
-          if (qtyCuaderno > 0) extrasList.innerHTML += `<li>📔 ${qtyCuaderno} Cuadernos extra</li>`;
-          if (qtyLibro > 0) extrasList.innerHTML += `<li>📚 ${qtyLibro} Libros extra</li>`;
+          if (qtyLapiz > 0) extrasList.innerHTML += `<li><img src="icn lapices.png" class="h-3 inline-block mr-1 align-text-bottom"> ${qtyLapiz} Lápis extra</li>`;
+          if (qtyCirculo > 0) extrasList.innerHTML += `<li><img src="icn circulares.png" class="h-3 inline-block mr-1 align-text-bottom"> ${qtyCirculo} Circulares extra</li>`;
+          if (qtyCuaderno > 0) extrasList.innerHTML += `<li><img src="icn cuadernos.png" class="h-3 inline-block mr-1 align-text-bottom"> ${qtyCuaderno} Cadernos extra</li>`;
+          if (qtyLibro > 0) extrasList.innerHTML += `<li><img src="icn libros.png" class="h-3 inline-block mr-1 align-text-bottom"> ${qtyLibro} Livros extra</li>`;
           extrasBlock.classList.remove('hidden');
         } else {
           extrasBlock.classList.add('hidden');
         }
       }
 
-      let designName = "Diseño Personalizado";
+      let designName = "Design Personalizado";
       if (activeDesignIndex === 'custom') {
           const customTheme = document.getElementById('input-custom-theme').value.trim();
           designName = `PERSONALIZADO: ${customTheme}`;
@@ -1371,53 +1436,50 @@
       const ticketElement = document.getElementById('ticket-capture');
       if (!ticketElement) return;
       
-      showToast("📸 Generando ticket...", "success");
+      showToast("📸 Generando imagen de alta calidad...", "success");
 
-      const options = {
-        backgroundColor: '#FFE100',
-        scale: 2, 
-        logging: false,
-        useCORS: true
-      };
+      // Forzar scroll al tope antes de capturar previene que la imagen se recorte en el teléfono móvil
+      window.scrollTo(0, 0);
 
-      html2canvas(ticketElement, options).then(canvas => {
-        const imgData = canvas.toDataURL('image/png');
-        
-        const modal = document.getElementById('save-modal');
-        const modalImg = document.getElementById('modal-captured-img');
-        if (modal && modalImg) {
-          modalImg.src = imgData;
-          modal.classList.remove('hidden');
-          modal.classList.add('flex');
-        }
-      }).catch(err => {
-        showToast("⚠️ Ocurrió un detalle. Toma captura manual al ticket.", "warning");
-        console.error("Error html2canvas:", err);
-      });
-    }
+      setTimeout(() => {
+        const options = {
+          backgroundColor: '#FFE100',
+          scale: 2, 
+          logging: false,
+          useCORS: true,
+          scrollY: -window.scrollY // Solución clave para evitar cortes extraños
+        };
 
-    // === FUNCIÓN DE COMPARTIR NATIVA ===
-    async function shareTicket() {
-      const imgEl = document.getElementById('modal-captured-img');
-      if (!imgEl || !imgEl.src) return;
-      
-      try {
-        const res = await fetch(imgEl.src);
-        const blob = await res.blob();
-        const file = new File([blob], 'Pedido_FosfoKids.png', { type: blob.type });
-        
-        if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-          await navigator.share({
-            title: 'Pedido Fosfo Kids',
-            text: 'Aquí está mi pedido de etiquetas de Fosfo Kids.',
-            files: [file]
-          });
-        } else {
-           showToast("⚠️ Tu navegador no soporta el compartido directo. Mantén presionada la imagen para guardarla en tu carrete.", "warning");
-        }
-      } catch(err) {
-        console.error("Error al compartir:", err);
-      }
+        html2canvas(ticketElement, options).then(canvas => {
+          const imgData = canvas.toDataURL('image/png', 1.0); // Forzar 100% de calidad PNG
+          
+          const modal = document.getElementById('save-modal');
+          const modalImg = document.getElementById('modal-captured-img');
+          if (modal && modalImg) {
+            modalImg.src = imgData;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            try {
+              // Nombre de archivo dinámico para evitar bloqueos por descargas repetidas
+              const randomSuffix = Math.floor(Math.random() * 10000);
+              const link = document.createElement('a');
+              link.download = `Pedido_FosfoKids_${randomSuffix}.png`;
+              link.href = imgData;
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+            } catch (e) {
+              console.warn("Fallo descarga auto, mostrando modal.");
+            }
+            
+            showToast("💾 ¡Mantén presionada la imagen para guardarla en tu carrete!");
+          }
+        }).catch(err => {
+          showToast("⚠️ Detalle al capturar. Toma captura manual al ticket.", "warning");
+          console.error("Error html2canvas:", err);
+        });
+      }, 300); // Pausa de 300ms para asegurar renderizado de pantalla
     }
 
     function closeSaveModal() {
