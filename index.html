@@ -47,9 +47,16 @@
 
     /* Animación para elemento seleccionado en la cuadrícula del catálogo */
     .selected-grid-cell {
-      border: 5px solid #FF2E93 !important;
-      background-color: rgba(255, 46, 147, 0.25);
-      box-shadow: 0 0 12px rgba(255, 46, 147, 0.8) !important;
+      border: 3px solid #00D4FF !important;
+      box-shadow: 0 0 0 2px #000, 0 0 15px rgba(0, 212, 255, 0.7) !important;
+      transform: scale(1.05);
+      z-index: 10;
+      border-radius: 8px;
+    }
+    
+    /* Mostrar la palomita solo cuando está seleccionado */
+    .selected-grid-cell .check-overlay {
+      display: flex !important;
     }
 
     /* SUPER CONTRASTE PARA MATERIALES Y LAMINADOS SELECCIONADOS */
@@ -66,7 +73,21 @@
 
     /* Estilo para las celdas del catálogo interactivo */
     .catalog-cell {
-      transition: all 0.15s ease-in-out;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 8px;
+    }
+    .catalog-cell:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      border: 2px dashed rgba(255, 46, 147, 0.6);
+    }
+    
+    /* Utilidad para esconder la barra de scroll nativa en el slider */
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
     
     /* Personalización de barra de desplazamiento */
@@ -127,38 +148,6 @@
       <button onclick="dismissInstallPrompt()" class="w-full bg-slate-100 hover:bg-slate-200 text-black font-black py-2.5 rounded-lg text-[10px] uppercase border-2 border-black">
         Quizás más tarde
       </button>
-    </div>
-  </div>
-
-  <!-- MODAL DE GUARDADO Y COMPARTIDO (Carrete / WhatsApp) -->
-  <div id="save-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50 transition-opacity duration-300">
-    <div class="bg-white rounded-2xl p-5 max-w-sm w-full shadow-comic-black border-4 border-black text-center space-y-4">
-      <div class="flex justify-between items-center border-b-4 border-black pb-2">
-        <div class="flex items-center gap-2">
-          <img src="fav.png" alt="Fosfo Kids Icon" class="w-8 h-8 object-contain rounded bg-slate-900 p-0.5 border border-black">
-          <span class="font-comic text-2xl text-black">💾 TU TICKET LISTO</span>
-        </div>
-        <button onclick="closeSaveModal()" class="text-slate-500 hover:text-black">
-          <i data-lucide="x" class="w-6 h-6"></i>
-        </button>
-      </div>
-      <p class="text-[10px] font-black text-slate-800 uppercase tracking-wide leading-tight">
-        📱 Presiona <span class="text-[#FF2E93]">"Compartir"</span> para enviarlo, o mantén presionada la imagen para guardarla directo en tus Fotos.
-      </p>
-      
-      <div class="border-4 border-black rounded-xl overflow-hidden bg-[#FFE100] p-2">
-        <img id="modal-captured-img" src="" class="w-full h-auto max-h-72 object-contain mx-auto" alt="Tu Ticket Fosfo Kids">
-      </div>
-      
-      <!-- Botones de Acción Múltiple -->
-      <div class="flex gap-2">
-        <button onclick="closeSaveModal()" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-black font-black py-2.5 rounded-lg text-[10px] uppercase border-2 border-black">
-          Cerrar
-        </button>
-        <button onclick="shareTicket()" class="w-2/3 bg-[#00D4FF] hover:bg-cyan-400 text-black font-black py-2.5 rounded-lg text-[10px] uppercase border-2 border-black shadow-comic-sm flex items-center justify-center gap-1.5">
-          <i data-lucide="share-2" class="w-4 h-4"></i> Compartir / Enviar
-        </button>
-      </div>
     </div>
   </div>
 
@@ -469,88 +458,105 @@
           <p class="text-[11px] font-black text-gray-500 uppercase">Selecciona una página y haz clic en la etiqueta que más te guste para aplicarla.</p>
         </div>
 
-        <!-- Selector de Páginas del Catálogo -->
-        <div class="bg-black p-2 border-2 border-black flex flex-col gap-1.5 shadow-comic-black rounded-xl font-sans-bold">
-          <span class="text-[10px] font-black text-white uppercase tracking-wider text-center">📖 Selecciona la Página:</span>
-          <div class="grid grid-cols-5 gap-1 font-sans-bold">
-            <button onclick="changeCatalogPage(1)" id="btn-page-1" class="page-tab-btn py-1.5 border border-white bg-neutral-800 text-white font-black text-[10px] uppercase rounded">Pág 1</button>
-            <button onclick="changeCatalogPage(2)" id="btn-page-2" class="page-tab-btn py-1.5 border border-white bg-neutral-800 text-white font-black text-[10px] uppercase rounded">Pág 2</button>
-            <button onclick="changeCatalogPage(3)" id="btn-page-3" class="page-tab-btn py-1.5 border border-white bg-neutral-800 text-white font-black text-[10px] uppercase rounded">Pág 3</button>
-            <button onclick="changeCatalogPage(4)" id="btn-page-4" class="page-tab-btn py-1.5 border border-white bg-neutral-800 text-white font-black text-[10px] uppercase rounded">Pág 4</button>
-            <button onclick="changeCatalogPage(5)" id="btn-page-5" class="page-tab-btn py-1.5 border border-white bg-neutral-800 text-white font-black text-[10px] uppercase rounded">Pág 5</button>
-            <button onclick="changeCatalogPage(6)" id="btn-page-6" class="page-tab-btn py-1.5 border border-white bg-neutral-800 text-white font-black text-[10px] uppercase rounded">Pág 6</button>
-            <button onclick="changeCatalogPage(7)" id="btn-page-7" class="page-tab-btn py-1.5 border border-white bg-neutral-800 text-white font-black text-[10px] uppercase rounded">Pág 7</button>
-            <button onclick="changeCatalogPage(8)" id="btn-page-8" class="page-tab-btn py-1.5 border border-white bg-neutral-800 text-white font-black text-[10px] uppercase rounded">Pág 8</button>
-            <button onclick="changeCatalogPage(9)" id="btn-page-9" class="page-tab-btn py-1.5 border border-white bg-neutral-800 text-white font-black text-[10px] uppercase rounded">Pág 9</button>
+        <!-- Selector de Páginas del Catálogo (Diseño Píldora Deslizable) -->
+        <div class="bg-white p-3 border-4 border-black mb-4 shadow-comic-black rounded-2xl">
+          <div class="flex items-center gap-2 mb-2.5">
+            <span class="text-[10px] font-black text-black uppercase tracking-wider bg-[#FFE100] px-2 py-0.5 border-2 border-black rotate-[-1deg] shadow-comic-sm">📖 Explora las páginas:</span>
+          </div>
+          <div class="flex overflow-x-auto gap-2 pb-2 snap-x hide-scrollbar">
+            <button onclick="changeCatalogPage(1)" id="btn-page-1" class="page-tab-btn snap-start shrink-0 px-4 py-2 border-2 border-black bg-[#FF2E93] text-white font-black text-[11px] uppercase rounded-full shadow-comic-sm transition-colors">Pág 1</button>
+            <button onclick="changeCatalogPage(2)" id="btn-page-2" class="page-tab-btn snap-start shrink-0 px-4 py-2 border-2 border-black bg-white text-gray-400 font-black text-[11px] uppercase rounded-full hover:bg-gray-50 transition-colors">Pág 2</button>
+            <button onclick="changeCatalogPage(3)" id="btn-page-3" class="page-tab-btn snap-start shrink-0 px-4 py-2 border-2 border-black bg-white text-gray-400 font-black text-[11px] uppercase rounded-full hover:bg-gray-50 transition-colors">Pág 3</button>
+            <button onclick="changeCatalogPage(4)" id="btn-page-4" class="page-tab-btn snap-start shrink-0 px-4 py-2 border-2 border-black bg-white text-gray-400 font-black text-[11px] uppercase rounded-full hover:bg-gray-50 transition-colors">Pág 4</button>
+            <button onclick="changeCatalogPage(5)" id="btn-page-5" class="page-tab-btn snap-start shrink-0 px-4 py-2 border-2 border-black bg-white text-gray-400 font-black text-[11px] uppercase rounded-full hover:bg-gray-50 transition-colors">Pág 5</button>
+            <button onclick="changeCatalogPage(6)" id="btn-page-6" class="page-tab-btn snap-start shrink-0 px-4 py-2 border-2 border-black bg-white text-gray-400 font-black text-[11px] uppercase rounded-full hover:bg-gray-50 transition-colors">Pág 6</button>
+            <button onclick="changeCatalogPage(7)" id="btn-page-7" class="page-tab-btn snap-start shrink-0 px-4 py-2 border-2 border-black bg-white text-gray-400 font-black text-[11px] uppercase rounded-full hover:bg-gray-50 transition-colors">Pág 7</button>
+            <button onclick="changeCatalogPage(8)" id="btn-page-8" class="page-tab-btn snap-start shrink-0 px-4 py-2 border-2 border-black bg-white text-gray-400 font-black text-[11px] uppercase rounded-full hover:bg-gray-50 transition-colors">Pág 8</button>
+            <button onclick="changeCatalogPage(9)" id="btn-page-9" class="page-tab-btn snap-start shrink-0 px-4 py-2 border-2 border-black bg-white text-gray-400 font-black text-[11px] uppercase rounded-full hover:bg-gray-50 transition-colors">Pág 9</button>
           </div>
         </div>
 
-        <div class="relative border-4 border-black bg-neutral-900 mx-auto overflow-hidden shadow-comic-black select-none w-full max-w-sm aspect-[3/4] rounded-xl">
-          <!-- Cargador Dinámico -->
-          <img id="active-catalog-img" src="1.png" class="w-full h-full block object-fill" alt="Página de Catálogo Fosfo Kids" onerror="handleImageError(this)">
-          
-          <div class="absolute top-[17%] bottom-[8%] left-[9%] right-[9%] grid grid-cols-3 grid-rows-5 gap-[1.5%]">
-            <!-- Celdas Interactivas Sólidas con números sutiles -->
-            <button onclick="selectGridDesign(1, 1, 1)" id="cell-1" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
-              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-1">#1</span>
-            </button>
-            <button onclick="selectGridDesign(2, 1, 2)" id="cell-2" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
-              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-2">#2</span>
-            </button>
-            <button onclick="selectGridDesign(3, 1, 3)" id="cell-3" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
-              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-3">#3</span>
-            </button>
+        <!-- Marco estilo "Tablet" para la imagen -->
+        <div class="bg-[#00D4FF] p-3 border-4 border-black rounded-2xl shadow-comic-black mx-auto max-w-sm mb-4">
+          <div class="relative border-4 border-black bg-white overflow-hidden w-full aspect-[3/4] rounded-xl shadow-inner">
+            <!-- Cargador Dinámico -->
+            <img id="active-catalog-img" src="1.png" class="w-full h-full block object-fill" alt="Página de Catálogo Fosfo Kids" onerror="handleImageError(this)">
             
-            <button onclick="selectGridDesign(4, 2, 1)" id="cell-4" class="catalog-cell border-2 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
-              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-4">#4</span>
-            </button>
-            <button onclick="selectGridDesign(5, 2, 2)" id="cell-5" class="catalog-cell border-2 border-transparent hover:border-white/90 rounded relative group cursor-pointer">
-              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-5">#5</span>
-            </button>
-            <button onclick="selectGridDesign(6, 2, 3)" id="cell-6" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
-              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-6">#6</span>
-            </button>
-            
-            <button onclick="selectGridDesign(7, 3, 1)" id="cell-7" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
-              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-7">#7</span>
-            </button>
-            <button onclick="selectGridDesign(8, 3, 2)" id="cell-8" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
-              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-8">#8</span>
-            </button>
-            <button onclick="selectGridDesign(9, 3, 3)" id="cell-9" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
-              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-9">#9</span>
-            </button>
-            
-            <button onclick="selectGridDesign(10, 4, 1)" id="cell-10" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
-              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-10">#10</span>
-            </button>
-            <button onclick="selectGridDesign(11, 4, 2)" id="cell-11" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
-              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-11">#11</span>
-            </button>
-            <button onclick="selectGridDesign(12, 4, 3)" id="cell-12" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
-              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-12">#12</span>
-            </button>
-            
-            <button onclick="selectGridDesign(13, 5, 1)" id="cell-13" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
-              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-13">#13</span>
-            </button>
-            <button onclick="selectGridDesign(14, 5, 2)" id="cell-14" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
-              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-14">#14</span>
-            </button>
-            <button onclick="selectGridDesign(15, 5, 3)" id="cell-15" class="catalog-cell border-2 border-transparent hover:border-white/80 rounded relative group cursor-pointer">
-              <span class="absolute top-0.5 left-1 bg-black/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded border border-white/20 select-none" id="cell-label-15">#15</span>
-            </button>
+            <div class="absolute top-[17%] bottom-[8%] left-[9%] right-[9%] grid grid-cols-3 grid-rows-5 gap-[1.5%]">
+              <!-- Celdas Interactivas con Diseño Premium -->
+              <button onclick="selectGridDesign(1, 1, 1)" id="cell-1" class="catalog-cell border-2 border-transparent relative group cursor-pointer">
+                <span class="absolute -top-1.5 -left-1.5 bg-black text-white text-[9px] font-black px-1.5 py-0.5 rounded-full border-2 border-white shadow-sm z-20 transition-transform group-hover:scale-110" id="cell-label-1">#1</span>
+                <div class="hidden check-overlay absolute inset-0 items-center justify-center bg-black/20 backdrop-blur-[1px] rounded-md z-10"><div class="bg-[#00D4FF] border-2 border-black rounded-full p-1 shadow-comic-sm"><i data-lucide="check" class="w-3 h-3 text-black"></i></div></div>
+              </button>
+              <button onclick="selectGridDesign(2, 1, 2)" id="cell-2" class="catalog-cell border-2 border-transparent relative group cursor-pointer">
+                <span class="absolute -top-1.5 -left-1.5 bg-black text-white text-[9px] font-black px-1.5 py-0.5 rounded-full border-2 border-white shadow-sm z-20 transition-transform group-hover:scale-110" id="cell-label-2">#2</span>
+                <div class="hidden check-overlay absolute inset-0 items-center justify-center bg-black/20 backdrop-blur-[1px] rounded-md z-10"><div class="bg-[#00D4FF] border-2 border-black rounded-full p-1 shadow-comic-sm"><i data-lucide="check" class="w-3 h-3 text-black"></i></div></div>
+              </button>
+              <button onclick="selectGridDesign(3, 1, 3)" id="cell-3" class="catalog-cell border-2 border-transparent relative group cursor-pointer">
+                <span class="absolute -top-1.5 -left-1.5 bg-black text-white text-[9px] font-black px-1.5 py-0.5 rounded-full border-2 border-white shadow-sm z-20 transition-transform group-hover:scale-110" id="cell-label-3">#3</span>
+                <div class="hidden check-overlay absolute inset-0 items-center justify-center bg-black/20 backdrop-blur-[1px] rounded-md z-10"><div class="bg-[#00D4FF] border-2 border-black rounded-full p-1 shadow-comic-sm"><i data-lucide="check" class="w-3 h-3 text-black"></i></div></div>
+              </button>
+              <button onclick="selectGridDesign(4, 2, 1)" id="cell-4" class="catalog-cell border-2 border-transparent relative group cursor-pointer">
+                <span class="absolute -top-1.5 -left-1.5 bg-black text-white text-[9px] font-black px-1.5 py-0.5 rounded-full border-2 border-white shadow-sm z-20 transition-transform group-hover:scale-110" id="cell-label-4">#4</span>
+                <div class="hidden check-overlay absolute inset-0 items-center justify-center bg-black/20 backdrop-blur-[1px] rounded-md z-10"><div class="bg-[#00D4FF] border-2 border-black rounded-full p-1 shadow-comic-sm"><i data-lucide="check" class="w-3 h-3 text-black"></i></div></div>
+              </button>
+              <button onclick="selectGridDesign(5, 2, 2)" id="cell-5" class="catalog-cell border-2 border-transparent relative group cursor-pointer">
+                <span class="absolute -top-1.5 -left-1.5 bg-black text-white text-[9px] font-black px-1.5 py-0.5 rounded-full border-2 border-white shadow-sm z-20 transition-transform group-hover:scale-110" id="cell-label-5">#5</span>
+                <div class="hidden check-overlay absolute inset-0 items-center justify-center bg-black/20 backdrop-blur-[1px] rounded-md z-10"><div class="bg-[#00D4FF] border-2 border-black rounded-full p-1 shadow-comic-sm"><i data-lucide="check" class="w-3 h-3 text-black"></i></div></div>
+              </button>
+              <button onclick="selectGridDesign(6, 2, 3)" id="cell-6" class="catalog-cell border-2 border-transparent relative group cursor-pointer">
+                <span class="absolute -top-1.5 -left-1.5 bg-black text-white text-[9px] font-black px-1.5 py-0.5 rounded-full border-2 border-white shadow-sm z-20 transition-transform group-hover:scale-110" id="cell-label-6">#6</span>
+                <div class="hidden check-overlay absolute inset-0 items-center justify-center bg-black/20 backdrop-blur-[1px] rounded-md z-10"><div class="bg-[#00D4FF] border-2 border-black rounded-full p-1 shadow-comic-sm"><i data-lucide="check" class="w-3 h-3 text-black"></i></div></div>
+              </button>
+              <button onclick="selectGridDesign(7, 3, 1)" id="cell-7" class="catalog-cell border-2 border-transparent relative group cursor-pointer">
+                <span class="absolute -top-1.5 -left-1.5 bg-black text-white text-[9px] font-black px-1.5 py-0.5 rounded-full border-2 border-white shadow-sm z-20 transition-transform group-hover:scale-110" id="cell-label-7">#7</span>
+                <div class="hidden check-overlay absolute inset-0 items-center justify-center bg-black/20 backdrop-blur-[1px] rounded-md z-10"><div class="bg-[#00D4FF] border-2 border-black rounded-full p-1 shadow-comic-sm"><i data-lucide="check" class="w-3 h-3 text-black"></i></div></div>
+              </button>
+              <button onclick="selectGridDesign(8, 3, 2)" id="cell-8" class="catalog-cell border-2 border-transparent relative group cursor-pointer">
+                <span class="absolute -top-1.5 -left-1.5 bg-black text-white text-[9px] font-black px-1.5 py-0.5 rounded-full border-2 border-white shadow-sm z-20 transition-transform group-hover:scale-110" id="cell-label-8">#8</span>
+                <div class="hidden check-overlay absolute inset-0 items-center justify-center bg-black/20 backdrop-blur-[1px] rounded-md z-10"><div class="bg-[#00D4FF] border-2 border-black rounded-full p-1 shadow-comic-sm"><i data-lucide="check" class="w-3 h-3 text-black"></i></div></div>
+              </button>
+              <button onclick="selectGridDesign(9, 3, 3)" id="cell-9" class="catalog-cell border-2 border-transparent relative group cursor-pointer">
+                <span class="absolute -top-1.5 -left-1.5 bg-black text-white text-[9px] font-black px-1.5 py-0.5 rounded-full border-2 border-white shadow-sm z-20 transition-transform group-hover:scale-110" id="cell-label-9">#9</span>
+                <div class="hidden check-overlay absolute inset-0 items-center justify-center bg-black/20 backdrop-blur-[1px] rounded-md z-10"><div class="bg-[#00D4FF] border-2 border-black rounded-full p-1 shadow-comic-sm"><i data-lucide="check" class="w-3 h-3 text-black"></i></div></div>
+              </button>
+              <button onclick="selectGridDesign(10, 4, 1)" id="cell-10" class="catalog-cell border-2 border-transparent relative group cursor-pointer">
+                <span class="absolute -top-1.5 -left-1.5 bg-black text-white text-[9px] font-black px-1.5 py-0.5 rounded-full border-2 border-white shadow-sm z-20 transition-transform group-hover:scale-110" id="cell-label-10">#10</span>
+                <div class="hidden check-overlay absolute inset-0 items-center justify-center bg-black/20 backdrop-blur-[1px] rounded-md z-10"><div class="bg-[#00D4FF] border-2 border-black rounded-full p-1 shadow-comic-sm"><i data-lucide="check" class="w-3 h-3 text-black"></i></div></div>
+              </button>
+              <button onclick="selectGridDesign(11, 4, 2)" id="cell-11" class="catalog-cell border-2 border-transparent relative group cursor-pointer">
+                <span class="absolute -top-1.5 -left-1.5 bg-black text-white text-[9px] font-black px-1.5 py-0.5 rounded-full border-2 border-white shadow-sm z-20 transition-transform group-hover:scale-110" id="cell-label-11">#11</span>
+                <div class="hidden check-overlay absolute inset-0 items-center justify-center bg-black/20 backdrop-blur-[1px] rounded-md z-10"><div class="bg-[#00D4FF] border-2 border-black rounded-full p-1 shadow-comic-sm"><i data-lucide="check" class="w-3 h-3 text-black"></i></div></div>
+              </button>
+              <button onclick="selectGridDesign(12, 4, 3)" id="cell-12" class="catalog-cell border-2 border-transparent relative group cursor-pointer">
+                <span class="absolute -top-1.5 -left-1.5 bg-black text-white text-[9px] font-black px-1.5 py-0.5 rounded-full border-2 border-white shadow-sm z-20 transition-transform group-hover:scale-110" id="cell-label-12">#12</span>
+                <div class="hidden check-overlay absolute inset-0 items-center justify-center bg-black/20 backdrop-blur-[1px] rounded-md z-10"><div class="bg-[#00D4FF] border-2 border-black rounded-full p-1 shadow-comic-sm"><i data-lucide="check" class="w-3 h-3 text-black"></i></div></div>
+              </button>
+              <button onclick="selectGridDesign(13, 5, 1)" id="cell-13" class="catalog-cell border-2 border-transparent relative group cursor-pointer">
+                <span class="absolute -top-1.5 -left-1.5 bg-black text-white text-[9px] font-black px-1.5 py-0.5 rounded-full border-2 border-white shadow-sm z-20 transition-transform group-hover:scale-110" id="cell-label-13">#13</span>
+                <div class="hidden check-overlay absolute inset-0 items-center justify-center bg-black/20 backdrop-blur-[1px] rounded-md z-10"><div class="bg-[#00D4FF] border-2 border-black rounded-full p-1 shadow-comic-sm"><i data-lucide="check" class="w-3 h-3 text-black"></i></div></div>
+              </button>
+              <button onclick="selectGridDesign(14, 5, 2)" id="cell-14" class="catalog-cell border-2 border-transparent relative group cursor-pointer">
+                <span class="absolute -top-1.5 -left-1.5 bg-black text-white text-[9px] font-black px-1.5 py-0.5 rounded-full border-2 border-white shadow-sm z-20 transition-transform group-hover:scale-110" id="cell-label-14">#14</span>
+                <div class="hidden check-overlay absolute inset-0 items-center justify-center bg-black/20 backdrop-blur-[1px] rounded-md z-10"><div class="bg-[#00D4FF] border-2 border-black rounded-full p-1 shadow-comic-sm"><i data-lucide="check" class="w-3 h-3 text-black"></i></div></div>
+              </button>
+              <button onclick="selectGridDesign(15, 5, 3)" id="cell-15" class="catalog-cell border-2 border-transparent relative group cursor-pointer">
+                <span class="absolute -top-1.5 -left-1.5 bg-black text-white text-[9px] font-black px-1.5 py-0.5 rounded-full border-2 border-white shadow-sm z-20 transition-transform group-hover:scale-110" id="cell-label-15">#15</span>
+                <div class="hidden check-overlay absolute inset-0 items-center justify-center bg-black/20 backdrop-blur-[1px] rounded-md z-10"><div class="bg-[#00D4FF] border-2 border-black rounded-full p-1 shadow-comic-sm"><i data-lucide="check" class="w-3 h-3 text-black"></i></div></div>
+              </button>
+            </div>
           </div>
         </div>
 
-        <div class="p-3 border-2 border-black bg-slate-100 flex items-center gap-3 rounded-xl">
-          <div class="w-10 h-10 bg-black text-[#FFE100] flex items-center justify-center text-lg border border-black rounded shrink-0">
-            🏷️
+        <!-- Info del diseño súper pop -->
+        <div class="p-3 border-4 border-black bg-black flex items-center gap-3 rounded-2xl shadow-comic-sm">
+          <div class="w-12 h-12 bg-[#FF2E93] text-white flex items-center justify-center border-2 border-white rounded-full shrink-0 shadow-comic-sm">
+            <i data-lucide="palette" class="w-6 h-6"></i>
           </div>
-          <div class="min-w-0">
-            <p class="text-[9px] font-black text-gray-500 uppercase tracking-widest">Diseño seleccionado:</p>
-            <p class="font-black text-xs text-black uppercase truncate" id="live-design-name">- NINGUNO -</p>
-            <p class="text-[9px] font-bold text-[#FF2E93] uppercase" id="live-design-coordinates"></p>
+          <div class="min-w-0 flex-grow">
+            <p class="text-[9px] font-black text-[#00D4FF] uppercase tracking-widest mb-0.5">Diseño Seleccionado:</p>
+            <p class="font-comic text-xl text-[#FFE100] uppercase truncate leading-none" id="live-design-name">- NINGUNO -</p>
+            <p class="text-[9px] font-bold text-white uppercase mt-1" id="live-design-coordinates"></p>
           </div>
         </div>
 
@@ -930,17 +936,17 @@
       
       const buttons = document.querySelectorAll('.page-tab-btn');
       buttons.forEach(btn => {
-        btn.className = "page-tab-btn py-1.5 border border-white bg-neutral-800 text-white font-black text-[10px] uppercase rounded";
+        btn.className = "page-tab-btn snap-start shrink-0 px-4 py-2 border-2 border-black bg-white text-gray-400 font-black text-[11px] uppercase rounded-full hover:bg-gray-50 transition-colors";
       });
       
       const activeBtn = document.getElementById(`btn-page-${pageNum}`);
       if (activeBtn) {
-        activeBtn.className = "page-tab-btn py-1.5 border border-white bg-[#FF2E93] text-white font-black text-[10px] uppercase shadow-comic-sm rounded";
+        activeBtn.className = "page-tab-btn snap-start shrink-0 px-4 py-2 border-2 border-black bg-[#FF2E93] text-white font-black text-[11px] uppercase rounded-full shadow-comic-sm transition-colors";
       }
 
       const cells = document.querySelectorAll('.catalog-cell');
       cells.forEach(cell => {
-        cell.className = "catalog-cell border-2 border-transparent hover:border-white/80 rounded transition-all relative group cursor-pointer";
+        cell.className = "catalog-cell border-2 border-transparent relative group cursor-pointer";
       });
 
       const currentPageMapping = catalogMapping[activePage];
@@ -1436,9 +1442,9 @@
       const ticketElement = document.getElementById('ticket-capture');
       if (!ticketElement) return;
       
-      showToast("📸 Generando imagen de alta calidad...", "success");
+      showToast("📸 Descargando tu ticket...", "success");
 
-      // Forzar scroll al tope antes de capturar previene que la imagen se recorte en el teléfono móvil
+      // Forzar scroll al tope antes de capturar previene recortes en celulares
       window.scrollTo(0, 0);
 
       setTimeout(() => {
@@ -1453,49 +1459,21 @@
         html2canvas(ticketElement, options).then(canvas => {
           const imgData = canvas.toDataURL('image/png', 1.0); // Forzar 100% de calidad PNG
           
-          const modal = document.getElementById('save-modal');
-          const modalImg = document.getElementById('modal-captured-img');
-          if (modal && modalImg) {
-            modalImg.src = imgData;
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-          }
+          // Descarga directa a un solo clic
+          const randomSuffix = Math.floor(Math.random() * 10000);
+          const link = document.createElement('a');
+          link.download = `Pedido_FosfoKids_${randomSuffix}.png`;
+          link.href = imgData;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          
+          showToast("💾 ¡Ticket descargado exitosamente!");
         }).catch(err => {
           showToast("⚠️ Detalle al capturar. Toma captura manual al ticket.", "warning");
           console.error("Error html2canvas:", err);
         });
       }, 300); // Pausa de 300ms para asegurar renderizado de pantalla
-    }
-
-    async function shareTicket() {
-      const imgEl = document.getElementById('modal-captured-img');
-      if (!imgEl || !imgEl.src) return;
-      
-      try {
-        const res = await fetch(imgEl.src);
-        const blob = await res.blob();
-        const file = new File([blob], 'Pedido_FosfoKids.png', { type: blob.type });
-        
-        if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-          await navigator.share({
-            title: 'Pedido Fosfo Kids',
-            text: 'Aquí está mi pedido de etiquetas de Fosfo Kids.',
-            files: [file]
-          });
-        } else {
-           showToast("⚠️ Tu navegador no soporta el compartido directo. Mantén presionada la imagen para guardarla en tu carrete.", "warning");
-        }
-      } catch(err) {
-        console.error("Error al compartir:", err);
-      }
-    }
-
-    function closeSaveModal() {
-      const modal = document.getElementById('save-modal');
-      if (modal) {
-        modal.classList.remove('flex');
-        modal.classList.add('hidden');
-      }
     }
   </script>
 </body>
