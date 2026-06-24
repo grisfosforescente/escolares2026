@@ -1391,41 +1391,43 @@
       if (!ticketElement) return;
 
       if (typeof html2canvas === 'undefined') {
-        showToast("⏳ Cargando herramienta de captura...", "warning");
+        showToast("⏳ Cargando, intenta de nuevo.", "warning");
         return;
       }
       
-      showToast("📸 Procesando tu ticket...", "success");
+      showToast("📸 Descargando ticket...", "success");
 
-      // Forzar scroll al tope antes de capturar previene recortes en celulares
-      window.scrollTo(0, 0);
+      // Opciones ultra básicas, sin inventos
+      const options = {
+        backgroundColor: '#ffffff',
+        scale: 2, 
+        useCORS: true
+      };
 
-      setTimeout(() => {
-        const options = {
-          backgroundColor: '#ffffff', // Fondo blanco garantizado
-          scale: 2, 
-          logging: false,
-          useCORS: true,
-          scrollY: -window.scrollY // Clave para evitar el bug de corte de pantalla
-        };
-
-        html2canvas(ticketElement, options).then(canvas => {
-          const imgData = canvas.toDataURL('image/png', 1.0);
+      html2canvas(ticketElement, options).then(canvas => {
+        // Convertimos el canvas a un archivo real (Blob) para que los celulares no lo bloqueen
+        canvas.toBlob(function(blob) {
+          const fileUrl = URL.createObjectURL(blob);
+          const randomNum = Math.floor(Math.random() * 10000);
           
-          const randomSuffix = Math.floor(Math.random() * 10000);
           const link = document.createElement('a');
-          link.download = `Pedido_FosfoKids_${randomSuffix}.png`;
-          link.href = imgData;
+          link.download = `Pedido_FosfoKids_${randomNum}.png`;
+          link.href = fileUrl;
+          
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
           
-          showToast("💾 ¡Ticket descargado exitosamente!");
-        }).catch(err => {
-          showToast("⚠️ Detalle al capturar. Toma captura manual al ticket.", "warning");
-          console.error("Error html2canvas:", err);
-        });
-      }, 300);
+          // Limpiamos la memoria
+          URL.revokeObjectURL(fileUrl);
+          
+          showToast("💾 ¡Ticket descargado con éxito!");
+        }, 'image/png');
+        
+      }).catch(err => {
+        showToast("⚠️ Error. Toma captura manual.", "warning");
+        console.error(err);
+      });
     }
   </script>
 </body>
