@@ -422,16 +422,16 @@
                 <p class="text-[9px] text-[#39FF14] bg-black border border-black px-1.5 py-0.5 inline-block uppercase mt-1 shadow-comic-sm font-black tracking-wide">Sin costo extra</p>
               </div>
 
-              <div onclick="selectLaminated('brillante', 70)" id="lam-brillante" class="border-2 border-black p-3 bg-white cursor-pointer select-none relative rounded-md">
+              <div onclick="selectLaminated('brillante', 20)" id="lam-brillante" class="border-2 border-black p-3 bg-white cursor-pointer select-none relative rounded-md">
                 <div class="absolute -top-3 -right-2 bg-[#FF2E93] text-white border-2 border-black font-black px-2 py-0.5 text-[8px] uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✓ ELEGIDO</div>
                 <h4 class="font-black text-xs text-black uppercase">Laminado Brillante</h4>
-                <p class="text-[9px] text-red-600 font-black mt-0.5">+$70.00 MXN</p>
+                <p class="text-[9px] text-red-600 font-black mt-0.5">+$20.00 MXN</p>
               </div>
 
-              <div onclick="selectLaminated('mate', 70)" id="lam-mate" class="border-2 border-black p-3 bg-white cursor-pointer select-none relative rounded-md">
+              <div onclick="selectLaminated('mate', 30)" id="lam-mate" class="border-2 border-black p-3 bg-white cursor-pointer select-none relative rounded-md">
                 <div class="absolute -top-3 -right-2 bg-[#FF2E93] text-white border-2 border-black font-black px-2 py-0.5 text-[8px] uppercase hidden check-indicator shadow-comic-sm rotate-3 z-20">✓ ELEGIDO</div>
                 <h4 class="font-black text-xs text-black uppercase">Laminado Mate</h4>
-                <p class="text-[9px] text-red-600 font-black mt-0.5">+$70.00 MXN</p>
+                <p class="text-[9px] text-red-600 font-black mt-0.5">+$30.00 MXN</p>
               </div>
 
             </div>
@@ -1234,7 +1234,7 @@
       // Regla exclusiva Vinil Holográfico: se lamina en Mate o va Sin Laminar
       if (material === 'vinil_holografico') {
         if (selectedLaminated === 'brillante') {
-          selectLaminated('mate', 70);
+          selectLaminated('mate', 30);
           showToast("⚠️ El Vinil Holográfico no acepta Laminado Brillante.", "warning");
         }
         
