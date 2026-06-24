@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Fosfo Kids - Catálogo y Pedido de Etiquetas</title>
   
   <!-- Favicon Oficial con tu logotipo fav.png -->
@@ -14,14 +14,37 @@
   
   <!-- Google Fonts de alto impacto -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Plus+Jakarta+Sans:wght@600;800;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Plus+Jakarta+Sans:wght@600;800;900&display=swap" rel="stylesheet" crossorigin="anonymous">
   
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   
-  <!-- html2canvas para capturar el pedido en PNG -->
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <!-- html2canvas: Regresamos a la vieja confiable que NUNCA falla -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <script>
+    // Variables globales
+    window.activePage = 1;
+    window.imgErrorCount = 0;
+    window.EXTENSIONS = ['.png', '.PNG', '.jpg', '.JPG', '.jpeg', '.JPEG'];
+
+    function handleImageError(imgElement) {
+      window.imgErrorCount++;
+      if (window.imgErrorCount < window.EXTENSIONS.length) {
+        const nextExt = window.EXTENSIONS[window.imgErrorCount];
+        const newSrc = `${window.activePage}${nextExt}`;
+        console.log(`Error de carga en página ${window.activePage}. Intentando con: ${nextExt}`);
+        imgElement.src = newSrc;
+      } else {
+        imgElement.src = 'https://placehold.co/600x800/000000/ffffff?text=Fosfo+Kids+2026';
+        imgElement.onerror = null;
+        if (typeof showToast === 'function') {
+          showToast("⚠️ Nota: No pudimos cargar el catálogo.", "warning");
+        }
+      }
+    }
+  </script>
 
   <style>
     .font-comic {
@@ -43,6 +66,30 @@
       background-color: #f8fafc;
       background-image: radial-gradient(#cbd5e1 2px, transparent 2px);
       background-size: 16px 16px;
+    }
+
+    /* === NUEVO DISEÑO APP NATIVE PARA LA BARRA DE NAVEGACIÓN === */
+    .step-btn-active {
+      background-color: #FFE100;
+      color: black;
+      border-color: black;
+      border-width: 2px;
+      border-radius: 0.5rem;
+      box-shadow: 3px 3px 0px 0px #000000;
+      transform: scale(1.05);
+      z-index: 10;
+    }
+    .step-btn-inactive {
+      background-color: transparent;
+      color: #9ca3af; /* gray-400 */
+      border-color: transparent;
+      border-width: 2px;
+    }
+    .step-btn-inactive .step-icon {
+      filter: grayscale(100%) opacity(50%);
+    }
+    .step-btn-active .step-icon {
+      filter: none;
     }
 
     /* Animación para elemento seleccionado en la cuadrícula del catálogo */
@@ -81,28 +128,17 @@
       border: 2px dashed rgba(255, 46, 147, 0.6);
     }
     
-    /* Utilidad para esconder la barra de scroll nativa en el slider */
-    .hide-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .hide-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-    
     /* Personalización de barra de desplazamiento */
     ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
     }
     ::-webkit-scrollbar-track {
-      background: #f1f5f9;
-      border-radius: 10px;
+      background: transparent;
     }
     ::-webkit-scrollbar-thumb {
       background: #FF2E93;
       border-radius: 10px;
-      border: 2px solid #f1f5f9;
     }
   </style>
 </head>
@@ -118,57 +154,20 @@
     </div>
   </div>
 
-  <!-- POPUP "AGREGA A PANTALLA" (A2HS) PARA CELULARES - REDISEÑADO CON ALTO CONTRASTE -->
-  <div id="install-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50 transition-opacity duration-300">
-    <div class="bg-white rounded-2xl p-5 max-w-sm w-full shadow-comic-black border-4 border-black text-center space-y-4">
-      <div class="flex justify-between items-center border-b-4 border-black pb-2">
-        <div class="flex items-center gap-2">
-          <img src="fav.png" alt="Fosfo Kids Icon" class="w-8 h-8 object-contain rounded bg-slate-900 p-0.5 border border-black">
-          <span class="font-comic text-2xl text-black">📲 INSTALAR APP</span>
-        </div>
-        <button onclick="dismissInstallPromptPermanently()" class="text-slate-500 hover:text-black">
-          <i data-lucide="x" class="w-6 h-6"></i>
-        </button>
-      </div>
-      
-      <p class="text-xs font-black text-slate-800 uppercase tracking-wide leading-tight">
-        📱 Para una mejor experiencia, agrega el configurador de catálogo directamente a tus aplicaciones de pantalla de inicio.
-      </p>
-      
-      <!-- Instrucciones Dinámicas Multi-Navegador -->
-      <div id="install-instructions" class="text-[10px] text-left font-black uppercase text-black bg-[#00D4FF] p-3 border-2 border-black rounded-lg leading-snug">
-        <!-- Rellenado dinámicamente por JS -->
-      </div>
-      
-      <!-- Botón Directo (Para Android Chrome / Edge) -->
-      <button id="btn-install-app" onclick="triggerPWAInstall()" class="hidden w-full bg-[#FFE100] hover:bg-yellow-400 text-black font-black uppercase py-2.5 border-2 border-black shadow-comic-sm text-xs rounded-lg">
-        ¡Instalar App Automáticamente!
-      </button>
-
-      <button onclick="dismissInstallPrompt()" class="w-full bg-slate-100 hover:bg-slate-200 text-black font-black py-2.5 rounded-lg text-[10px] uppercase border-2 border-black">
-        Quizás más tarde
-      </button>
-    </div>
-  </div>
-
-  <!-- MODAL PREGUNTA EXTRAS (Intermedio entre Paso 1 y Paso 2) -->
+  <!-- POPUP DE PREGUNTA EXTRAS ANTES DEL PASO 2 -->
   <div id="extras-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50 transition-opacity duration-300">
-    <div class="bg-[#FFE100] rounded-2xl p-5 max-w-sm w-full shadow-comic-black border-4 border-black text-center space-y-4">
-      <div class="flex justify-center mb-1">
-        <div class="w-16 h-16 bg-white border-4 border-black rounded-full flex items-center justify-center text-3xl shadow-comic-sm">
-          🤔
-        </div>
-      </div>
-      <h3 class="font-comic text-3xl text-black uppercase leading-tight">¿QUIERES AGREGAR MÁS ETIQUETAS?</h3>
-      <p class="text-[10px] font-black text-slate-800 uppercase tracking-wide leading-tight">
+    <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-comic-black border-4 border-black text-center space-y-4">
+      <div class="text-4xl mb-2">🤔</div>
+      <h3 class="font-comic text-2xl text-black leading-none uppercase tracking-wide">¿QUIERES AGREGAR MÁS ETIQUETAS?</h3>
+      <p class="text-xs font-black text-slate-600 uppercase tracking-tight leading-tight">
         Tu paquete base ya está elegido. ¿Deseas sumar piezas extra sueltas a tu pedido?
       </p>
       
-      <div class="flex flex-col gap-3 mt-2">
-        <button onclick="answerExtras(true)" class="w-full bg-[#00D4FF] hover:bg-cyan-400 text-black font-black uppercase py-3 border-4 border-black shadow-comic-sm text-sm rounded-xl transition-transform active:scale-95">
+      <div class="flex flex-col gap-3 pt-2">
+        <button onclick="answerExtras(true)" class="w-full bg-[#FFE100] hover:bg-yellow-400 text-black font-black uppercase py-3.5 border-4 border-black shadow-comic-sm text-sm rounded-xl active:scale-95 transition-transform">
           SÍ, AGREGAR MÁS
         </button>
-        <button onclick="answerExtras(false)" class="w-full bg-white hover:bg-slate-100 text-black font-black uppercase py-3 border-4 border-black shadow-comic-sm text-sm rounded-xl transition-transform active:scale-95">
+        <button onclick="answerExtras(false)" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-black uppercase py-3 border-2 border-black text-xs rounded-xl active:scale-95 transition-transform">
           NO, PASAR A DATOS
         </button>
       </div>
@@ -197,35 +196,41 @@
   <!-- CONTENEDOR PRINCIPAL CENTRADO -->
   <main class="w-full max-w-lg mx-auto px-3 mt-4 flex flex-col gap-4 font-sans-bold">
     
-    <!-- NAVEGACIÓN DE PASOS DE ALTO CONTRASTE -->
-    <div class="bg-white border-2 border-black p-2 shadow-comic-black flex justify-between items-center gap-1 overflow-x-auto rounded-lg hide-scrollbar">
-      <button onclick="goToStep(1)" id="btn-step-1" class="px-2.5 py-1.5 border border-black font-black text-[10px] uppercase bg-[#FFE100] text-black shrink-0 rounded-md">
-        1. Paquetes
+    <!-- NUEVA NAVEGACIÓN DE PASOS (App-Like, sin Scroll) -->
+    <div class="bg-white border-4 border-black p-1 shadow-comic-black flex justify-between items-stretch gap-0.5 rounded-xl w-full mb-2">
+      <button onclick="goToStep(1)" id="btn-step-1" class="step-btn step-btn-active flex-1 flex flex-col items-center justify-center py-2 px-1 font-black text-[8px] sm:text-[10px] uppercase transition-all duration-200">
+        <span class="step-icon text-base sm:hidden mb-0.5 leading-none">🎒</span>
+        <span class="hidden sm:block">1. Paquetes</span>
+        <span class="block sm:hidden text-[7px] mt-0.5">Paquetes</span>
       </button>
-      <div class="h-0.5 bg-black flex-grow min-w-[5px]"></div>
-      <button onclick="goToStep(2)" id="btn-step-2" class="px-2.5 py-1.5 border border-black font-black text-[10px] uppercase bg-white text-gray-400 shrink-0 rounded-md">
-        2. ¿Más?
+      <button onclick="goToStep(2)" id="btn-step-2" class="step-btn step-btn-inactive flex-1 flex flex-col items-center justify-center py-2 px-1 font-black text-[8px] sm:text-[10px] uppercase transition-all duration-200">
+        <span class="step-icon text-base sm:hidden mb-0.5 leading-none">➕</span>
+        <span class="hidden sm:block">2. ¿Más?</span>
+        <span class="block sm:hidden text-[7px] mt-0.5">¿Más?</span>
       </button>
-      <div class="h-0.5 bg-black flex-grow min-w-[5px]"></div>
-      <button onclick="goToStep(3)" id="btn-step-3" class="px-2.5 py-1.5 border border-black font-black text-[10px] uppercase bg-white text-gray-400 shrink-0 rounded-md">
-        3. Datos
+      <button onclick="goToStep(3)" id="btn-step-3" class="step-btn step-btn-inactive flex-1 flex flex-col items-center justify-center py-2 px-1 font-black text-[8px] sm:text-[10px] uppercase transition-all duration-200">
+        <span class="step-icon text-base sm:hidden mb-0.5 leading-none">✏️</span>
+        <span class="hidden sm:block">3. Datos</span>
+        <span class="block sm:hidden text-[7px] mt-0.5">Datos</span>
       </button>
-      <div class="h-0.5 bg-black flex-grow min-w-[5px]"></div>
-      <button onclick="goToStep(4)" id="btn-step-4" class="px-2.5 py-1.5 border border-black font-black text-[10px] uppercase bg-white text-gray-400 shrink-0 rounded-md">
-        4. Diseño
+      <button onclick="goToStep(4)" id="btn-step-4" class="step-btn step-btn-inactive flex-1 flex flex-col items-center justify-center py-2 px-1 font-black text-[8px] sm:text-[10px] uppercase transition-all duration-200">
+        <span class="step-icon text-base sm:hidden mb-0.5 leading-none">🎨</span>
+        <span class="hidden sm:block">4. Diseño</span>
+        <span class="block sm:hidden text-[7px] mt-0.5">Diseño</span>
       </button>
-      <div class="h-0.5 bg-black flex-grow min-w-[5px]"></div>
-      <button onclick="goToStep(5)" id="btn-step-5" class="px-2.5 py-1.5 border border-black font-black text-[10px] uppercase bg-white text-gray-400 shrink-0 rounded-md">
-        5. Ticket
+      <button onclick="goToStep(5)" id="btn-step-5" class="step-btn step-btn-inactive flex-1 flex flex-col items-center justify-center py-2 px-1 font-black text-[8px] sm:text-[10px] uppercase transition-all duration-200">
+        <span class="step-icon text-base sm:hidden mb-0.5 leading-none">🧾</span>
+        <span class="hidden sm:block">5. Ticket</span>
+        <span class="block sm:hidden text-[7px] mt-0.5">Ticket</span>
       </button>
     </div>
 
     <!-- PANEL CONTENEDOR DEL FORMULARIO -->
-    <div class="bg-white border-4 border-black p-4 shadow-comic-black relative w-full rounded-2xl">
+    <div class="bg-white border-4 border-black p-4 sm:p-6 shadow-comic-black relative w-full rounded-2xl">
       
       <!-- PASO 1: SELECCIÓN DE PAQUETES -->
       <div id="step-content-1" class="step-pane space-y-4">
-        <div class="text-center sm:text-left">
+        <div class="text-center sm:text-left mb-2">
           <h2 class="font-comic text-2xl md:text-3xl text-black uppercase">
             🎒 Paso 1: Elige tu Paquete
           </h2>
@@ -287,10 +292,10 @@
           </div>
         </div>
 
-        <div class="mt-6 flex justify-end pt-2">
-          <!-- Modificado para lanzar la pregunta de extras en vez de ir directo al Paso 2 -->
-          <button onclick="showExtrasPrompt()" class="bg-[#FFE100] text-black font-comic text-xl px-6 py-2.5 border-4 border-black shadow-comic-black hover:translate-y-0.5 active:translate-y-1 transition-all flex items-center gap-1.5 uppercase rounded-xl">
-            Siguiente Paso <i data-lucide="arrow-right" class="w-5 h-5"></i>
+        <!-- Botón de acción principal Chunk/Gordo -->
+        <div class="mt-6 pt-2 w-full">
+          <button onclick="showExtrasPrompt()" class="w-full bg-[#FFE100] text-black font-comic text-2xl px-6 py-4 border-4 border-black shadow-comic-black active:scale-95 transition-transform flex items-center justify-center gap-2 uppercase rounded-xl">
+            Siguiente Paso <i data-lucide="arrow-right" class="w-6 h-6"></i>
           </button>
         </div>
       </div>
@@ -312,10 +317,10 @@
             <img src="icn lapices.png" class="h-8 object-contain mb-1" alt="Lápices">
             <span class="text-xs font-black text-black uppercase">Lápices</span>
             <span class="text-[10px] font-black text-[#FF2E93]">$2.00 c/u</span>
-            <div class="flex items-center mt-2 gap-1.5">
-              <button type="button" onclick="adjustQty('lapiz', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black rounded-md">-</button>
-              <input type="number" id="qty-lapiz" value="0" min="0" onchange="calculatePrice()" class="w-8 text-center border-2 border-black text-xs font-black py-0.5">
-              <button type="button" onclick="adjustQty('lapiz', 5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black rounded-md">+</button>
+            <div class="flex items-center mt-2 gap-1.5 w-full justify-center">
+              <button type="button" onclick="adjustQty('lapiz', -5)" class="bg-black text-white w-7 h-7 flex items-center justify-center font-black rounded-md text-lg active:scale-90">-</button>
+              <input type="number" id="qty-lapiz" value="0" min="0" onchange="calculatePrice()" class="w-10 text-center border-2 border-black text-sm font-black py-0.5">
+              <button type="button" onclick="adjustQty('lapiz', 5)" class="bg-black text-white w-7 h-7 flex items-center justify-center font-black rounded-md text-lg active:scale-90">+</button>
             </div>
           </div>
 
@@ -324,10 +329,10 @@
             <img src="icn circulares.png" class="h-8 object-contain mb-1" alt="Circulares">
             <span class="text-xs font-black text-black uppercase">Circulares</span>
             <span class="text-[10px] font-black text-[#FF2E93]">$4.00 c/u</span>
-            <div class="flex items-center mt-2 gap-1.5">
-              <button type="button" onclick="adjustQty('circulo', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black rounded-md">-</button>
-              <input type="number" id="qty-circulo" value="0" min="0" onchange="calculatePrice()" class="w-8 text-center border-2 border-black text-xs font-black py-0.5">
-              <button type="button" onclick="adjustQty('circulo', 5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black rounded-md">+</button>
+            <div class="flex items-center mt-2 gap-1.5 w-full justify-center">
+              <button type="button" onclick="adjustQty('circulo', -5)" class="bg-black text-white w-7 h-7 flex items-center justify-center font-black rounded-md text-lg active:scale-90">-</button>
+              <input type="number" id="qty-circulo" value="0" min="0" onchange="calculatePrice()" class="w-10 text-center border-2 border-black text-sm font-black py-0.5">
+              <button type="button" onclick="adjustQty('circulo', 5)" class="bg-black text-white w-7 h-7 flex items-center justify-center font-black rounded-md text-lg active:scale-90">+</button>
             </div>
           </div>
 
@@ -336,10 +341,10 @@
             <img src="icn cuadernos.png" class="h-8 object-contain mb-1" alt="Cuadernos">
             <span class="text-xs font-black text-black uppercase">Cuadernos</span>
             <span class="text-[10px] font-black text-[#FF2E93]">$3.00 c/u</span>
-            <div class="flex items-center mt-2 gap-1.5">
-              <button type="button" onclick="adjustQty('cuaderno', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black rounded-md">-</button>
-              <input type="number" id="qty-cuaderno" value="0" min="0" onchange="calculatePrice()" class="w-8 text-center border-2 border-black text-xs font-black py-0.5">
-              <button type="button" onclick="adjustQty('cuaderno', 5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black rounded-md">+</button>
+            <div class="flex items-center mt-2 gap-1.5 w-full justify-center">
+              <button type="button" onclick="adjustQty('cuaderno', -5)" class="bg-black text-white w-7 h-7 flex items-center justify-center font-black rounded-md text-lg active:scale-90">-</button>
+              <input type="number" id="qty-cuaderno" value="0" min="0" onchange="calculatePrice()" class="w-10 text-center border-2 border-black text-sm font-black py-0.5">
+              <button type="button" onclick="adjustQty('cuaderno', 5)" class="bg-black text-white w-7 h-7 flex items-center justify-center font-black rounded-md text-lg active:scale-90">+</button>
             </div>
           </div>
 
@@ -348,25 +353,26 @@
             <img src="icn libros.png" class="h-8 object-contain mb-1" alt="Libros">
             <span class="text-xs font-black text-black uppercase">Libros</span>
             <span class="text-[10px] font-black text-[#FF2E93]">$5.00 c/u</span>
-            <div class="flex items-center mt-2 gap-1.5">
-              <button type="button" onclick="adjustQty('libro', -5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black rounded-md">-</button>
-              <input type="number" id="qty-libro" value="0" min="0" onchange="calculatePrice()" class="w-8 text-center border-2 border-black text-xs font-black py-0.5">
-              <button type="button" onclick="adjustQty('libro', 5)" class="bg-black text-white w-6 h-6 flex items-center justify-center font-black rounded-md">+</button>
+            <div class="flex items-center mt-2 gap-1.5 w-full justify-center">
+              <button type="button" onclick="adjustQty('libro', -5)" class="bg-black text-white w-7 h-7 flex items-center justify-center font-black rounded-md text-lg active:scale-90">-</button>
+              <input type="number" id="qty-libro" value="0" min="0" onchange="calculatePrice()" class="w-10 text-center border-2 border-black text-sm font-black py-0.5">
+              <button type="button" onclick="adjustQty('libro', 5)" class="bg-black text-white w-7 h-7 flex items-center justify-center font-black rounded-md text-lg active:scale-90">+</button>
             </div>
           </div>
 
         </div>
 
-        <div class="p-3 border-2 border-black bg-slate-50 flex justify-between items-center rounded-xl">
-          <span class="text-[10px] uppercase font-black text-gray-500 tracking-wider">Monto preliminar:</span>
-          <span class="font-comic text-xl text-black" id="live-base-sum">$260.00 MXN</span>
+        <div class="p-4 border-4 border-black bg-slate-50 flex justify-between items-center rounded-xl">
+          <span class="text-xs uppercase font-black text-gray-500 tracking-wider">Monto preliminar:</span>
+          <span class="font-comic text-2xl text-black" id="live-base-sum">$260.00 MXN</span>
         </div>
 
-        <div class="flex justify-between pt-2">
-          <button onclick="goToStep(1)" class="bg-white text-black font-black px-4 py-2 border-2 border-black shadow-comic-black flex items-center gap-1.5 uppercase text-xs rounded-xl">
+        <!-- Botones de Navegación Robustos -->
+        <div class="flex gap-2 pt-4 w-full">
+          <button onclick="goToStep(1)" class="w-1/3 bg-white text-black font-black py-3 border-4 border-black shadow-comic-sm flex justify-center items-center gap-1 uppercase text-[10px] rounded-xl active:scale-95 transition-transform">
             <i data-lucide="arrow-left" class="w-4 h-4"></i> Atrás
           </button>
-          <button onclick="goToStep(3)" class="bg-[#FFE100] text-black font-comic text-xl px-6 py-2.5 border-4 border-black shadow-comic-black flex items-center gap-1.5 uppercase rounded-xl">
+          <button onclick="goToStep(3)" class="w-2/3 bg-[#FFE100] text-black font-comic text-xl py-3 border-4 border-black shadow-comic-sm flex justify-center items-center gap-1.5 uppercase rounded-xl active:scale-95 transition-transform">
             Siguiente <i data-lucide="arrow-right" class="w-5 h-5"></i>
           </button>
         </div>
@@ -383,35 +389,35 @@
 
         <div class="space-y-4">
           
-          <div class="border-2 border-black p-3.5 bg-slate-50 space-y-3 rounded-xl">
-            <h3 class="text-xs font-black text-black uppercase border-b-2 border-black pb-1">👤 Datos del Cliente & Etiquetas:</h3>
+          <div class="border-2 border-black p-4 bg-slate-50 space-y-3 rounded-xl">
+            <h3 class="text-sm font-black text-black uppercase border-b-2 border-black pb-1">👤 Datos del Cliente & Etiquetas:</h3>
             
             <div>
-              <label class="block text-[10px] font-black text-black uppercase mb-1">Nombre del Cliente (Quien compra):</label>
-              <input type="text" id="input-client-name" placeholder="Ej. Carlos Mendoza" class="w-full border-2 border-black px-3 py-2 text-xs font-black uppercase bg-white outline-none rounded-md">
+              <label class="block text-xs font-black text-black uppercase mb-1">Nombre del Cliente (Quien compra):</label>
+              <input type="text" id="input-client-name" placeholder="Ej. Carlos Mendoza" class="w-full border-2 border-black px-3 py-2.5 text-sm font-black uppercase bg-white outline-none focus:border-[#FF2E93] rounded-md transition-colors">
             </div>
 
             <div class="border-t-2 border-black border-dashed my-4"></div>
 
             <div>
-              <label class="block text-[10px] font-black text-black uppercase mb-1">Nombre a Imprimir en Etiquetas:</label>
-              <input type="text" id="input-name" placeholder="Ej. ELA REYES LUJAN" class="w-full border-2 border-black px-3 py-2 text-xs font-black uppercase bg-white outline-none rounded-md">
+              <label class="block text-xs font-black text-black uppercase mb-1">Nombre a Imprimir en Etiquetas:</label>
+              <input type="text" id="input-name" placeholder="Ej. ELA REYES LUJAN" class="w-full border-2 border-black px-3 py-2.5 text-sm font-black uppercase bg-white outline-none focus:border-[#00D4FF] rounded-md transition-colors">
             </div>
 
             <div>
-              <label class="block text-[10px] font-black text-black uppercase mb-1">Grado, Grupo o Colegio (Opcional):</label>
-              <input type="text" id="input-grade" placeholder="Ej. 2º GRADO" class="w-full border-2 border-black px-3 py-2 text-xs font-black uppercase bg-white outline-none rounded-md">
+              <label class="block text-xs font-black text-black uppercase mb-1">Grado, Grupo o Colegio (Opcional):</label>
+              <input type="text" id="input-grade" placeholder="Ej. 2º GRADO" class="w-full border-2 border-black px-3 py-2.5 text-sm font-black uppercase bg-white outline-none focus:border-[#00D4FF] rounded-md transition-colors">
             </div>
 
             <div>
-              <label class="block text-[10px] font-black text-black uppercase mb-1">Información Adicional (Opcional):</label>
-              <textarea id="input-extra" placeholder="Ej. MATERIA: ESPAÑOL" class="w-full border-2 border-black px-3 py-1.5 text-xs font-black uppercase bg-white outline-none h-14 resize-none rounded-md"></textarea>
+              <label class="block text-xs font-black text-black uppercase mb-1">Información Adicional (Opcional):</label>
+              <textarea id="input-extra" placeholder="Ej. MATERIA: ESPAÑOL" class="w-full border-2 border-black px-3 py-2 text-sm font-black uppercase bg-white outline-none focus:border-[#00D4FF] h-16 resize-none rounded-md transition-colors"></textarea>
             </div>
           </div>
 
           <!-- Bloque de Materiales -->
-          <div class="border-2 border-black p-3.5 bg-slate-50 space-y-3 rounded-xl">
-            <h3 class="text-xs font-black text-black uppercase border-b-2 border-black pb-1">🎨 Tipo de Vinil Base:</h3>
+          <div class="border-2 border-black p-4 bg-slate-50 space-y-3 rounded-xl">
+            <h3 class="text-sm font-black text-black uppercase border-b-2 border-black pb-1">🎨 Tipo de Vinil Base:</h3>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
               
               <div onclick="selectMaterial('vinil_blanco_brillante', 0)" id="mat-vinil_blanco_brillante" class="border-2 border-black p-3 bg-white cursor-pointer select-none relative rounded-md">
@@ -437,8 +443,8 @@
           </div>
 
           <!-- Bloque de Laminados -->
-          <div class="border-2 border-black p-3.5 bg-slate-50 space-y-3 rounded-xl">
-            <h3 class="text-xs font-black text-black uppercase border-b-2 border-black pb-1">🛡️ Laminado Protector:</h3>
+          <div class="border-2 border-black p-4 bg-slate-50 space-y-3 rounded-xl">
+            <h3 class="text-sm font-black text-black uppercase border-b-2 border-black pb-1">🛡️ Laminado Protector:</h3>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
               
               <div onclick="selectLaminated('ninguno', 0)" id="lam-ninguno" class="border-2 border-black p-3 bg-white cursor-pointer select-none relative rounded-md">
@@ -464,11 +470,11 @@
 
         </div>
 
-        <div class="flex justify-between pt-2">
-          <button onclick="goToStep(2)" class="bg-white text-black font-black px-4 py-2 border-2 border-black shadow-comic-black flex items-center gap-1.5 uppercase text-xs rounded-xl">
+        <div class="flex gap-2 pt-4 w-full">
+          <button onclick="goToStep(2)" class="w-1/3 bg-white text-black font-black py-3 border-4 border-black shadow-comic-sm flex justify-center items-center gap-1 uppercase text-[10px] rounded-xl active:scale-95 transition-transform">
             <i data-lucide="arrow-left" class="w-4 h-4"></i> Atrás
           </button>
-          <button onclick="goToStep(4)" class="bg-[#FFE100] text-black font-comic text-xl px-6 py-2.5 border-4 border-black shadow-comic-black flex items-center gap-1.5 uppercase rounded-xl">
+          <button onclick="goToStep(4)" class="w-2/3 bg-[#FFE100] text-black font-comic text-xl py-3 border-4 border-black shadow-comic-sm flex justify-center items-center gap-1.5 uppercase rounded-xl active:scale-95 transition-transform">
             Siguiente <i data-lucide="arrow-right" class="w-5 h-5"></i>
           </button>
         </div>
@@ -489,15 +495,15 @@
             <span class="text-[10px] font-black text-black uppercase tracking-wider bg-[#FFE100] px-2 py-0.5 border-2 border-black rotate-[-1deg] shadow-comic-sm">📖 Explora las páginas:</span>
           </div>
           <div class="flex flex-wrap justify-center gap-1.5 pb-1">
-            <button onclick="changeCatalogPage(1)" id="btn-page-1" class="page-tab-btn px-2.5 py-1 border-2 border-black bg-[#FF2E93] text-white font-black text-[10px] uppercase rounded-lg shadow-comic-sm transition-colors">Pág 1</button>
-            <button onclick="changeCatalogPage(2)" id="btn-page-2" class="page-tab-btn px-2.5 py-1 border-2 border-black bg-white text-gray-400 font-black text-[10px] uppercase rounded-lg hover:bg-gray-50 transition-colors">Pág 2</button>
-            <button onclick="changeCatalogPage(3)" id="btn-page-3" class="page-tab-btn px-2.5 py-1 border-2 border-black bg-white text-gray-400 font-black text-[10px] uppercase rounded-lg hover:bg-gray-50 transition-colors">Pág 3</button>
-            <button onclick="changeCatalogPage(4)" id="btn-page-4" class="page-tab-btn px-2.5 py-1 border-2 border-black bg-white text-gray-400 font-black text-[10px] uppercase rounded-lg hover:bg-gray-50 transition-colors">Pág 4</button>
-            <button onclick="changeCatalogPage(5)" id="btn-page-5" class="page-tab-btn px-2.5 py-1 border-2 border-black bg-white text-gray-400 font-black text-[10px] uppercase rounded-lg hover:bg-gray-50 transition-colors">Pág 5</button>
-            <button onclick="changeCatalogPage(6)" id="btn-page-6" class="page-tab-btn px-2.5 py-1 border-2 border-black bg-white text-gray-400 font-black text-[10px] uppercase rounded-lg hover:bg-gray-50 transition-colors">Pág 6</button>
-            <button onclick="changeCatalogPage(7)" id="btn-page-7" class="page-tab-btn px-2.5 py-1 border-2 border-black bg-white text-gray-400 font-black text-[10px] uppercase rounded-lg hover:bg-gray-50 transition-colors">Pág 7</button>
-            <button onclick="changeCatalogPage(8)" id="btn-page-8" class="page-tab-btn px-2.5 py-1 border-2 border-black bg-white text-gray-400 font-black text-[10px] uppercase rounded-lg hover:bg-gray-50 transition-colors">Pág 8</button>
-            <button onclick="changeCatalogPage(9)" id="btn-page-9" class="page-tab-btn px-2.5 py-1 border-2 border-black bg-white text-gray-400 font-black text-[10px] uppercase rounded-lg hover:bg-gray-50 transition-colors">Pág 9</button>
+            <button onclick="changeCatalogPage(1)" id="btn-page-1" class="page-tab-btn px-2.5 py-1.5 border-2 border-black bg-[#FF2E93] text-white font-black text-[10px] uppercase rounded-lg shadow-comic-sm transition-colors">Pág 1</button>
+            <button onclick="changeCatalogPage(2)" id="btn-page-2" class="page-tab-btn px-2.5 py-1.5 border-2 border-black bg-white text-gray-400 font-black text-[10px] uppercase rounded-lg hover:bg-gray-50 transition-colors">Pág 2</button>
+            <button onclick="changeCatalogPage(3)" id="btn-page-3" class="page-tab-btn px-2.5 py-1.5 border-2 border-black bg-white text-gray-400 font-black text-[10px] uppercase rounded-lg hover:bg-gray-50 transition-colors">Pág 3</button>
+            <button onclick="changeCatalogPage(4)" id="btn-page-4" class="page-tab-btn px-2.5 py-1.5 border-2 border-black bg-white text-gray-400 font-black text-[10px] uppercase rounded-lg hover:bg-gray-50 transition-colors">Pág 4</button>
+            <button onclick="changeCatalogPage(5)" id="btn-page-5" class="page-tab-btn px-2.5 py-1.5 border-2 border-black bg-white text-gray-400 font-black text-[10px] uppercase rounded-lg hover:bg-gray-50 transition-colors">Pág 5</button>
+            <button onclick="changeCatalogPage(6)" id="btn-page-6" class="page-tab-btn px-2.5 py-1.5 border-2 border-black bg-white text-gray-400 font-black text-[10px] uppercase rounded-lg hover:bg-gray-50 transition-colors">Pág 6</button>
+            <button onclick="changeCatalogPage(7)" id="btn-page-7" class="page-tab-btn px-2.5 py-1.5 border-2 border-black bg-white text-gray-400 font-black text-[10px] uppercase rounded-lg hover:bg-gray-50 transition-colors">Pág 7</button>
+            <button onclick="changeCatalogPage(8)" id="btn-page-8" class="page-tab-btn px-2.5 py-1.5 border-2 border-black bg-white text-gray-400 font-black text-[10px] uppercase rounded-lg hover:bg-gray-50 transition-colors">Pág 8</button>
+            <button onclick="changeCatalogPage(9)" id="btn-page-9" class="page-tab-btn px-2.5 py-1.5 border-2 border-black bg-white text-gray-400 font-black text-[10px] uppercase rounded-lg hover:bg-gray-50 transition-colors">Pág 9</button>
           </div>
         </div>
 
@@ -577,38 +583,38 @@
           </div>
         </div>
 
-        <div class="p-3 border-4 border-black bg-black flex items-center gap-3 rounded-2xl shadow-comic-sm">
-          <div class="w-12 h-12 bg-[#FF2E93] text-white flex items-center justify-center border-2 border-white rounded-full shrink-0 shadow-comic-sm">
-            <i data-lucide="palette" class="w-6 h-6"></i>
+        <div class="p-3 border-4 border-black bg-black flex items-center gap-3 rounded-xl">
+          <div class="w-10 h-10 bg-[#FF2E93] text-white flex items-center justify-center text-lg border-2 border-white rounded-full shrink-0 shadow-comic-sm">
+            <i data-lucide="palette" class="w-5 h-5"></i>
           </div>
-          <div class="min-w-0 flex-grow">
-            <p class="text-[9px] font-black text-[#00D4FF] uppercase tracking-widest mb-0.5">Diseño Seleccionado:</p>
-            <p class="font-comic text-xl text-[#FFE100] uppercase truncate leading-none" id="live-design-name">- NINGUNO -</p>
-            <p class="text-[9px] font-bold text-white uppercase mt-1" id="live-design-coordinates"></p>
+          <div class="min-w-0">
+            <p class="text-[9px] font-black text-[#00D4FF] uppercase tracking-widest">Diseño seleccionado:</p>
+            <p class="font-black text-xs text-[#FFE100] uppercase truncate" id="live-design-name">- NINGUNO -</p>
+            <p class="text-[9px] font-bold text-white uppercase" id="live-design-coordinates"></p>
           </div>
         </div>
 
         <!-- CAJA DE DISEÑO PERSONALIZADO (ALTO IMPACTO JUSTO ANTES DE NAVEGACIÓN) -->
-        <div class="bg-[#FFE100] p-4 border-4 border-[#FF2E93] shadow-comic-black relative rounded-xl mt-6">
+        <div class="bg-[#FFE100] p-5 border-4 border-[#FF2E93] shadow-comic-black relative rounded-xl mt-6">
           <div class="absolute -top-3.5 left-3 bg-[#FF2E93] text-white text-[10px] font-black px-2.5 py-1 border-2 border-black rotate-[-1deg] uppercase shadow-comic-sm">
             💥 ¿NO ENCUENTRAS TU TEMA?
           </div>
-          <p class="text-[10px] font-black text-black uppercase mb-2.5 leading-tight mt-1.5">
+          <p class="text-[10px] font-black text-black uppercase mb-3 leading-tight mt-1">
             ¡Diseñamos el tema que quieras! Se te hará <span class="text-[#FF2E93] font-black bg-white px-1.5 py-0.5 rounded border border-black">1 propuesta con 1 cambio</span>. Todo ajuste de diseño extra tendrá costo.
           </p>
           <div class="flex flex-col gap-2">
-            <input type="text" id="input-custom-theme" placeholder="Ej. Star Wars con fondo oscuro..." class="w-full border-2 border-black px-3 py-1.5 text-xs font-black uppercase outline-none focus:bg-white bg-white rounded-md">
-            <button onclick="applyCustomTheme()" class="w-full bg-[#FF2E93] text-white hover:text-[#FFE100] font-black uppercase py-2 border-2 border-black hover:bg-rose-600 transition-colors shadow-comic-sm text-xs rounded-md">
+            <input type="text" id="input-custom-theme" placeholder="Ej. Star Wars con fondo oscuro..." class="w-full border-2 border-black px-3 py-2 text-sm font-black uppercase outline-none focus:border-[#FF2E93] bg-white rounded-md transition-colors">
+            <button onclick="applyCustomTheme()" class="w-full bg-[#FF2E93] text-white hover:text-[#FFE100] font-black uppercase py-2.5 border-2 border-black hover:bg-rose-600 transition-colors shadow-comic-sm text-sm rounded-md active:scale-95">
               Aplicar Tema Especial
             </button>
           </div>
         </div>
 
-        <div class="flex justify-between pt-4">
-          <button onclick="goToStep(3)" class="bg-white text-black font-black px-4 py-2 border-2 border-black shadow-comic-black flex items-center gap-1.5 uppercase text-xs rounded-xl">
+        <div class="flex gap-2 pt-4 w-full">
+          <button onclick="goToStep(3)" class="w-1/3 bg-white text-black font-black py-3 border-4 border-black shadow-comic-sm flex justify-center items-center gap-1 uppercase text-[10px] rounded-xl active:scale-95 transition-transform">
             <i data-lucide="arrow-left" class="w-4 h-4"></i> Atrás
           </button>
-          <button onclick="goToStep(5)" class="bg-[#FF2E93] text-white font-comic text-xl px-6 py-2.5 border-4 border-black shadow-comic-black flex items-center gap-1.5 uppercase rounded-xl">
+          <button onclick="goToStep(5)" class="w-2/3 bg-[#FF2E93] text-white font-comic text-xl py-3 border-4 border-black shadow-comic-sm flex justify-center items-center gap-1.5 uppercase rounded-xl active:scale-95 transition-transform">
             Ver Resumen <i data-lucide="check" class="w-5 h-5"></i>
           </button>
         </div>
@@ -616,91 +622,87 @@
 
       <!-- PASO 5: TICKET DE COMPRA -->
       <div id="step-content-5" class="step-pane hidden space-y-4">
-        <div>
+        <div class="text-center sm:text-left mb-2">
           <h2 class="font-comic text-2xl md:text-3xl text-black uppercase">
             🧾 Paso 5: Ticket de Pedido
           </h2>
-          <p class="text-[11px] font-black text-gray-500 uppercase">Revisa que todo esté correcto y tómale captura para tu vendedor.</p>
+          <p class="text-[11px] font-black text-gray-500 uppercase">Revisa que todo esté correcto y descarga el ticket para tu vendedor.</p>
         </div>
 
-        <!-- TICKET BLANCO CON DETALLES ROSA Y AMARILLO -->
-        <div class="bg-white p-4 border-4 border-black relative rounded-2xl max-w-sm mx-auto shadow-[6px_6px_0px_0px_#FFE100] overflow-hidden" id="ticket-capture">
-          <!-- Decoración de esquinas Fosfo -->
-          <div class="absolute -top-6 -right-6 w-16 h-16 bg-[#FFE100] rounded-full border-4 border-black"></div>
-          <div class="absolute -bottom-6 -left-6 w-16 h-16 bg-[#FF2E93] rounded-full border-4 border-black"></div>
-          
-          <div class="absolute -top-2.5 right-4 bg-[#FF2E93] text-white text-[9px] font-black px-3 py-1 border-2 border-black rotate-[2deg] uppercase tracking-wider shadow-comic-sm z-10">
+        <!-- TICKET ULTRA CONTRASTADO Y COMPACTO (Fondo Blanco) -->
+        <div class="bg-white p-3 sm:p-4 border-4 border-black relative rounded-2xl max-w-sm mx-auto shadow-comic-black" id="ticket-capture">
+          <div class="absolute -top-3 right-3 bg-black text-white text-[9px] font-black px-2 py-1 border-2 border-white rotate-[2deg] uppercase tracking-wider shadow-comic-sm">
             ORDEN FOSFO KIDS
           </div>
           
-          <div class="text-center pb-3 border-b-4 border-black mt-2 flex flex-col items-center justify-center relative z-10">
-            <!-- Logotipo oficial con fondo claro para que resalte -->
-            <img src="fav.png" alt="Logo Fosfo Kids" class="w-12 h-12 object-contain border-2 border-black rounded-full bg-white p-1 mb-2 shadow-[3px_3px_0px_0px_#FF2E93] shrink-0">
-            <span class="font-comic text-3xl text-black uppercase tracking-wide leading-none">TICKET DE PEDIDO</span>
-            <p class="text-[8px] font-black text-[#FFE100] uppercase font-sans-bold mt-1.5 bg-black px-2.5 py-0.5 rounded-full tracking-widest border border-black shadow-sm">CATÁLOGO OFICIAL 2026</p>
+          <div class="text-center pb-2 border-b-2 border-black flex flex-col items-center justify-center">
+            <!-- Logotipo oficial integrado en el ticket final -->
+            <img src="fav.png" alt="Logo Fosfo Kids" class="w-10 h-10 object-contain border-2 border-black rounded-lg bg-slate-950 p-1 mb-1 shadow-comic-sm shrink-0">
+            <span class="font-comic text-2xl text-black uppercase tracking-wide leading-none">TICKET DE PEDIDO</span>
+            <p class="text-[7px] font-black text-black uppercase font-sans-bold mt-0.5">CATÁLOGO OFICIAL 2026</p>
           </div>
 
-          <div class="py-3 text-xs font-black text-black font-sans-bold relative z-10 space-y-3">
+          <div class="py-2 text-xs font-black text-black font-sans-bold">
             
-            <!-- NOTA COMPACTA -->
-            <div class="bg-black text-[#FFE100] p-2 border-2 border-black text-center font-black text-[8px] uppercase tracking-wider shadow-[3px_3px_0px_0px_#FF2E93] rounded-lg leading-tight">
-              🚨 1 DÍA HÁBIL DESPUÉS DEL PAGO (NO SE PROCESA SIN PAGO).<br>PROGRAMA ENTREGA HASTA RECIBIR LUZ VERDE 🟢
+            <!-- NOTA UBER / DIDI COMPACTA -->
+            <div class="bg-black text-[#FFE100] p-1.5 border-2 border-black text-center font-black text-[7px] uppercase tracking-wider shadow-comic-sm rounded-md leading-tight mb-2">
+              🚨 2 DÍAS HÁBILES DESPUÉS DEL PAGO (SI NO HAY PAGO NO SE PROCESA).<br>PROGRAMA ENTREGA HASTA RECIBIR LUZ VERDE 🟢
             </div>
 
-            <!-- TABLA DE ESPECIFICACIONES CON TOQUES AMARILLOS -->
-            <div class="bg-white border-2 border-black rounded-lg p-2.5 text-[9px] space-y-1.5 shadow-[4px_4px_0px_0px_#FFE100]">
-               <div class="flex justify-between border-b border-dashed border-gray-300 pb-1"><span class="text-gray-500 uppercase">👤 Cliente:</span><span class="font-black text-right truncate max-w-[140px]" id="ticket-client-name">-</span></div>
-               <div class="flex justify-between border-b border-dashed border-gray-300 pb-1"><span class="text-gray-500 uppercase">🎒 Paquete:</span><span class="font-black text-right truncate max-w-[140px]" id="ticket-package">-</span></div>
-               <div class="flex justify-between border-b border-dashed border-gray-300 pb-1"><span class="text-gray-500 uppercase">🎨 Diseño:</span><span class="font-black text-[#FF2E93] text-right truncate max-w-[140px]" id="ticket-design">-</span></div>
-               <div class="flex justify-between border-b border-dashed border-gray-300 pb-1"><span class="text-gray-500 uppercase">✨ Vinil:</span><span class="font-black text-right" id="ticket-material">-</span></div>
+            <!-- TABLA DE ESPECIFICACIONES COMPACTA -->
+            <div class="bg-white border-2 border-black rounded-lg p-1.5 text-[8px] space-y-1 shadow-comic-sm">
+               <div class="flex justify-between border-b border-gray-200 pb-0.5"><span class="text-gray-500 uppercase">👤 Cliente:</span><span class="font-black text-right truncate max-w-[140px]" id="ticket-client-name">-</span></div>
+               <div class="flex justify-between border-b border-gray-200 pb-0.5"><span class="text-gray-500 uppercase">🎒 Paquete:</span><span class="font-black text-right truncate max-w-[140px]" id="ticket-package">-</span></div>
+               <div class="flex justify-between border-b border-gray-200 pb-0.5"><span class="text-gray-500 uppercase">🎨 Diseño:</span><span class="font-black text-[#FF2E93] text-right truncate max-w-[140px]" id="ticket-design">-</span></div>
+               <div class="flex justify-between border-b border-gray-200 pb-0.5"><span class="text-gray-500 uppercase">✨ Vinil:</span><span class="font-black text-right" id="ticket-material">-</span></div>
                <div class="flex justify-between pb-0.5"><span class="text-gray-500 uppercase">🛡️ Laminado:</span><span class="font-black text-right" id="ticket-laminado">-</span></div>
             </div>
 
-            <!-- BLOQUE STARK DE DATOS CON BORDE ROSA -->
-            <div class="bg-white p-3 border-4 border-[#FF2E93] shadow-[4px_4px_0px_0px_#FFE100] rounded-xl text-center relative mt-4">
-              <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-black text-white text-[8px] px-3 py-1 border-2 border-black rounded-full tracking-widest uppercase shadow-sm">🏷️ DATOS A IMPRIMIR</div>
-              <div class="text-lg font-black text-black uppercase leading-tight mt-1.5" id="ticket-child-name">- SIN NOMBRE -</div>
-              <div class="flex flex-col items-center justify-center gap-1.5 mt-1.5">
-                <div class="text-[9px] font-black text-white bg-[#FF2E93] border-2 border-black uppercase px-2 py-0.5 rounded shadow-sm" id="ticket-child-grade">- SIN GRADO -</div>
-                <div class="text-[8px] font-bold text-gray-500 italic uppercase max-w-[200px] truncate" id="ticket-child-extra">- SIN INFO ADICIONAL -</div>
+            <!-- Bloque Stark de Datos de Impresión COMPACTO -->
+            <div class="bg-cyan-100 p-2 border-2 border-black shadow-comic-sm rounded-lg mt-2 text-center">
+              <div class="text-[7px] font-black uppercase text-gray-600 tracking-widest mb-0.5">🏷️ DATOS A IMPRIMIR</div>
+              <div class="text-sm font-black text-black uppercase leading-none" id="ticket-child-name">- SIN NOMBRE -</div>
+              <div class="flex items-center justify-center gap-2 mt-1">
+                <div class="text-[8px] font-black text-[#FF2E93] uppercase bg-white px-1.5 py-0.5 border border-black rounded" id="ticket-child-grade">- SIN GRADO -</div>
+                <div class="text-[7px] font-bold text-gray-700 italic uppercase truncate max-w-[100px]" id="ticket-child-extra">- SIN INFO ADICIONAL -</div>
               </div>
             </div>
 
-            <!-- EXTRAS -->
-            <div id="ticket-extras-block" class="bg-white p-2 border-2 border-black border-dashed rounded-lg hidden mt-3 text-center relative">
-              <div class="text-[8px] font-black uppercase text-gray-500 tracking-widest mb-1.5">🧩 PIEZAS EXTRAS AÑADIDAS</div>
-              <div class="flex flex-wrap gap-1.5 justify-center text-slate-800" id="ticket-extras-list">
+            <!-- SECCIÓN TICKET DE PIEZAS ADICIONALES COMPACTA (En fila horizontal) -->
+            <div id="ticket-extras-block" class="bg-slate-100 p-1.5 border-2 border-black shadow-comic-sm rounded-lg hidden mt-2 text-center">
+              <div class="text-[7px] font-black uppercase text-gray-500 tracking-widest mb-1">🧩 PIEZAS EXTRAS AÑADIDAS</div>
+              <div class="flex flex-wrap gap-1 justify-center text-slate-800" id="ticket-extras-list">
                 <!-- Inyección JS -->
               </div>
             </div>
 
-            <!-- DESGLOSE DE PRECIOS -->
-            <div class="flex justify-between items-end mt-4 pt-3 border-t-4 border-black">
-               <div class="text-[8px] text-gray-500 space-y-0.5 font-bold uppercase">
+            <!-- Desglose de Precios COMPACTO HORIZONTAL -->
+            <div class="flex justify-between items-end mt-2 pt-2 border-t-2 border-black">
+               <div class="text-[7px] text-gray-600 space-y-0.5 font-bold uppercase">
                   <div>Costo Base: <span class="font-black text-black" id="ticket-base-cost">$0.00</span></div>
                   <div>Costo Vinil: <span class="font-black text-black" id="ticket-material-cost">$0.00</span></div>
                   <div>Costo Lam: <span class="font-black text-black" id="ticket-laminado-cost">$0.00</span></div>
                </div>
                <div class="text-right flex flex-col items-end">
-                 <div class="text-[8px] font-black uppercase mb-1 tracking-widest bg-black text-white px-2 py-0.5 rounded border border-black shadow-sm">TOTAL A PAGAR</div>
-                 <div class="bg-[#FFE100] text-black px-3 py-1 text-2xl font-comic rounded-lg border-4 border-[#FF2E93] shadow-[3px_3px_0px_0px_#000000] leading-none" id="ticket-total">$0.00 MXN</div>
+                 <div class="text-[7px] font-black uppercase mb-0.5 tracking-widest">TOTAL A PAGAR</div>
+                 <div class="bg-black text-[#FFE100] px-2 py-0.5 text-lg font-comic rounded-md border-2 border-black shadow-comic-sm leading-none" id="ticket-total">$0.00 MXN</div>
                </div>
             </div>
           </div>
         </div>
 
-        <div class="mt-6 space-y-3 font-sans-bold">
-          <button onclick="captureOrder()" class="w-full bg-[#FF2E93] text-white font-comic text-2xl py-3.5 border-4 border-black shadow-comic-black hover:scale-[1.01] transition-transform flex items-center justify-center gap-2 rounded-xl">
+        <div class="mt-6 space-y-3 font-sans-bold w-full">
+          <button onclick="captureOrder()" class="w-full bg-[#FF2E93] text-white font-comic text-2xl py-4 border-4 border-black shadow-comic-black hover:scale-[1.01] transition-transform flex items-center justify-center gap-2 rounded-xl active:scale-95">
             <i data-lucide="download" class="w-6 h-6"></i> DESCARGAR TICKET (PNG)
           </button>
           <div class="bg-[#00D4FF] p-3 border-2 border-black text-center font-black text-[10px] uppercase shadow-comic-black rounded-lg leading-tight">
-            📢 COMPARTE LA IMAGEN DESCARGADA CON TU VENDEDOR POR WHATSAPP PARA PROCESAR TU ENTREGA.
+            📢 DESCARGA Y ENVÍA ESTA IMAGEN A TU VENDEDOR POR WHATSAPP PARA PROCESAR TU ENTREGA.
           </div>
         </div>
 
-        <div class="mt-8 flex justify-start font-sans-bold">
-          <button onclick="goToStep(4)" class="bg-white text-black font-black px-4 py-2 border-2 border-black shadow-comic-black flex items-center gap-1.5 uppercase text-xs rounded-xl">
-            <i data-lucide="arrow-left" class="w-4 h-4"></i> Atrás
+        <div class="mt-4 flex justify-start font-sans-bold">
+          <button onclick="goToStep(4)" class="w-full bg-white text-black font-black py-3 border-4 border-black shadow-comic-sm flex justify-center items-center gap-1.5 uppercase text-xs rounded-xl active:scale-95 transition-transform">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> Modificar Algo (Atrás)
           </button>
         </div>
       </div>
@@ -723,24 +725,41 @@
     let materialPrice = 0;
     let selectedLaminated = 'ninguno';
     let laminatedPrice = 0;
-    
-    let activePage = 1;
     let activeDesignIndex = 1;
 
-    // === LINKS DIRECTOS DE TUS CATÁLOGOS ===
-    const CATALOG_IMAGES = {
-      1: "1.png", 
-      2: "2.png",
-      3: "3.png",
-      4: "4.png",
-      5: "5.png",
-      6: "6.png",
-      7: "7.png",
-      8: "8.png",
-      9: "9.png"
-    };
+    // === LÓGICA DE PREGUNTA EXTRAS ===
+    function showExtrasPrompt() {
+      if (selectedPackage === 'individual') {
+        goToStep(2);
+        return;
+      }
+      
+      const modal = document.getElementById('extras-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
 
-    // Mapeo detallado de diseños
+    function answerExtras(wantsMore) {
+      const modal = document.getElementById('extras-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+      
+      if (wantsMore) {
+        goToStep(2);
+      } else {
+        syncQty('lapiz', 0);
+        syncQty('circulo', 0);
+        syncQty('cuaderno', 0);
+        syncQty('libro', 0);
+        goToStep(3);
+      }
+    }
+
+    // === Mapeo detallado de diseños ===
     const catalogMapping = {
       1: {
         1: { id: 1, name: "Gabby's Dollhouse", cat: "tiernos" },
@@ -918,73 +937,23 @@
       }
     };
 
-    // === LÓGICA DE PREGUNTA EXTRAS ===
-    function showExtrasPrompt() {
-      if (selectedPackage === 'individual') {
-        goToStep(2);
-        return;
-      }
-      
-      const modal = document.getElementById('extras-modal');
-      if (modal) {
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-      }
-    }
-
-    function answerExtras(wantsMore) {
-      const modal = document.getElementById('extras-modal');
-      if (modal) {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-      }
-      
-      if (wantsMore) {
-        goToStep(2);
-      } else {
-        syncQty('lapiz', 0);
-        syncQty('circulo', 0);
-        syncQty('cuaderno', 0);
-        syncQty('libro', 0);
-        goToStep(3);
-      }
-    }
-
-    // === DETECTOR DE CARGA AUTO-CURATIVO ===
-    const EXTENSIONS = ['.png', '.PNG', '.jpg', '.JPG', '.jpeg', '.JPEG'];
-    let imgErrorCount = 0;
-
-    function handleImageError(imgElement) {
-      imgErrorCount++;
-      if (imgErrorCount < EXTENSIONS.length) {
-        const nextExt = EXTENSIONS[imgErrorCount];
-        const newSrc = `${activePage}${nextExt}`;
-        console.log(`Error de carga en página ${activePage}. Intentando con: ${nextExt}`);
-        imgElement.src = newSrc;
-      } else {
-        imgElement.src = 'https://placehold.co/600x800/000000/ffffff?text=Fosfo+Kids+2026';
-        imgElement.onerror = null;
-        showToast("⚠️ Nota: No pudimos cargar el catálogo.", "warning");
-      }
-    }
-
     function changeCatalogPage(pageNum) {
-      activePage = pageNum;
-      imgErrorCount = 0;
+      window.activePage = pageNum;
+      window.imgErrorCount = 0;
       
       const activeImg = document.getElementById('active-catalog-img');
       if (activeImg) {
-        activeImg.src = `${pageNum}${EXTENSIONS[0]}`;
+        activeImg.src = `${pageNum}${window.EXTENSIONS[0]}`;
       }
       
       const buttons = document.querySelectorAll('.page-tab-btn');
       buttons.forEach(btn => {
-        btn.className = "page-tab-btn px-2.5 py-1 border-2 border-black bg-white text-gray-400 font-black text-[10px] uppercase rounded-lg hover:bg-gray-50 transition-colors";
+        btn.className = "page-tab-btn px-2.5 py-1.5 border-2 border-black bg-white text-gray-400 font-black text-[10px] uppercase rounded-lg hover:bg-gray-50 transition-colors";
       });
       
       const activeBtn = document.getElementById(`btn-page-${pageNum}`);
       if (activeBtn) {
-        activeBtn.className = "page-tab-btn px-2.5 py-1 border-2 border-black bg-[#FF2E93] text-white font-black text-[10px] uppercase rounded-lg shadow-comic-sm transition-colors";
+        activeBtn.className = "page-tab-btn px-2.5 py-1.5 border-2 border-black bg-[#FF2E93] text-white font-black text-[10px] uppercase rounded-lg shadow-comic-sm transition-colors";
       }
 
       const cells = document.querySelectorAll('.catalog-cell');
@@ -992,7 +961,7 @@
         cell.className = "catalog-cell border-2 border-transparent relative group cursor-pointer";
       });
 
-      const currentPageMapping = catalogMapping[activePage];
+      const currentPageMapping = catalogMapping[window.activePage];
       if (currentPageMapping) {
         Object.keys(currentPageMapping).forEach(cellIndex => {
           const designInfo = currentPageMapping[cellIndex];
@@ -1017,13 +986,13 @@
       const customInput = document.getElementById('input-custom-theme');
       if (customInput) customInput.value = '';
 
-      const currentPageMapping = catalogMapping[activePage];
+      const currentPageMapping = catalogMapping[window.activePage];
       if (currentPageMapping && currentPageMapping[cellIndex]) {
         activeDesignIndex = currentPageMapping[cellIndex].id;
         
         const d = currentPageMapping[cellIndex];
         document.getElementById('live-design-name').innerText = `DISEÑO #${d.id} - ${d.name.toUpperCase()}`;
-        document.getElementById('live-design-coordinates').innerText = `Página ${activePage} • Fila ${row}, Columna ${col}`;
+        document.getElementById('live-design-coordinates').innerText = `Página ${window.activePage} • Fila ${row}, Columna ${col}`;
       }
     }
     
@@ -1045,34 +1014,7 @@
         showToast("🎨 Tema personalizado aplicado.");
     }
 
-    function filterCatalog(category, element) {
-      const currentPageMapping = catalogMapping[activePage];
-      if (!currentPageMapping) return;
-
-      Object.keys(currentPageMapping).forEach(cellIndex => {
-        const designInfo = currentPageMapping[cellIndex];
-        const cellEl = document.getElementById(`cell-${cellIndex}`);
-        if (cellEl) {
-          if (category === 'todos' || designInfo.cat === category) {
-            cellEl.style.opacity = "1";
-            cellEl.style.pointerEvents = "auto";
-          } else {
-            cellEl.style.opacity = "0.15";
-            cellEl.style.pointerEvents = "none";
-          }
-        }
-      });
-
-      const tabs = document.querySelectorAll('.cat-tab');
-      tabs.forEach(tab => {
-        tab.className = "cat-tab bg-white border-2 border-black px-3 py-1 text-xs font-black uppercase text-gray-500 shrink-0";
-      });
-      if (element) {
-        element.className = "cat-tab bg-[#FFE100] border-2 border-black px-3 py-1 text-xs font-black uppercase text-black shadow-comic-sm shrink-0";
-      }
-    }
-
-    // NAVEGACIÓN DE PASOS CON SCROLL AL TOP
+    // NAVEGACIÓN DE PASOS CON SCROLL AL TOP Y CLASES APP-NATIVE
     function goToStep(step) {
       if (step > currentStep && step > 3) {
         const clientNameInput = document.getElementById('input-client-name');
@@ -1096,14 +1038,20 @@
         if (contentEl) contentEl.classList.add('hidden');
         
         const btn = document.getElementById(`btn-step-${i}`);
-        if (btn) btn.className = "px-2.5 py-1.5 border border-black font-black text-[10px] uppercase bg-white text-gray-400 shrink-0 rounded-md";
+        if (btn) {
+          btn.classList.remove('step-btn-active');
+          btn.classList.add('step-btn-inactive');
+        }
       }
 
       const activeContentEl = document.getElementById(`step-content-${step}`);
       if (activeContentEl) activeContentEl.classList.remove('hidden');
       
       const activeBtn = document.getElementById(`btn-step-${step}`);
-      if (activeBtn) activeBtn.className = "px-2.5 py-1.5 border border-black font-black text-[10px] uppercase bg-[#FFE100] text-black shrink-0 rounded-md shadow-comic-sm";
+      if (activeBtn) {
+        activeBtn.classList.remove('step-btn-inactive');
+        activeBtn.classList.add('step-btn-active');
+      }
       
       currentStep = step;
       
@@ -1124,9 +1072,9 @@
       
       if (toast) {
         if (type === "warning") {
-          toast.firstElementChild.className = "bg-[#FF2E93] text-white border-4 border-black font-black p-4 shadow-comic-black flex items-center gap-3";
+          toast.firstElementChild.className = "bg-[#FF2E93] text-white border-4 border-black font-black p-4 shadow-comic-black flex items-center gap-3 rounded-xl";
         } else {
-          toast.firstElementChild.className = "bg-[#FFE100] text-black border-4 border-black font-black p-4 shadow-comic-black flex items-center gap-3";
+          toast.firstElementChild.className = "bg-[#FFE100] text-black border-4 border-black font-black p-4 shadow-comic-black flex items-center gap-3 rounded-xl";
         }
 
         toast.classList.remove('opacity-0');
@@ -1230,41 +1178,7 @@
       }
     }
 
-    function toggleIndividualMode() {
-      const checkEl = document.getElementById('check-individual');
-      if (!checkEl) return;
-      
-      const isChecked = checkEl.checked;
-      const container = document.getElementById('individual-selectors');
-      
-      if (isChecked) {
-        if (container) container.classList.remove('opacity-30', 'pointer-events-none');
-        selectedPackage = 'individual';
-        
-        const cardChico = document.getElementById('card-pkg-chico');
-        const cardGrande = document.getElementById('card-pkg-grande');
-        const cardPersonalizado = document.getElementById('card-pkg-personalizado');
-        const badgeChico = document.getElementById('badge-pkg-chico');
-        const badgeGrande = document.getElementById('badge-pkg-grande');
-        const badgePersonalizado = document.getElementById('badge-pkg-personalizado');
-
-        if (cardChico) cardChico.classList.remove('selected-card');
-        if (badgeChico) badgeChico.classList.add('hidden');
-        if (cardGrande) cardGrande.classList.remove('selected-card');
-        if (badgeGrande) badgeGrande.classList.add('hidden');
-        if (cardPersonalizado) cardPersonalizado.classList.add('selected-card');
-        if (badgePersonalizado) badgePersonalizado.classList.remove('hidden');
-      } else {
-        if (container) container.classList.add('opacity-30', 'pointer-events-none');
-        selectPackage('chico', 260);
-      }
-      calculatePrice();
-      updateLiveSummary();
-    }
-
     function selectPackage(pkg, price) {
-      const checkEl = document.getElementById('check-individual');
-      
       selectedPackage = pkg;
       basePrice = price;
 
@@ -1285,21 +1199,12 @@
       if (pkg === 'chico') {
         if (cardChico) cardChico.classList.add('selected-card');
         if (badgeChico) badgeChico.classList.remove('hidden');
-        if (checkEl) checkEl.checked = false;
-        const container = document.getElementById('individual-selectors');
-        if (container) container.classList.add('opacity-30', 'pointer-events-none');
       } else if (pkg === 'grande') {
         if (cardGrande) cardGrande.classList.add('selected-card');
         if (badgeGrande) badgeGrande.classList.remove('hidden');
-        if (checkEl) checkEl.checked = false;
-        const container = document.getElementById('individual-selectors');
-        if (container) container.classList.add('opacity-30', 'pointer-events-none');
       } else {
         if (cardPersonalizado) cardPersonalizado.classList.add('selected-card');
         if (badgePersonalizado) badgePersonalizado.classList.remove('hidden');
-        if (checkEl) checkEl.checked = true;
-        const container = document.getElementById('individual-selectors');
-        if (container) container.classList.remove('opacity-30', 'pointer-events-none');
       }
       calculatePrice();
       updateLiveSummary();
@@ -1403,19 +1308,19 @@
         pkgText = 'PAQUETE GRANDE (120 PZAS)';
         if (totalAdicionales > 0) pkgText += ` + ADICIONALES`;
       } else {
-        pkgText = `SET PERSONALIZADO (${qtyLapiz} Lápices, ${qtyCirculo} Circulares, ${qtyCuaderno} Cuadernos, ${qtyLibro} Libros)`;
+        pkgText = `SET PERSONALIZADO (${qtyLapiz} Lápices, ${qtyCirculo} Circulares, ${qtyCuaderno} Cuad., ${qtyLibro} Libros)`;
       }
       const ticketPackageEl = document.getElementById('ticket-package');
       if (ticketPackageEl) ticketPackageEl.innerText = pkgText;
 
-      // Actualizar Bloque de Extras en Ticket (Versión con estílo Fosfo)
+      // Actualizar Bloque de Extras en Ticket (Versión Compacta de íconos)
       if (extrasBlock && extrasList) {
         extrasList.innerHTML = '';
         if (selectedPackage !== 'individual' && totalAdicionales > 0) {
-          if (qtyLapiz > 0) extrasList.innerHTML += `<span class="bg-[#FFE100] border-2 border-black px-1.5 py-0.5 rounded-md flex items-center gap-1 text-[9px] shadow-sm"><img src="icn lapices.png" class="h-3"> x${qtyLapiz}</span>`;
-          if (qtyCirculo > 0) extrasList.innerHTML += `<span class="bg-[#FFE100] border-2 border-black px-1.5 py-0.5 rounded-md flex items-center gap-1 text-[9px] shadow-sm"><img src="icn circulares.png" class="h-3"> x${qtyCirculo}</span>`;
-          if (qtyCuaderno > 0) extrasList.innerHTML += `<span class="bg-[#FFE100] border-2 border-black px-1.5 py-0.5 rounded-md flex items-center gap-1 text-[9px] shadow-sm"><img src="icn cuadernos.png" class="h-3"> x${qtyCuaderno}</span>`;
-          if (qtyLibro > 0) extrasList.innerHTML += `<span class="bg-[#FFE100] border-2 border-black px-1.5 py-0.5 rounded-md flex items-center gap-1 text-[9px] shadow-sm"><img src="icn libros.png" class="h-3"> x${qtyLibro}</span>`;
+          if (qtyLapiz > 0) extrasList.innerHTML += `<span class="bg-white border border-black px-1.5 py-0.5 rounded flex items-center gap-0.5 text-[8px]"><img src="icn lapices.png" class="h-2.5"> x${qtyLapiz}</span>`;
+          if (qtyCirculo > 0) extrasList.innerHTML += `<span class="bg-white border border-black px-1.5 py-0.5 rounded flex items-center gap-0.5 text-[8px]"><img src="icn circulares.png" class="h-2.5"> x${qtyCirculo}</span>`;
+          if (qtyCuaderno > 0) extrasList.innerHTML += `<span class="bg-white border border-black px-1.5 py-0.5 rounded flex items-center gap-0.5 text-[8px]"><img src="icn cuadernos.png" class="h-2.5"> x${qtyCuaderno}</span>`;
+          if (qtyLibro > 0) extrasList.innerHTML += `<span class="bg-white border border-black px-1.5 py-0.5 rounded flex items-center gap-0.5 text-[8px]"><img src="icn libros.png" class="h-2.5"> x${qtyLibro}</span>`;
           extrasBlock.classList.remove('hidden');
         } else {
           extrasBlock.classList.add('hidden');
@@ -1486,10 +1391,7 @@
       if (!ticketElement) return;
 
       if (typeof html2canvas === 'undefined') {
-        showToast("⏳ Cargando herramientas de captura... intenta de nuevo en un segundo.", "warning");
-        const script = document.createElement('script');
-        script.src = "https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js";
-        document.head.appendChild(script);
+        showToast("⏳ Cargando herramienta de captura...", "warning");
         return;
       }
       
@@ -1500,17 +1402,16 @@
 
       setTimeout(() => {
         const options = {
-          backgroundColor: '#FFE100',
+          backgroundColor: '#ffffff', // Fondo blanco garantizado
           scale: 2, 
           logging: false,
           useCORS: true,
-          scrollY: -window.scrollY // Solución clave para evitar cortes extraños
+          scrollY: -window.scrollY // Clave para evitar el bug de corte de pantalla
         };
 
         html2canvas(ticketElement, options).then(canvas => {
-          const imgData = canvas.toDataURL('image/png', 1.0); // Calidad 100%
+          const imgData = canvas.toDataURL('image/png', 1.0);
           
-          // Descarga directa a un solo clic sin popups intermedios
           const randomSuffix = Math.floor(Math.random() * 10000);
           const link = document.createElement('a');
           link.download = `Pedido_FosfoKids_${randomSuffix}.png`;
@@ -1524,9 +1425,8 @@
           showToast("⚠️ Detalle al capturar. Toma captura manual al ticket.", "warning");
           console.error("Error html2canvas:", err);
         });
-      }, 300); // Pausa de 300ms para asegurar renderizado de pantalla
+      }, 300);
     }
-
   </script>
 </body>
 </html>
