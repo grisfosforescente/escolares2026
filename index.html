@@ -20,8 +20,8 @@
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   
-  <!-- html2canvas -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <!-- html-to-image: Librería moderna que SÍ captura exactamente lo que se ve -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js"></script>
 
   <script>
     // Variables globales
@@ -912,21 +912,24 @@
       const ticketElement = document.getElementById('ticket-capture');
       if (!ticketElement) return;
 
-      if (typeof html2canvas === 'undefined') {
-        showToast("⏳ Cargando, intenta de nuevo.", "warning");
+      if (typeof htmlToImage === 'undefined') {
+        showToast("⏳ Cargando librería, intenta de nuevo.", "warning");
         return;
       }
       
-      showToast("📸 Procesando ticket en HQ...", "success");
+      showToast("📸 Generando captura exacta...", "success");
 
-      const options = {
+      // Forzamos el ancho exacto momentáneamente para evitar que se estire al capturar
+      const originalWidth = ticketElement.style.width;
+      ticketElement.style.width = ticketElement.offsetWidth + 'px';
+
+      htmlToImage.toBlob(ticketElement, {
         backgroundColor: '#ffffff',
-        scale: 3, // Mayor escala para asegurar buena legibilidad 
-        useCORS: true
-      };
+        pixelRatio: 2 // Doble resolución para que no se vea borroso al hacer zoom
+      }).then(blob => {
+          // Restauramos el ancho
+          ticketElement.style.width = originalWidth;
 
-      html2canvas(ticketElement, options).then(canvas => {
-        canvas.toBlob(function(blob) {
           const fileUrl = URL.createObjectURL(blob);
           const randomNum = Math.floor(Math.random() * 10000);
           
@@ -939,10 +942,9 @@
           document.body.removeChild(link);
           URL.revokeObjectURL(fileUrl);
           
-          showToast("💾 ¡Ticket generado sin cortes!");
-        }, 'image/png');
-        
+          showToast("💾 ¡Ticket descargado idéntico!");
       }).catch(err => {
+        ticketElement.style.width = originalWidth;
         showToast("⚠️ Error. Toma captura manual.", "warning");
         console.error(err);
       });
